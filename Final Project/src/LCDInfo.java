@@ -38,8 +38,8 @@ public class LCDInfo implements TimerListener{
 		LCD.drawString("Y:  ", 0, 1);	LCD.drawString("1: ", 8, 1);	//starting and ending xTheta and yTheta values for the 
 		LCD.drawString("H:  ", 0, 2);	LCD.drawString("2: ", 8, 2);	//light localization
 		LCD.drawString("US: ", 0, 3);	LCD.drawString("3: ", 8, 3);	//US is the updated ultrasonic sensor (80 if no wall)
-		LCD.drawString("tA: ", 0, 4);	LCD.drawString("DE:", 8, 4);	//thetaA from USLocalizer
-		LCD.drawString("tB: ", 0, 5);									//thetaB from USLocalizer
+		LCD.drawString("tA: ", 0, 4);	LCD.drawString("DE:", 8, 4);	//thetaA from USLocalizer //de is the darkness edge
+		LCD.drawString("tB: ", 0, 5);	LCD.drawString("Av:", 8, 5);	//thetaB from USLocalizer //av is average
 		LCD.drawString("T:  ", 0, 6);									//turn to value (the positive y axis)
 		LCD.drawString("LS: ", 0, 7);									//light sensor value
 		
@@ -49,7 +49,7 @@ public class LCDInfo implements TimerListener{
 		LCD.drawInt((int)pos[2], 4, 2);					LCD.drawInt((int)LightLocalizer.thetas[2], 11, 2);
 		LCD.drawInt((int)USLocalizer.distance, 4, 3);	LCD.drawInt((int)LightLocalizer.thetas[3], 11, 3);
 		LCD.drawInt((int)USLocalizer.angleA, 4, 4);		LCD.drawInt((int)LightLocalizer.darknessEdge, 11, 4);
-		LCD.drawInt((int)USLocalizer.angleB, 4, 5);		
+		LCD.drawInt((int)USLocalizer.angleB, 4, 5);		LCD.drawInt(LightLocalizer.average, 11, 5);
 		LCD.drawInt((int)USLocalizer.turn, 4, 6);
 		LCD.drawInt(LightLocalizer.lightReading, 4, 7);
 	}

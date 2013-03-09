@@ -66,7 +66,7 @@ public class Lab4 {
 		LCDInfo lcd = new LCDInfo(odo);								//start the display
 		
 		// perform the ultrasonic localization
-		usl.doLocalization();												
+		//usl.doLocalization();												
 		
 		// perform the light sensor localization
 		LightLocalizer lsl = new LightLocalizer(odo, ls);

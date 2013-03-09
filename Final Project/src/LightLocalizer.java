@@ -23,10 +23,11 @@ public class LightLocalizer {
 	public static int lightReading;					//value from light sensor
 	public static int prevLR;
 	public static double darknessEdge = 510.0;		//the value the lightsensor reading must drop below to consider passing a line
-	private double lightMountOffSet = 15.0;			//offset from center
+	private double lightMountOffSet = 22.5;			//offset from center
 	public static double [] thetas = new double [4]; //first 2 entries are for start for x then y last 2 are for end x then y
 	public static double x, y, xTheta, yTheta;
 	public static double [] pos = new double [3];	//to access x, y theta from 2 Wheeled robot
+	public static int average = 0;
 	
 	
 	public LightLocalizer(Odometer odo, LightSensor ls) {
@@ -50,14 +51,30 @@ public class LightLocalizer {
 		//Attempted to get the average of the light readings in the first 5 seconds, did not work very well 
 		
 		
-		double avgLightReading = 0;
+		double [] lReadings = new double[5]; //5 readings stored at each instance
+		
+		for (int i = 0; i < 5; i++){ //reading 5 times, once every second
+			lReadings[i] = getLightReading();
+			try { Thread.sleep(200); } catch (InterruptedException e) {} //sleep 1/4 of a sec
+		}
+		
+		
+		for (int i = 0; i < 5; i++){
+			average = average + (int) lReadings[i]; //adding up the values in array
+		}
+		average = average/5;
+		
+		int prevAvg = 0;
+		int counter = 0;
+		int threshold;
+/*		double avgLightReading = 0;
 		for (int i = 0; i < 5; i++){ //reading 5 times, once every second
 			avgLightReading = avgLightReading + getLightReading();
 			try { Thread.sleep(200); } catch (InterruptedException e) {} //sleep 1/4 of a sec
 		}
 		avgLightReading = avgLightReading/5.0;
 	//	darknessEdge = avgLightReading - 12.0;
-		
+*/	
 		
 		robot.setRotationSpeed(ROTATION_SPEED);
 		odo.getPosition(pos);
@@ -66,13 +83,26 @@ public class LightLocalizer {
 		while (count < 4){ //while not crossing the negative y axis
 			
 			//300 milisecond sleep (if reduced could increase odo's theta accuracy
-			try { Thread.sleep(300); } catch (InterruptedException e) {}	
+			//try { Thread.sleep(300); } catch (InterruptedException e) {}	
 			
-			prevLR = lightReading;
-			getLightReading();						//get the light reading
+			if (counter == 5) //always wrap around
+				counter = 0;
+			lReadings[counter] = getLightReading();
+			
+			prevAvg = average;
+			average = 0; //reset the average
+			for (int i = 0; i < 5; i++){
+				average = average + (int) lReadings[i]; //adding up the values in array
+			}
+			average = average/5;		//getting actual average
+			counter++;
+			
+			threshold = (int) (average * 0.01); //1.25% threshold
+			//prevLR = lightReading;
+			//getLightReading();						//get the light reading
 			
 			odo.getPosition(pos);					//get pos from odometer
-			if((lightReading - prevLR)  <= -5){
+			if((prevAvg - average) > threshold  ){
 	//		if(lightReading < darknessEdge){		//if passes a line
 	
 				Sound.beepSequence();				//perform beep
@@ -162,8 +192,8 @@ public class LightLocalizer {
 		 // wait for the ping to complete
 		try { Thread.sleep(50); } catch (InterruptedException e) {}		//50 milisecond sleep
 		
-		//lightReading = ls.getNormalizedLightValue();
-		lightReading = ls.readValue();
+		lightReading = ls.getNormalizedLightValue();
+		//lightReading = ls.readValue();
 		
 		return lightReading;
 	}
