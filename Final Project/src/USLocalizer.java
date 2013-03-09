@@ -161,7 +161,7 @@ public class USLocalizer {
 			//robot.setRotationSpeed(-SECOND_ROTATION_SPEED);
 		}
 			
-		nav.keepRotating(0);
+		//nav.keepRotating(0);
 		//robot.setRotationSpeed(0); //dont need to stop the robot anymore as lightLocalization is called right after
 		
 		//set the new theta to 0
