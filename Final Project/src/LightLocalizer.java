@@ -23,7 +23,7 @@ public class LightLocalizer {
 	public static int lightReading;					//value from light sensor
 	public static int prevLR;
 	public static double darknessEdge = 510.0;		//the value the lightsensor reading must drop below to consider passing a line
-	private double lightMountOffSet = 22.5;			//offset from center
+	private double lightMountOffSet = 21.5;			//offset from center
 	public static double [] thetas = new double [4]; //first 2 entries are for start for x then y last 2 are for end x then y
 	public static double x, y, xTheta, yTheta;
 	public static double [] pos = new double [3];	//to access x, y theta from 2 Wheeled robot
@@ -53,7 +53,7 @@ public class LightLocalizer {
 		
 		double [] lReadings = new double[5]; //5 readings stored at each instance
 		
-		for (int i = 0; i < 5; i++){ //reading 5 times, once every second
+		for (int i = 0; i < 5; i++){ //reading 5 times, once every second - initial array
 			lReadings[i] = getLightReading();
 			try { Thread.sleep(200); } catch (InterruptedException e) {} //sleep 1/4 of a sec
 		}
@@ -65,16 +65,8 @@ public class LightLocalizer {
 		average = average/5;
 		
 		int prevAvg = 0;
-		int counter = 0;
+		int counter = 0;				//count for array of light readings
 		int threshold;
-/*		double avgLightReading = 0;
-		for (int i = 0; i < 5; i++){ //reading 5 times, once every second
-			avgLightReading = avgLightReading + getLightReading();
-			try { Thread.sleep(200); } catch (InterruptedException e) {} //sleep 1/4 of a sec
-		}
-		avgLightReading = avgLightReading/5.0;
-	//	darknessEdge = avgLightReading - 12.0;
-*/	
 		
 		robot.setRotationSpeed(ROTATION_SPEED);
 		odo.getPosition(pos);
@@ -97,7 +89,7 @@ public class LightLocalizer {
 			average = average/5;		//getting actual average
 			counter++;
 			
-			threshold = (int) (average * 0.01); //1.25% threshold
+			threshold = (int) (average * 0.01); //1% threshold
 			//prevLR = lightReading;
 			//getLightReading();						//get the light reading
 			
@@ -116,11 +108,18 @@ public class LightLocalizer {
 
 		double thetaCorrTo;							//second theta correction (first in USLocaliser)
 		
+		if (thetas[3]< thetas[1])					//if angle wraps around past 360 , undo the wrap
+			thetas[3] = thetas[3] + 360.0;
+		
 		xTheta = thetas[2] - thetas[0];				//getting xTheta
 		yTheta = thetas[3] - thetas[1];				//getting yTheta
 		y = (- lightMountOffSet * Math.cos(Math.toRadians(xTheta/2.0))); 		//get x
 		x = (- lightMountOffSet * Math.cos(Math.toRadians(yTheta/2.0)));		//get y (formula from tutorial notes)
-		thetaCorrTo = 90.0 - yTheta/2.0;										//get corrected theta
+		thetaCorrTo = 90.0 + yTheta/2.0 + (thetas[3] - 180.0);										//get corrected theta
+		//thetaCorrTo = thetaCorrTo + thetas[3];
+		
+		if (thetaCorrTo > 360)
+			thetaCorrTo = thetaCorrTo - 360.0;
 		
 		pos[0] = x;
 		pos[1] = y;
