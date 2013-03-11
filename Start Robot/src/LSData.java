@@ -12,11 +12,11 @@ public class LSData {
 	private LightSensor ls;
 	int data;
 	
-	
+	/*
 	public LSData(){	
 		this.data = ls.readValue();
 	}
-	
+*/
 	
 	public void checkAccess(){
 		System.out.println("LSData Class Online...");
@@ -28,22 +28,21 @@ public class LSData {
 		
 		ls.setFloodlight(true);
 		
-		
-		while(counter < 10){
-			data = ls.readNormalizedValue();
+		while(counter < 5){
+		    data = ls.readValue();
 			try{Thread.sleep(5000);} catch(InterruptedException e){}
-			
+			counter++;
 		}
-
-		
-		
-		
-		
-		
+	
 		ls.setFloodlight(false);
 		
 	}
 	
+	public void printSomething(){
+		
+		LCD.clear();
+		LCD.drawString("YO", 0, 0);
+	}
 	
 	
 	
