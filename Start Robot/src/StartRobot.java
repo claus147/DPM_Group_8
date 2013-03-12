@@ -12,7 +12,10 @@ import lejos.nxt.*;
 public class StartRobot {
 
 	
-	
+	/*
+	 * Main function will ask the user to choose between attacker (left button) or defender mode (right button).
+	 * It will call AttackerMode and DefenderMode class.
+	 */
 	public static void main(String args[]){
 	 
 		
@@ -24,7 +27,8 @@ public class StartRobot {
 			// clear the display
 			LCD.clear();
 
-			// ask the user whether the motors should drive in a square or float
+			// left : AttackerMode
+			// right : DefenderMode
 			LCD.drawString("<Atker  | Def>", 0, 0);
 			LCD.drawString("        |         	 ", 0, 1);
 			LCD.drawString(" Mode   | Mode"			, 0, 2);
@@ -36,7 +40,10 @@ public class StartRobot {
 				&& buttonChoice != Button.ID_RIGHT);
 		// perform the ultrasonic localization
 		
+		//Attacker Mode
 		if (buttonChoice == Button.ID_LEFT) {
+
+			
 /*			
 			LCDInfo lcd = new LCDInfo(odo);
 			USLocalizer usl = new USLocalizer(odo, us, USLocalizer.LocalizationType.FALLING_EDGE);
@@ -51,10 +58,12 @@ public class StartRobot {
 */
 			
 			
-			
+		//Testing access to wheelA Class
 			WheelAData wheelA = new WheelAData();
 			wheelA.TravelTo();
-		}else{
+		}
+		// Defender Mode
+		else{
 
 			LSData LSdata = new LSData();
 			LSdata.takeData();
@@ -82,16 +91,7 @@ public class StartRobot {
 		LCD.drawInt(LSdata.data, 5, 0);
 	}
 	*/
-	/*
-	public void checkClassAccess(){
-		
-			System.out.println("StartRobot Class Online...");
-		attackerMode.checkAccess();
-		defenderMode.checkAccess();
-		LSdata.checkAccess();
-	}
 	
-	*/
 	
 	
 	

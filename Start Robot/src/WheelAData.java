@@ -5,10 +5,15 @@
  */
 import lejos.nxt.*;
 
+/**
+ * @author Tuan-Kiet
+ * @version 1.0
+ */
+
 public class WheelAData {
 	
 	private final NXTRegulatedMotor leftMotor = Motor.A, rightMotor = Motor.B;
-	
+	private int tachoWheelA;
 	
 	public WheelAData(){
 		
@@ -16,15 +21,26 @@ public class WheelAData {
 		
 	}
 	
-	
+	//Test to see if this class is accessed
 	public void TravelTo(){
-		
-		
+
 		leftMotor.rotate(50);
 		rightMotor.rotate(50);
-		
-		
+	
 	}
+	
+
+	/*
+	 * This method is a getter that will get the tachometer count of the left motor (Motor A)
+	 * @param leftMotor
+	 */
+	public double getTachoWheelA() {
+		tachoWheelA = leftMotor.getTachoCount();
+		return tachoWheelA;
+	}
+	
+	
+	
 	
 	
 }

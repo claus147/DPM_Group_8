@@ -12,10 +12,12 @@ public class AttackerMode {
 	
 	
 	
-	
-	public static void checkAccess(){
-		System.out.println("AttackerMode Class online...");
+	public void attackAlgorithm(){
+		
 		
 	}
+	
+	
+	
 }
 
