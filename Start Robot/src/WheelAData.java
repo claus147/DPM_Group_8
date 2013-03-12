@@ -16,6 +16,7 @@ public class WheelAData {
 	private int tachoWheelA;
 	
 	public WheelAData(){
+		this.tachoWheelA = leftMotor.getTachoCount();
 		
 		
 		
@@ -30,11 +31,11 @@ public class WheelAData {
 	}
 	
 
-	/*
+	/**
 	 * This method is a getter that will get the tachometer count of the left motor (Motor A)
 	 * @param leftMotor
 	 */
-	public double getTachoWheelA() {
+	public int getTachoWheelA() {
 		tachoWheelA = leftMotor.getTachoCount();
 		return tachoWheelA;
 	}

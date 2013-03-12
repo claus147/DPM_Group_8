@@ -18,6 +18,18 @@ public class StartRobot {
 	 */
 	public static void main(String args[]){
 	 
+		Start();
+	
+		
+	}
+	
+	/**
+	 * Will start the robot
+	 */
+	public static void Start(){
+		
+		AttackerMode attack = new AttackerMode();
+		DefenderMode defend = new DefenderMode();
 		
 		UltrasonicSensor us = new UltrasonicSensor(SensorPort.S2);
 		LightSensor ls = new LightSensor(SensorPort.S1);
@@ -43,56 +55,18 @@ public class StartRobot {
 		//Attacker Mode
 		if (buttonChoice == Button.ID_LEFT) {
 
-			
-/*			
-			LCDInfo lcd = new LCDInfo(odo);
-			USLocalizer usl = new USLocalizer(odo, us, USLocalizer.LocalizationType.FALLING_EDGE);
-		//	usl.doLocalization();
-			LightLocalizer lsl = new LightLocalizer(odo, ls);
-			lsl.doLocalization();	
-		} else {
-			LCDInfo lcd = new LCDInfo(odo);
-			USLocalizer usl = new USLocalizer(odo, us, USLocalizer.LocalizationType.RISING_EDGE);
-		//	usl.doLocalization();
-			
-*/
-			
-			
-		//Testing access to wheelA Class
-			WheelAData wheelA = new WheelAData();
-			wheelA.TravelTo();
+		attack.attackAlgorithm();
 		}
 		// Defender Mode
 		else{
 
-			LSData LSdata = new LSData();
-			LSdata.takeData();
-			LSdata.printSomething();
+		defend.defendAlgorithm();
 			
 		}
-	
-		
-// 		perform the light sensor localization
-//		LightLocalizer lsl = new LightLocalizer(odo, ls);
-//		lsl.doLocalization();			
+			
 		
 		Button.waitForAnyPress();
 		
-		
-		
+			
 	}
-	
-	/*
-	public void timedOut(){
-		
-		
-		LCD.clear();
-		LCD.drawString("LSData: ", 0, 0);
-		LCD.drawInt(LSdata.data, 5, 0);
-	}
-	*/
-	
-	
-	
-	
 }

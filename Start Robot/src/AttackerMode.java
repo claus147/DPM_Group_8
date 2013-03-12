@@ -1,3 +1,5 @@
+import lejos.nxt.Sound;
+
 
 /**
  * 
@@ -8,11 +10,27 @@
  */
 public class AttackerMode {
 
+	Controller control = new Controller();
 	
 	
 	
 	
+	/**
+	 * TODO : develop an attacker algorithm
+	 * Testing class;
+	 * Activate motors
+	 */
 	public void attackAlgorithm(){
+		
+		Sound.beep();
+		Sound.beep();
+		control.activateMotors();
+		
+	}
+	/**
+	 * TODO: Call the strategy established in AttackerStrat1
+	 */
+	public void setStrategy(){
 		
 		
 	}

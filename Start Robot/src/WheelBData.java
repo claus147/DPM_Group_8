@@ -30,7 +30,7 @@ public class WheelBData {
 	
 	
 	
-	/*
+	/**
 	 * This method is a getter that will get the tachometer count of the right motor (Motor B)
 	 * @param rightMotor
 	 */
