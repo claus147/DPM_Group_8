@@ -7,7 +7,7 @@ import lejos.nxt.*;
  * 		   This class will be the main one that calls the other
  *         classes to start the robot It will take as input the coordinates of
  *         the ball dispenser. This class will also call what mode the robot
- *         will play the game; Attacker or Defender
+ *         will play the game; Attacker or Defender. We used the menu from Lab04 and modified it.
  */
 public class StartRobot {
 
