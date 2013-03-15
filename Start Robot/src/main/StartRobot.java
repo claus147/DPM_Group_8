@@ -34,7 +34,6 @@ public class StartRobot {
 		
 		AttackerMode attack = new AttackerMode();
 		DefenderMode defend = new DefenderMode();
-		USData usData = new USData();
 		
 		UltrasonicSensor us = new UltrasonicSensor(SensorPort.S2);
 		LightSensor ls = new LightSensor(SensorPort.S1);
@@ -65,10 +64,7 @@ public class StartRobot {
 		// Defender Mode
 		else{
 
-			usData.getUSData();
-			usData.timedOut();
-			
-		//defend.defendAlgorithm();
+		defend.defendAlgorithm();
 			
 		}
 			
