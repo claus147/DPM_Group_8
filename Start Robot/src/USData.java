@@ -18,7 +18,10 @@ public class USData {
 
 	
 
-	
+	/**
+	 * This method will take the distance using the ultrasonic Sensor
+	 * @return usData
+	 */
 	public double getUSData(){
 	
 
@@ -37,6 +40,9 @@ public class USData {
 		
 	
 	}
+	/**
+	 * This method will print all data to the LCD Screen
+	 */
 	public void timedOut() { 
 
 		// Step 1 : get info
