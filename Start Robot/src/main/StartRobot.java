@@ -1,4 +1,8 @@
+package main;
+
 import lejos.nxt.*;
+import modes.AttackerMode;
+import modes.DefenderMode;
 
 /**
  * The Class StartRobot.

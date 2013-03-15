@@ -1,3 +1,6 @@
+package modes;
+import data.WheelAData;
+import data.WheelBData;
 /**
  * This class will be the controller class that will send orders to all motors.
  * @author Tuan-Kiet Luu

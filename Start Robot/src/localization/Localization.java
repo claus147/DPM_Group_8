@@ -1,3 +1,5 @@
+package localization;
+
 /**
  * This class will serve as a map for the robot. It will localize itself, the ball dispenser, the
  * zones, and the goal.

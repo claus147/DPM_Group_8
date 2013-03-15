@@ -1,3 +1,4 @@
+package data;
 /**
  * Will take the data from the wheel A motor (tachometer)
  * @author Tuan-Kiet Luu

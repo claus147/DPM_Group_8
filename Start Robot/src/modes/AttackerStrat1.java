@@ -1,4 +1,4 @@
-
+package modes;
 /**
  * The Class AttackerStrat1.
  * 

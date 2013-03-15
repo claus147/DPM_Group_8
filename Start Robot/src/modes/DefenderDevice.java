@@ -1,3 +1,4 @@
+package modes;
 /**
  * Will implement the defender device if any.
  * @author Tuan-Kiet Luu

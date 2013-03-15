@@ -1,3 +1,4 @@
+package motion;
 import lejos.nxt.NXTRegulatedMotor;
 
 public class TwoWheeledRobot {

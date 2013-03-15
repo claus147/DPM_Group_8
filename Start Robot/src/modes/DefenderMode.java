@@ -1,3 +1,4 @@
+package modes;
 import lejos.nxt.Sound;
 
 

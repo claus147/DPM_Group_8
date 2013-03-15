@@ -1,3 +1,4 @@
+package motion;
 /**
  * This class will implement all the navigation algorithms and calculations.
  * @author Tuan-Kiet Luu
