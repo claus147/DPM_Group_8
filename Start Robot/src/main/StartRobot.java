@@ -1,7 +1,9 @@
 package main;
 
+import odometry.Odometry;
 import data.*;
 import modes.*;
+import motion.Navigation;
 
 import lejos.nxt.*;
 
@@ -36,10 +38,16 @@ public class StartRobot {
 		AttackerMode attack = new AttackerMode();
 		DefenderMode defend = new DefenderMode();
 		USData usData = new USData();
+		WheelsData wheels = new WheelsData();
 		
 		UltrasonicSensor us = new UltrasonicSensor(SensorPort.S1);
 		LightSensor lsL = new LightSensor(SensorPort.S2);
 		LightSensor lsR = new LightSensor(SensorPort.S3);
+		
+		Controller control = new Controller();
+		
+		LCDinfo LCDinfo = new LCDinfo();
+		
 		int buttonChoice;
 
 		do {
@@ -67,10 +75,8 @@ public class StartRobot {
 		// Defender Mode
 		else{
 
-			usData.getUSData();
-			usData.timedOut();
-			
-		//defend.defendAlgorithm();
+		LCDinfo.timedOut();
+
 			
 		}
 			

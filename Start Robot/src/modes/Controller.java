@@ -1,6 +1,7 @@
 package modes;
-import data.WheelAData;
-import data.WheelBData;
+import odometry.Odometry;
+import motion.*;
+import data.*;
 /**
  * This class will be the controller class that will send orders to all motors.
  * @author Tuan-Kiet Luu
@@ -11,8 +12,11 @@ public class Controller {
 
 	WheelAData leftMotor = new WheelAData();
 	WheelBData rightMotor = new WheelBData();
+	private Odometry odo = new Odometry();
+	Navigation navigate = new Navigation(odo);
 	
-	
+	USData usData = new USData();
+	WheelsData wheels = new WheelsData();
 	
 	/**
 	 * Testing phase : linking controller to wheels
@@ -42,5 +46,18 @@ public class Controller {
 		
 		
 	}
+	public void travelTo(double x, double y){
+		navigate.travelTo(x, y);
+	}
+	/* START METHODS TESTING */
 	
+	//WORKS!
+	public void callUSData(){
+		usData.getUSData();
+	}
+	
+
+	
+	
+	/* END METHODS TESTING */
 }

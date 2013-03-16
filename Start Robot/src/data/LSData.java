@@ -9,8 +9,10 @@ import lejos.nxt.*;
 
 
 public class LSData {
-	double lsValue;
-	private LightSensor ls;
+	double lsValueL;
+	double lsValueR;
+	LightSensor lsL = new LightSensor(SensorPort.S2);
+	LightSensor lsR = new LightSensor(SensorPort.S3);
 	int data;
 	
 	/*
@@ -23,11 +25,19 @@ public class LSData {
 	 * Will read the values of the light sensor
 	 * @return lsValue
 	 */
-public double getLSData(){
-	lsValue = ls.readValue();
-	return lsValue;
+public double getLSDataL(){
+	lsValueL = lsL.readValue();
+	try { Thread.sleep(100); } catch (InterruptedException e) {}
+
+	return lsValueL;
 }
 	
+public double getLSDataR(){
+	lsValueR = lsR.readValue();
+	try { Thread.sleep(100); } catch (InterruptedException e) {}
+
+	return lsValueR;
+}
 	
 	
 	

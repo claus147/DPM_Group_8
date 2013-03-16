@@ -133,9 +133,16 @@ public class Navigation extends Thread{
 	public void travelTo( double x, double y){
 		travelToCalled = true;
 		
+		/* START TEST */
+		leftMotor.setSpeed(100);
+		rightMotor.setSpeed(100);
+		
+		leftMotor.rotate(360);
+		rightMotor.rotate(360);
+		/* END TEST */
 		double headingAngle, currentX, currentY,currentT; //Initialising
 		while(true){
-			
+	
 			currentX = odo.getX();
 			currentY = odo.getY();
 			currentT = odo.getTheta();
