@@ -28,9 +28,10 @@ import lejos.util.TimerListener;
 		WheelsData wheels = new WheelsData();
 		USData usData = new USData();
 		LSData lsData = new LSData();
+		Odometry odo = new Odometry();
+		
 		
 		public static final int LCD_REFRESH = 100;
-		private Odometry odo;
 		private UltrasonicSensor us;
 		private Timer lcdTimer;
 		
@@ -56,12 +57,24 @@ import lejos.util.TimerListener;
 			LCD.drawString("US :", 0, 2);	//ultrasonic sensor
 			LCD.drawString("LSL :", 0, 3);	//light sensor left
 			LCD.drawString("LSR :", 0, 4);	//light sensor Right	
+			LCD.drawString("X :",0,5);	// X position
+			LCD.drawString("Y :",0,6);	// y position
+			LCD.drawString("Theta: ", 0,7); // theta
 	
 			LCD.drawInt((int) wheels.getLTacho(), 6, 0);
 			LCD.drawInt((int) wheels.getRTacho(), 6, 1);
 			LCD.drawInt((int) usData.getUSData(), 6, 2);
 			LCD.drawInt((int) lsData.getLSDataL(), 6, 3);
 			LCD.drawInt((int) lsData.getLSDataR(), 6, 4);
+			
+			/* START NOT TESTED YET*/
+			LCD.drawInt((int) odo.getX(), 6, 5);
+			LCD.drawInt((int) odo.getY(), 6, 6);
+			LCD.drawInt((int) odo.getTheta(), 6, 7);
+			
+			/* END NOT TESTED YET */
+			
+			
 		}
 		
 	
