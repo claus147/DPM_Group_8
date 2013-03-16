@@ -1,8 +1,9 @@
 package main;
 
+import data.*;
+import modes.*;
+
 import lejos.nxt.*;
-import modes.AttackerMode;
-import modes.DefenderMode;
 
 /**
  * The Class StartRobot.
@@ -34,9 +35,11 @@ public class StartRobot {
 		
 		AttackerMode attack = new AttackerMode();
 		DefenderMode defend = new DefenderMode();
+		USData usData = new USData();
 		
-		UltrasonicSensor us = new UltrasonicSensor(SensorPort.S2);
-		LightSensor ls = new LightSensor(SensorPort.S1);
+		UltrasonicSensor us = new UltrasonicSensor(SensorPort.S1);
+		LightSensor lsL = new LightSensor(SensorPort.S2);
+		LightSensor lsR = new LightSensor(SensorPort.S3);
 		int buttonChoice;
 
 		do {
@@ -64,7 +67,10 @@ public class StartRobot {
 		// Defender Mode
 		else{
 
-		defend.defendAlgorithm();
+			usData.getUSData();
+			usData.timedOut();
+			
+		//defend.defendAlgorithm();
 			
 		}
 			
