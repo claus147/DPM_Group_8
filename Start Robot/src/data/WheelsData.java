@@ -20,11 +20,13 @@ public class WheelsData {
 	
 	public int getLTacho() {
 		tachoWheelA = leftMotor.getTachoCount();
+		try { Thread.sleep(50); } catch (InterruptedException e) {}
 		return tachoWheelA;
 	}
 	
 	public int getRTacho() {
-		tachoWheelB = leftMotor.getTachoCount();
+		tachoWheelB = rightMotor.getTachoCount();
+		try { Thread.sleep(50); } catch (InterruptedException e) {}
 		return tachoWheelB;
 	}
 

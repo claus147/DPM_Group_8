@@ -1,5 +1,6 @@
 package motion;
 
+import data.LCDinfo;
 import odometry.Odometry;
 import lejos.nxt.Motor;
 import lejos.nxt.NXTRegulatedMotor;
@@ -13,6 +14,9 @@ import lejos.nxt.NXTRegulatedMotor;
  */
 
 public class Navigation extends Thread{
+	
+
+	
 
 	boolean travelToCalled = false;
 	boolean turnToCalled = false;
@@ -133,13 +137,7 @@ public class Navigation extends Thread{
 	public void travelTo( double x, double y){
 		travelToCalled = true;
 		
-		/* START TEST */
-		leftMotor.setSpeed(100);
-		rightMotor.setSpeed(100);
 		
-		leftMotor.rotate(360);
-		rightMotor.rotate(360);
-		/* END TEST */
 		double headingAngle, currentX, currentY,currentT; //Initialising
 		while(true){
 	
@@ -181,6 +179,9 @@ public class Navigation extends Thread{
 	 * @param theta
 	 */
 	public void turnTo( double theta ){
+		
+		
+		
 		turnToCalled = true;
 		double currentAngle = 0;
 		int currentSpeedL = 0;

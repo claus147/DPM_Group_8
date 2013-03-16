@@ -35,8 +35,11 @@ public class StartRobot {
 	 */
 	public static void Start(){
 		
+
 		AttackerMode attack = new AttackerMode();
 		DefenderMode defend = new DefenderMode();
+		Odometry odo = new Odometry();
+		Navigation navigate = new Navigation(odo);
 		USData usData = new USData();
 		WheelsData wheels = new WheelsData();
 		
@@ -45,8 +48,8 @@ public class StartRobot {
 		LightSensor lsR = new LightSensor(SensorPort.S3);
 		
 		Controller control = new Controller();
-		
-		LCDinfo LCDinfo = new LCDinfo();
+		LCDinfo LCDinfo = new LCDinfo(odo);
+
 		
 		int buttonChoice;
 
@@ -74,8 +77,14 @@ public class StartRobot {
 		}
 		// Defender Mode
 		else{
-
+		
 		LCDinfo.timedOut();
+		navigate.travelTo(90,90);
+		//LCDinfo.timedOut();
+		
+		// turnTo works!
+		// navigate.turnTo(180);
+		
 
 			
 		}

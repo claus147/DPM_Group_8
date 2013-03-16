@@ -22,23 +22,26 @@ public class LSData {
 */
 
 	/**
-	 * Will read the values of the light sensor
-	 * @return lsValue
+	 * Will read the values of the Left light sensor
+	 * @return lsValueL
 	 */
 public double getLSDataL(){
-	lsValueL = lsL.readValue();
-	try { Thread.sleep(100); } catch (InterruptedException e) {}
+	lsValueL = lsL.getNormalizedLightValue();
+	try { Thread.sleep(50); } catch (InterruptedException e) {}
 
 	return lsValueL;
-}
+	}
+	/**
+	 * Will read the values of the Right light sensor
+	 * @return lsValueR
+	 */
+	public double getLSDataR(){
+		lsValueR = lsR.getNormalizedLightValue();
+		try { Thread.sleep(50); } catch (InterruptedException e) {}
 	
-public double getLSDataR(){
-	lsValueR = lsR.readValue();
-	try { Thread.sleep(100); } catch (InterruptedException e) {}
-
-	return lsValueR;
-}
-	
+		return lsValueR;
+	}
+		
 	
 	
 	

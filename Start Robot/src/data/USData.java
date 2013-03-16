@@ -34,8 +34,8 @@ public class USData {
 		// us.ping();
 		
 		 // wait for the ping to complete
-		try { Thread.sleep(100); } catch (InterruptedException e) {}
-
+		try { Thread.sleep(50); } catch (InterruptedException e) {}
+		
 		usData = us.getDistance();
 		 if (usData > 80){				//if distance > 80 (noWall) set it to 80
 			 usData = 80;
