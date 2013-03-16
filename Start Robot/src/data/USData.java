@@ -37,6 +37,8 @@ public class USData {
 		try { Thread.sleep(50); } catch (InterruptedException e) {}
 		
 		usData = us.getDistance();
+		
+		//TODO : CHANGE THIS CONDITION
 		 if (usData > 80){				//if distance > 80 (noWall) set it to 80
 			 usData = 80;
 		 }

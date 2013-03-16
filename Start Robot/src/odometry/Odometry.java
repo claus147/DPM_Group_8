@@ -178,7 +178,6 @@ public class Odometry {
 
 		return result;
 	}
-
 	// mutators
 	public void setPosition(double[] position, boolean[] update) {
 		// ensure that the values don't change while the odometer is running

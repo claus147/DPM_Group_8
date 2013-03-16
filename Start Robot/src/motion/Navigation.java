@@ -137,7 +137,6 @@ public class Navigation extends Thread{
 	public void travelTo( double x, double y){
 		travelToCalled = true;
 		
-		
 		double headingAngle, currentX, currentY,currentT; //Initialising
 		while(true){
 	
@@ -199,7 +198,6 @@ public class Navigation extends Thread{
 			}else if(angleDiff < -2 ){
 				leftMotor.setSpeed(currentSpeedL - 50);
 			}
-			
 			try { Thread.sleep(100); } catch (InterruptedException e) {}
 					
 		}else{
