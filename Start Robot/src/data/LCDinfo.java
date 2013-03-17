@@ -1,8 +1,6 @@
 /**
  * @author Tuan-Kiet Luu
- * @author Kornpat Choy
  * @version 1.0
- * This class will show all data on the LCD Screen
  */
 package data;
 
@@ -12,13 +10,20 @@ import odometry.Odometry;
 import lejos.nxt.*;
 import lejos.util.TimerListener;
 
+/**
+ * @author Tuan-Kiet
+ * @author Yu Yang Liu
+ * @author Kornpat Choy
+ * @author Nabil Zoldjalali
+ * This class will show all data on the LCD Screen
+ */
 
 	import lejos.nxt.LCD;
 	import lejos.nxt.UltrasonicSensor;
 	import lejos.util.Timer;
 	import lejos.util.TimerListener;
 
-	public class LCDInfo implements TimerListener{
+	public class LCDinfo implements TimerListener{
 		
 		WheelsData wheels = new WheelsData();
 		USData usData = new USData();
@@ -33,7 +38,7 @@ import lejos.util.TimerListener;
 		// arrays for displaying data
 		private double [] pos;
 		
-		public LCDInfo(Odometry odo) {
+		public LCDinfo(Odometry odo) {
 			this.odo = odo;
 			this.lcdTimer = new Timer(LCD_REFRESH, this);
 			
