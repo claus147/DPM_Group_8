@@ -48,7 +48,7 @@ public class StartRobot {
 		LightSensor lsR = new LightSensor(SensorPort.S3);
 		
 		Controller control = new Controller();
-		LCDinfo LCDinfo = new LCDinfo(odo);
+		LCDInfo LCDinfo = new LCDInfo(odo);
 
 		
 		int buttonChoice;

@@ -9,6 +9,8 @@ package localization;
  *	orients correctly to angle 0
  */
 
+import java.util.Arrays;
+
 import lejos.nxt.UltrasonicSensor;
 import motion.Navigation;
 import odometry.Odometry;
@@ -23,23 +25,25 @@ public class USLocalizer {
 	public static int distance = 0;			//distance from wall measured by usSensor					
 	private Odometry odo;
 	private Navigation nav;
-	private UltrasonicSensor us;
+	private UltrasonicSensor usL, usR;
 	private LocalizationType locType;
 	private int noWall = 80;				//distance to be considered "no wall" - for usSensor
 	
-	public USLocalizer(Odometry odo, UltrasonicSensor us, LocalizationType locType) {
+	public USLocalizer(Odometry odo, UltrasonicSensor usL,UltrasonicSensor usR, LocalizationType locType) {
 		this.odo = odo;
-		this.robot = odo.getTwoWheeledRobot();
-		this.us = us;
+		this.usL = usL;
+		this.usR = usR;
 		this.locType = locType;
 		this.nav = new Navigation(odo);
 		//makes sure us is working
-		us.reset();
+		usL.reset();
+		usR.reset();
 	}
 	
 	public void doLocalization() {
 		double [] pos = new double [3];			//to get/set odometer x,y, theta values
 		boolean[] update = new boolean [3];		//tells which of x,y,theta to update
+		Arrays.fill(update, Boolean.TRUE);
 		double dtheta;							//the change in theta
 		
 		
@@ -58,7 +62,7 @@ public class USLocalizer {
 			while (distance < noWall){ 							//while facing wall (can detect wall)
 				distance = getFilteredData();					//keep getting distance from usSensor
 			}
-			odo.getPosition(pos);								//finally doesnt find the wall, record position from odometer
+			odo.getPosition(pos, update);						//finally doesnt find the wall, record position from odometer
 			angleA = pos[2];									//set the angle given by odometer
 			
 			
@@ -73,7 +77,7 @@ public class USLocalizer {
 			while (distance < noWall){ 							//while facing wall (can detect wall)
 				distance = getFilteredData();					//keep getting distance from usSensor
 			}
-			odo.getPosition(pos);								//finally doesnt find the wall, record position from odometer
+			odo.getPosition(pos, update);						//finally doesnt find the wall, record position from odometer
 			angleB = pos[2];									//set the angle given by odometer
 		
 
@@ -92,7 +96,7 @@ public class USLocalizer {
 			while (distance >= noWall){ 					//while facing away from wall (cant detect wall)
 				distance = getFilteredData();				//keep getting distance from usSensor
 			}
-			odo.getPosition(pos);							//finally finds the wall, record position from odometer
+			odo.getPosition(pos, update);							//finally finds the wall, record position from odometer
 			angleA = pos[2];								//set the angle given by odometer
 			
 			
@@ -106,7 +110,7 @@ public class USLocalizer {
 				distance = getFilteredData();				//keep getting distance from usSensor
 			}
 			
-			odo.getPosition(pos);							//finally finds the wall, record position from odometer
+			odo.getPosition(pos, update);					//finally finds the wall, record position from odometer
 			angleB = pos[2];								//set the angle given by odometer
 			
 		}
@@ -154,12 +158,12 @@ public class USLocalizer {
 		}*/
 		//do the turns to get to the (0,0)
 		while (pos[2] < turn){
-			odo.getPosition(pos);
+			odo.getPosition(pos, update);
 			nav.keepRotating(SECOND_ROTATION_SPEED);
 			//robot.setRotationSpeed(SECOND_ROTATION_SPEED);
 		}
 		while (pos[2] > turn){
-			odo.getPosition(pos);
+			odo.getPosition(pos, update);
 			nav.keepRotating(-SECOND_ROTATION_SPEED);
 			//robot.setRotationSpeed(-SECOND_ROTATION_SPEED);
 		}

@@ -1,6 +1,6 @@
 package motion;
 
-import data.LCDinfo;
+import data.LCDInfo;
 import odometry.Odometry;
 import lejos.nxt.Motor;
 import lejos.nxt.NXTRegulatedMotor;
