@@ -1,9 +1,7 @@
 package localization;
 
 /*
- * USLocalizer.java
- * Kornpat Choy 260454385
- * Nabil Zoldjalali 260450152
+ *  @author Kornpat Choy (Claus)
  *	
  *	turns only, does not travel to (0,0)
  *	orients correctly to angle 0

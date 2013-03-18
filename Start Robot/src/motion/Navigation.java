@@ -33,6 +33,8 @@ public class Navigation extends Thread{
 	final double rightRadius = 2.8;
 	final double width = 15.6;
 	
+	private enum wheelSide { LEFT, RIGHT };
+	
 	public Navigation(Odometry odometer) {
 		// TODO Auto-generated constructor stub
 		this.odo = odometer;
@@ -252,7 +254,35 @@ public class Navigation extends Thread{
 			rightMotor.setSpeed((int)rightSpeed);
 	}
 	
+	/**
+	 * keeps going, does not stop - until stop method called
+	 * @param forwardSpeed
+	 */
+	public void goforward(double forwardSpeed){
+		leftMotor.setSpeed((int)forwardSpeed);
+		rightMotor.setSpeed((int)forwardSpeed);
+		leftMotor.forward();
+		rightMotor.forward();
+	}
 	
+	/**
+	 * for localization - stop a single wheel
+	 * @param side (LEFT, RIGHT)
+	 */
+	public void stop(wheelSide side){
+		if (side == wheelSide.LEFT)
+			leftMotor.setSpeed(0);
+		else
+			rightMotor.setSpeed(0);
+	}
+	
+	/**
+	 * stop both wheels
+	 */
+	public void stop(){
+		leftMotor.setSpeed(0);
+		rightMotor.setSpeed(0);
+	}
 	
 	/**
 	 * method isNavigating() 
