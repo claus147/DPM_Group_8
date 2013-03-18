@@ -33,7 +33,10 @@ public class Navigation extends Thread{
 	final double rightRadius = 2.8;
 	final double width = 15.6;
 	
-	private enum wheelSide { LEFT, RIGHT };
+	public enum WheelSide { LEFT, RIGHT };
+	
+	public Navigation() {
+	}
 	
 	public Navigation(Odometry odometer) {
 		// TODO Auto-generated constructor stub
@@ -269,8 +272,8 @@ public class Navigation extends Thread{
 	 * for localization - stop a single wheel
 	 * @param side (LEFT, RIGHT)
 	 */
-	public void stop(wheelSide side){
-		if (side == wheelSide.LEFT)
+	public void stop(WheelSide side){
+		if (side == WheelSide.LEFT)
 			leftMotor.setSpeed(0);
 		else
 			rightMotor.setSpeed(0);

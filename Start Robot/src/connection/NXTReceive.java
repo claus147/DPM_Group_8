@@ -1,4 +1,4 @@
-package org.lejos.sample.nxtreceive;
+package connection;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

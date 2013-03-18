@@ -1,4 +1,4 @@
-package org.lejos.sample.nxtconnecttest;
+package connection;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
