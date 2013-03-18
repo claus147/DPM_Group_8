@@ -18,13 +18,14 @@ import lejos.nxt.Sound;
 public class LightLocalizer {
 	private Odometry odo;
 	private Navigation nav;
-	private LightSensor ls;
+	private LightSensor lsL, lsR;
 	public static double FORWARD_SPEED = 1;			
 	public static double ROTATION_SPEED = 40; //was 15
 	public static int lightReading;					//value from light sensor
 	public static int prevLR;
 	public static double darknessEdge = 510.0;		//the value the lightsensor reading must drop below to consider passing a line
-	private double lightMountOffSet = 12.0;			//offset from center was 21.5
+	private double lightMountOffSetL = 2.0;			//offset from center was 21.5
+	private double lightMountOffSetR = 2.0;
 	public static double [] thetas = new double [4]; //first 2 entries are for start for x then y last 2 are for end x then y
 	public static double x, y, xTheta, yTheta;
 	public static double [] pos = new double [3];	//to access x, y theta from 2 Wheeled robot
@@ -32,13 +33,15 @@ public class LightLocalizer {
 	public static double thetaCorrTo;
 	
 	
-	public LightLocalizer(Odometry odo, Navigation nav, LightSensor ls) {
+	public LightLocalizer(Odometry odo, Navigation nav, LightSensor lsL, LightSensor lsR) {
 		this.odo = odo;
 		this.nav = nav;
-		this.ls = ls;
+		this.lsL = lsL;
+		this.lsR = lsR;
 		
 		// turn on the light
-		ls.setFloodlight(true);
+		lsL.setFloodlight(true);
+		lsR.setFloodlight(true);
 	}
 	
 	public void doLocalization() { //assumes facing 0 theta at start.
@@ -53,35 +56,52 @@ public class LightLocalizer {
 		//Attempted to get the average of the light readings in the first 5 seconds, did not work very well 
 		
 		
-		double [] lReadings = new double[5]; //5 readings stored at each instance
+		double [] lReadingsL = new double[5]; //5 readings stored at each instance (left)
 		
+		double [] lReadingsR = new double[5]; //5 readings stored at each instance (right)
+		
+		//------------initialize light array (left)-------------
 		for (int i = 0; i < 5; i++){ //reading 5 times, once every second - initial array
-			lReadings[i] = getLightReading();
+			lReadingsL[i] = getLightReading(lsL);
 			try { Thread.sleep(200); } catch (InterruptedException e) {} //sleep 1/4 of a sec
 		}
 		
-		
+		//get the average
 		for (int i = 0; i < 5; i++){
-			average = average + (int) lReadings[i]; //adding up the values in array
+			average = average + (int) lReadingsL[i]; //adding up the values in array
 		}
 		average = average/5;
+		//-----------end left init---------------
+		
+		//--------initialize light array (right)
+		for (int i = 0; i < 5; i++){ //reading 5 times, once every second - initial array
+			lReadingsR[i] = getLightReading(lsR);
+			try { Thread.sleep(200); } catch (InterruptedException e) {} //sleep 1/4 of a sec
+		}
+		
+		//get the average
+		for (int i = 0; i < 5; i++){
+			average = average + (int) lReadingsR[i]; //adding up the values in array
+		}
+		average = average/5;
+		//------------end right init--------------
+		
 		
 		int prevAvg = 0;
 		int counter = 0;				//count for array of light readings
 		int threshold;
 		
-		nav.keepRotating(ROTATION_SPEED);
-		odo.getPosition(pos, update);
-		int count = 0;	//number of lines crossed
-		getLightReading();	
-		while (count < 4){ //while not crossing the negative y axis
-			
-			//300 milisecond sleep (if reduced could increase odo's theta accuracy
-			//try { Thread.sleep(300); } catch (InterruptedException e) {}	
+		nav.goforward(ROTATION_SPEED);
+		
+		getLightReading(lsL);	
+		boolean isLineL = false;
+		boolean isLineR = false;
+		
+		while (!isLineL){ //while not crossing the negative x axis (left)
 			
 			if (counter == 5) //always wrap around
 				counter = 0;
-			lReadings[counter] = getLightReading();
+			lReadingsL[counter] = getLightReading(lsL);
 			
 			prevAvg = average;
 			average = 0; //reset the average
@@ -135,70 +155,19 @@ public class LightLocalizer {
 		
 		ls.setFloodlight(false);												//turn off light sensor to save battery
 		
-		nav.turnTo(0);
-/*		while (pos[2] >180){													//turn to theta = 0
-			odo.getPosition(pos);
-			robot.setRotationSpeed(ROTATION_SPEED);
-		}
-		robot.setRotationSpeed(0);
-*/		
-		//Light Localization done, faces 0 direction but not on (0,0) yet
+		nav.travelTo(0, 0);
 		
-		
-		
-		/* moving to (0,0)
-		 * start by moving forward until y = 0
-		 * turn to 90 degrees
-		 * move until x = 0
-		 * turn to 0 degrees
-		 * done
-		 */
-
-	/*	while (pos[1] < 0){							//moves to y = 0
-			odo.getPosition(pos);
-			robot.setForwardSpeed(FORWARD_SPEED);	
-		}
-		robot.setForwardSpeed(0);
-		try { Thread.sleep(500); } catch (InterruptedException e) {}
-		
-		
-		while (pos[2] <90){							//turns to 90 degrees
-			odo.getPosition(pos);
-			robot.setRotationSpeed(ROTATION_SPEED);
-		}
-		robot.setRotationSpeed(0);
-		try { Thread.sleep(500); } catch (InterruptedException e) {}
-		
-		
-		while (pos[0] <0){							//moves to x = 0
-			odo.getPosition(pos);
-			robot.setForwardSpeed(FORWARD_SPEED);
-		}
-		robot.setForwardSpeed(0);
-		try { Thread.sleep(500); } catch (InterruptedException e) {}
-		
-		
-		while (pos[2] > 0){							//turn to 0 degrees
-			odo.getPosition(pos);
-			robot.setRotationSpeed(-ROTATION_SPEED);
-			if (pos[2] > 180)						// if accidently passes 0 then stop
-				break;
-		}
-		robot.setRotationSpeed(0);
-		try { Thread.sleep(500); } catch (InterruptedException e) {}
-		
-		//done
-		*/
 	}
 	
-	public int getLightReading(){				//to read light sensor
+	public int getLightReading(LightSensor side){				//to read light sensor
 		 // wait for the ping to complete
 		try { Thread.sleep(50); } catch (InterruptedException e) {}		//50 milisecond sleep
 		
-		lightReading = ls.getNormalizedLightValue();
+		lightReading = side.getNormalizedLightValue();
 		//lightReading = ls.readValue();
 		
 		return lightReading;
 	}
+	
 
 }
