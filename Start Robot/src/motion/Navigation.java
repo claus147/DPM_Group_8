@@ -213,6 +213,48 @@ public class Navigation extends Thread{
 	}
 	
 	/**
+	 * for Localization class 
+	 * @author Kornpat Choy (Claus)
+	 * @param rotationalSpeed
+	 */
+	public void keepRotating(double rotationalSpeed) {
+		double leftSpeed, rightSpeed;
+
+		leftSpeed = (rotationalSpeed * width * Math.PI / 360.0) *
+				180.0 / (leftRadius * Math.PI);
+		rightSpeed = (- rotationalSpeed * width * Math.PI / 360.0) *
+				180.0 / (rightRadius * Math.PI);
+
+		// set motor directions
+		if (leftSpeed > 0.0)
+			leftMotor.forward();
+		else {
+			leftMotor.backward();
+			leftSpeed = -leftSpeed;
+		}
+		
+		if (rightSpeed > 0.0)
+			rightMotor.forward();
+		else {
+			rightMotor.backward();
+			rightSpeed = -rightSpeed;
+		}
+		
+		// set motor speeds
+		if (leftSpeed > 900.0)
+			leftMotor.setSpeed(900);
+		else
+			leftMotor.setSpeed((int)leftSpeed);
+		
+		if (rightSpeed > 900.0)
+			rightMotor.setSpeed(900);
+		else
+			rightMotor.setSpeed((int)rightSpeed);
+	}
+	
+	
+	
+	/**
 	 * method isNavigating() 
 	 */
 	boolean isNavigating(){
