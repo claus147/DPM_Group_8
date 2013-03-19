@@ -21,15 +21,20 @@ import lejos.util.TimerListener;
  */
 
 	import lejos.nxt.LCD;
+import lejos.nxt.LightSensor;
+import lejos.nxt.SensorPort;
 import lejos.nxt.UltrasonicSensor;
 import lejos.util.Timer;
 import lejos.util.TimerListener;
 
 	public class LCDinfo implements TimerListener{
+		private LightSensor lsL = new LightSensor(SensorPort.S1);
+		private LightSensor lsR = new LightSensor(SensorPort.S2);
 		
 		WheelsData wheels = new WheelsData();
 		USData usData = new USData();
-		LSData lsData = new LSData();
+		LSData lsDataL = new LSData(lsL);
+		LSData lsDataR = new LSData(lsR);
 		Odometry odo = new Odometry();
 		
 		
@@ -67,8 +72,8 @@ import lejos.util.TimerListener;
 			LCD.drawInt((int) wheels.getLTacho(), 4, 0);	LCD.drawInt((int)USLocalizer.distance, 11, 0);
 			LCD.drawInt((int) wheels.getRTacho(), 4, 1);	LCD.drawInt((int)USLocalizer.distance2, 11, 1);
 			LCD.drawInt((int) usData.getUSData(), 4, 2);
-			LCD.drawInt((int) lsData.getLSDataL(), 4, 3);
-			LCD.drawInt((int) lsData.getLSDataR(), 4, 4);
+			LCD.drawInt((int) lsDataL.getLSData(), 4, 3);
+			LCD.drawInt((int) lsDataR.getLSData(), 4, 4);
 			
 			/* START NOT TESTED YET*/
 			LCD.drawInt((int) odo.getX(), 4, 5);

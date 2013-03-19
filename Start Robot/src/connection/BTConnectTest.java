@@ -1,6 +1,10 @@
+<<<<<<< HEAD
 
 package connection;
 
+=======
+package connection;
+>>>>>>> cf2b5a9202a89f81a04e371244f106c305b90806
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
