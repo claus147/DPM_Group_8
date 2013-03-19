@@ -1,4 +1,6 @@
-package org.lejos.sample.btconnecttest;
+
+package connection;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -32,8 +34,10 @@ import lejos.nxt.comm.Bluetooth;
  *
  */
 public class BTConnectTest {
-	public static void main(String[] args) throws Exception {
-		String name = "NXT";
+	public void connect() throws Exception {
+		//slave name : headyin / T04M
+		String name = "T04M";
+		
 		
 		LCD.drawString("Connecting...", 0, 0);
 		LCD.refresh();
@@ -57,7 +61,7 @@ public class BTConnectTest {
 			Thread.sleep(2000);
 			System.exit(1);
 		}
-		
+	
 		LCD.clear();
 		LCD.drawString("Connected", 0, 0);
 		LCD.refresh();
@@ -65,6 +69,7 @@ public class BTConnectTest {
 		DataInputStream dis = btc.openDataInputStream();
 		DataOutputStream dos = btc.openDataOutputStream();
 				
+	
 		for(int i=0;i<100;i++) {
 			try {
 				LCD.drawInt(i*30000, 8, 0, 2);

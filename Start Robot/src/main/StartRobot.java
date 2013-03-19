@@ -1,5 +1,7 @@
 package main;
 
+import connection.BTConnectTest;
+import connection.BTReceive;
 import odometry.Odometry;
 import data.*;
 import modes.*;
@@ -35,7 +37,9 @@ public class StartRobot {
 	 */
 	public static void Start(){
 		
-
+		//BTConnectTest connect = new BTConnectTest();
+		BTReceive connectReceive = new BTReceive();
+		
 		AttackerMode attack = new AttackerMode();
 		DefenderMode defend = new DefenderMode();
 		Odometry odo = new Odometry();
@@ -48,7 +52,7 @@ public class StartRobot {
 		LightSensor lsR = new LightSensor(SensorPort.S3);
 		
 		Controller control = new Controller();
-		LCDinfo LCDinfo = new LCDinfo(odo);
+		//LCDinfo LCDinfo = new LCDinfo(odo);
 
 		
 		int buttonChoice;
@@ -68,20 +72,24 @@ public class StartRobot {
 			buttonChoice = Button.waitForAnyPress();
 		} while (buttonChoice != Button.ID_LEFT
 				&& buttonChoice != Button.ID_RIGHT);
-		// perform the ultrasonic localization
 		
 		//Attacker Mode
 		if (buttonChoice == Button.ID_LEFT) {
 
+		Sound.beep();	
+		LCDinfo LCDinfo = new LCDinfo(odo);
 		attack.attackAlgorithm();
 		}
 		// Defender Mode
 		else{
 		
-		LCDinfo.timedOut();
-		navigate.travelTo(90,90);
-		//LCDinfo.timedOut();
-		
+		BTConnectTest connect = new BTConnectTest();
+		try {
+			connect.connect();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		// turnTo works!
 		// navigate.turnTo(180);
 		

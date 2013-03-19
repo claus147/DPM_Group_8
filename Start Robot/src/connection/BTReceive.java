@@ -3,6 +3,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
 import lejos.nxt.LCD;
+import lejos.nxt.Sound;
 import lejos.nxt.comm.BTConnection;
 import lejos.nxt.comm.Bluetooth;
 
@@ -38,14 +39,22 @@ public class BTReceive {
 
 			DataInputStream dis = btc.openDataInputStream();
 			DataOutputStream dos = btc.openDataOutputStream();
-			
+			/*
+			if(dis.readInt() == 1){
+				
+				Sound.beep();
+			}
+			*/
+			/*
 			for(int i=0;i<100;i++) {
 				int n = dis.readInt();
 				LCD.drawInt(n,7,0,1);
 				LCD.refresh();
 				dos.writeInt(-n);
 				dos.flush();
-			}
+			}*/
+			Sound.beep();
+			
 			
 			dis.close();
 			dos.close();
