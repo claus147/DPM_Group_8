@@ -26,6 +26,9 @@ public class lsTest{
 		boolean lsLState = false;
 		boolean lsRState = false;
 		
+		lsDataL.start();
+		lsDataR.start();
+		
 		while(true){
 			lsLState = lsDataL.getIsLine();
 			if (lsLState) {

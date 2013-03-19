@@ -23,21 +23,30 @@ public class LSData implements TimerListener{
 	private int sleepTime = 50; 								//50 millisecond is optimal time for ls reading sleep
 	private boolean isLine = false;								//boolean for line detection
 	
+	/**
+	 * constructor
+	 * default light sensor port w/ default 50 sleep time (optimal)
+	 */
+	public LSData(){	
+		this.timer = new Timer(sleepTime,this);
+		initialise();
+	}
+	
 	
 	/**
-	 * starts the timer right away with default 50 sleep time (optimal)
+	 * constructor
+	 * pass in light sensor w/ default 50 sleep time (optimal)
 	 * @param ls - the light sensor to use
 	 */
 	public LSData(LightSensor ls){	
 		this.ls =ls;
 		this.timer = new Timer(sleepTime,this);
 		initialise();
-		
-		start();
 	}
 	
 	/**
-	 * starts the timer right away with user defined sleep time
+	 * constructor
+	 * pass in light sensor & user defined sleep time
 	 * @param ls - the light sensor to use
 	 * @param sleepTime - can choose the sleep time
 	 */
@@ -46,8 +55,6 @@ public class LSData implements TimerListener{
 		this.sleepTime = sleepTime;
 		this.timer = new Timer(this.sleepTime,this);
 		initialise();
-		
-		start();
 	}
 
 	/**
