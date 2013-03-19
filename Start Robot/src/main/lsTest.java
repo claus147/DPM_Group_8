@@ -21,14 +21,6 @@ public class lsTest{
 		
 		LSData lsDataL = new LSData(lsL);
 		LSData lsDataR = new LSData(lsR);
-		lsDataL.initialise();
-		lsDataR.initialise();
-		
-		Timer timerL = new Timer(10, lsDataL);
-		timerL.start();
-		
-		Timer timerR = new Timer(10, lsDataR);
-		timerR.start();
 		
 		nav.goforward(100);
 		boolean lsLState = false;
@@ -38,15 +30,14 @@ public class lsTest{
 			lsLState = lsDataL.getIsLine();
 			if (lsLState) {
 				nav.stop(Navigation.WheelSide.LEFT);
-				timerL.stop();
+				lsDataL.stop();
 			}
 			
 			lsRState = lsDataR.getIsLine();
 			if (lsRState){
 				nav.stop(Navigation.WheelSide.RIGHT);
-				timerR.stop();
+				lsDataR.stop();
 			}
-			//try { Thread.sleep(25); } catch (InterruptedException e) {}
 		}
 	}
 }

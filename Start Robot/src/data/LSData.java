@@ -3,44 +3,72 @@ import lejos.nxt.*;
 
 /**
  * Will take data from the Lightsensor
- * @author Tuan-Kiet Luu
  * @author Kornpat Choy (Claus)
- * @version 1.1
+ * @author Tuan-Kiet Luu
+ * @version 2.0
  */
 
 import lejos.util.TimerListener;
+import lejos.util.Timer;
 
 public class LSData implements TimerListener{
 	private double lsValue;
-	private LightSensor ls = new LightSensor(SensorPort.S1); //default port	
-	private double [] lReadings = new double[5]; //5 readings stored at each instance
+	private LightSensor ls = new LightSensor(SensorPort.S1); 	//default port	
+	private double [] lReadings = new double[5]; 				//5 readings stored at each instance
 	private int average = 0;
-	private int counter = 0;
 	private int prevAvg;
-	private int threshold;
-	private boolean isLine = false;
+	private int counter = 0; 									//for the array, so it doesnt do null pointer (wrap around)
+	private int threshold;										//threshold level for line detection - tolerance
+	private Timer timer;										//timer for timedOut()
+	private int sleepTime = 50; 								//50 millisecond is optimal time for ls reading sleep
+	private boolean isLine = false;								//boolean for line detection
 	
 	
+	/**
+	 * starts the timer right away with default 50 sleep time (optimal)
+	 * @param ls - the light sensor to use
+	 */
 	public LSData(LightSensor ls){	
 		this.ls =ls;
+		this.timer = new Timer(sleepTime,this);
+		initialise();
+		
+		start();
+	}
+	
+	/**
+	 * starts the timer right away with user defined sleep time
+	 * @param ls - the light sensor to use
+	 * @param sleepTime - can choose the sleep time
+	 */
+	public LSData(LightSensor ls, int sleepTime){	
+		this.ls =ls;
+		this.sleepTime = sleepTime;
+		this.timer = new Timer(this.sleepTime,this);
+		initialise();
+		
+		start();
 	}
 
-
+	/**
+	 * method to be repeated, gets the light readings once every (sleepTime - constant/or user chosen)
+	 * then sets isLine to true if sees line.
+	 */
 	public void timedOut() {
 	
-		if (counter == 5) //always wrap around
+		setIsLine(false);			//assume after every run of the method, there is no line.
+		
+		if (counter == 5) 			//always wrap around to get back into the right pos in array
 			counter = 0;
-		lReadings[counter] = getLSData();
+		lReadings[counter] = getLSData();		//place reading in array
 		
 		prevAvg = average;
-		average = 0; //reset the average
-		for (int i = 0; i < 5; i++){
-			average = average + (int) lReadings[i]; //adding up the values in array
-		}
-		average = average/5;		//getting actual average
-		counter++;
-			
-		threshold = (int) (average * 0.01); //1% threshold
+		average = 0; 							//reset the average
+		
+		getAverage();
+		
+		counter++;								//increment to get to the next array location
+		threshold = (int) (average * 0.01); 	//1% threshold
 		
 		if((prevAvg - average) > threshold  ){
 			setIsLine(true);
@@ -48,34 +76,63 @@ public class LSData implements TimerListener{
 		}
 	}
 	
-	public void initialise(){
+	/**
+	 * Initialise the array of averages and get the average
+	 */
+	private void initialise(){
 		for (int i = 0; i < 5; i++){ //reading 5 times, once every second - initial array
 			lReadings[i] = getLSData();
-			try { Thread.sleep(200); } catch (InterruptedException e) {} //sleep 1/4 of a sec
+			try { Thread.sleep(250); } catch (InterruptedException e) {} //sleep 1/4 of a sec
 		}
 		
-		//get the average
-		for (int i = 0; i < 5; i++){
-			average = average + (int) lReadings[i]; //adding up the values in array
-		}
-		average = average/5;
+		getAverage();
 	}
 	
 	/**
-	 * Will read the values of the Left light sensor
+	 * does the method for the average readings in the array at any instance.
+	 */
+	private void getAverage(){
+		for (int i = 0; i < 5; i++){
+			average = average + (int) lReadings[i]; 	//adding up the values in array
+		}
+		average = average/5;				//getting actual average
+	}
+	
+	/**
+	 * starts the timer (default already started)
+	 */
+	public void start(){
+		timer.start();
+	}
+	
+	/**
+	 * stop the timer
+	 */
+	public void stop(){
+		timer.stop();
+	}
+	
+	/**
+	 * Will read the values of the light sensor
 	 * @return lsValue
 	 */
 	public double getLSData(){
-		try { Thread.sleep(50); } catch (InterruptedException e) {}
 		lsValue = ls.getNormalizedLightValue();
-		
 		return lsValue;
 	}
 	
+	/**
+	 * set true or false (if there is a line)
+	 * @param isLine
+	 */
 	public void setIsLine(boolean isLine){
 		this.isLine = isLine;
 	}
 	
+	/**
+	 * 
+	 * @return true if line detected, false otherwise
+	 */
 	public boolean getIsLine(){
 		return isLine;
 	}
