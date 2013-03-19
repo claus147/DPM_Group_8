@@ -11,6 +11,7 @@ package localization;
  */
 
 import motion.Navigation;
+import data.LSData;
 import odometry.Odometry;
 import lejos.nxt.LightSensor;
 import lejos.nxt.Sound;
@@ -19,6 +20,7 @@ public class LightLocalizer {
 	private Odometry odo;
 	private Navigation nav;
 	private LightSensor lsL, lsR;
+	private LSData LSDataL, LSDataR;
 	public static double FORWARD_SPEED = 1;			
 	public static double ROTATION_SPEED = 40; //was 15
 	public static int lightReading;					//value from light sensor
@@ -33,11 +35,14 @@ public class LightLocalizer {
 	public static double thetaCorrTo;
 	
 	
+	
 	public LightLocalizer(Odometry odo, Navigation nav, LightSensor lsL, LightSensor lsR) {
 		this.odo = odo;
 		this.nav = nav;
 		this.lsL = lsL;
 		this.lsR = lsR;
+		this.LSDataL = new LSData(lsL);
+		this.LSDataR = new LSData(lsR);
 		
 		// turn on the light
 		lsL.setFloodlight(true);
@@ -56,35 +61,6 @@ public class LightLocalizer {
 		//Attempted to get the average of the light readings in the first 5 seconds, did not work very well 
 		
 		
-		double [] lReadingsL = new double[5]; //5 readings stored at each instance (left)
-		
-		double [] lReadingsR = new double[5]; //5 readings stored at each instance (right)
-		
-		//------------initialize light array (left)-------------
-		for (int i = 0; i < 5; i++){ //reading 5 times, once every second - initial array
-			lReadingsL[i] = getLightReading(lsL);
-			try { Thread.sleep(200); } catch (InterruptedException e) {} //sleep 1/4 of a sec
-		}
-		
-		//get the average
-		for (int i = 0; i < 5; i++){
-			average = average + (int) lReadingsL[i]; //adding up the values in array
-		}
-		average = average/5;
-		//-----------end left init---------------
-		
-		//--------initialize light array (right)
-		for (int i = 0; i < 5; i++){ //reading 5 times, once every second - initial array
-			lReadingsR[i] = getLightReading(lsR);
-			try { Thread.sleep(200); } catch (InterruptedException e) {} //sleep 1/4 of a sec
-		}
-		
-		//get the average
-		for (int i = 0; i < 5; i++){
-			average = average + (int) lReadingsR[i]; //adding up the values in array
-		}
-		average = average/5;
-		//------------end right init--------------
 		
 		
 		int prevAvg = 0;
