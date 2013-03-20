@@ -135,7 +135,9 @@ public class Navigation extends Thread{
 	}
 	
 	/**
-	 * travelTo method
+	 * This method will move the robot to a specific coordinate. This method will call the turnTo method.
+	 * Basically, it will first use the input coordinates to calculate its path. After the calculation, it will call
+	 * the turnTo method to turn the robot to the desitnation, then it will navigate to the target location.
 	 * @param x
 	 * @param y
 	 */
@@ -179,7 +181,7 @@ public class Navigation extends Thread{
 	}
 	
 	/**
-	 * turnTo method
+	 * This method will take as input an angle theta, and it will turn the robot to a specific angle.
 	 * @param theta
 	 */
 	public void turnTo( double theta ){
@@ -258,7 +260,7 @@ public class Navigation extends Thread{
 	}
 	
 	/**
-	 * keeps going, does not stop - until stop method called
+	 * Keeps going, does not stop - until stop method called
 	 * @param forwardSpeed
 	 */
 	public void goforward(double forwardSpeed){
@@ -288,7 +290,7 @@ public class Navigation extends Thread{
 	}
 	
 	/**
-	 * method isNavigating() 
+	 * boolean isNavigating(), check if the robot is navigation
 	 */
 	boolean isNavigating(){
 		if(travelToCalled || turnToCalled){
@@ -298,10 +300,24 @@ public class Navigation extends Thread{
 		}
 	}
 	
+	/**
+	 * 
+	 * This method will take as input the radius and distance of the wheel and it will convert to radians**.
+	 * @param radius
+	 * @param distance
+	 * @return
+	 */
 	private static int toAngle(double radius, double distance) {
 		return (int) ((180.0 * distance) / (Math.PI * radius));
 	}
 
+/**
+ * 
+ * 
+ * @param width
+ * @param angle
+ * @return
+ */
 	private static double toDistForRotationLeft( double width, double angle) {
 		return angle * Math.PI * width / (180.0 * 2.0);
 	}
