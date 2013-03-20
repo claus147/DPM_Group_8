@@ -312,7 +312,7 @@ public class Navigation extends Thread{
 	}
 
 /**
- * 
+ * This method will calculate the angle left for rotation
  * 
  * @param width
  * @param angle
