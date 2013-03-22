@@ -1,6 +1,6 @@
 package localization;
 
-/*
+/**
  * @author Kornpat Choy (Claus)
  *
  * code assumes the robot did USLocaliser successfully and it is facing the positive y axis
@@ -57,93 +57,57 @@ public class LightLocalizer {
 		
 
 		boolean[] update = new boolean [3]; //initialize the update (for two wheeled robot)
-		
-		//Attempted to get the average of the light readings in the first 5 seconds, did not work very well 
-		
-		
-		
-		
-		int prevAvg = 0;
-		int counter = 0;				//count for array of light readings
-		int threshold;
-		
+
 		nav.goforward(ROTATION_SPEED);
 		
-		getLightReading(lsL);	
+		LSDataL.start();
+		LSDataR.start();
 		boolean isLineL = false;
 		boolean isLineR = false;
 		
-		while (!isLineL){ //while not crossing the negative x axis (left)
+		while (!isLineL && !isLineR){ //while not crossing the negative x axis (left)
 			
-			if (counter == 5) //always wrap around
-				counter = 0;
-			lReadingsL[counter] = getLightReading(lsL);
-			
-			prevAvg = average;
-			average = 0; //reset the average
-			for (int i = 0; i < 5; i++){
-				average = average + (int) lReadings[i]; //adding up the values in array
+			isLineL = LSDataL.getIsLine();
+			if (isLineL) {
+				nav.stop(Navigation.WheelSide.LEFT);
+				LSDataL.stop();
 			}
-			average = average/5;		//getting actual average
-			counter++;
 			
-			threshold = (int) (average * 0.01); //1% threshold
-			//prevLR = lightReading;
-			//getLightReading();						//get the light reading
-			
-			odo.getPosition(pos, update);					//get pos from odometer
-			if((prevAvg - average) > threshold  ){
-	//		if(lightReading < darknessEdge){		//if passes a line
-	
-				Sound.beepSequence();				//perform beep
-				thetas[count] = pos[2];				//"thetas" hold the value for (init theta of x, y and final theta x,y) 
-													//		see initialised variables for details 
-				count++;							
+			isLineR = LSDataR.getIsLine();
+			if (isLineR){
+				nav.stop(Navigation.WheelSide.RIGHT);
+				LSDataR.stop();
 			}
 			
 		}
-		nav.keepRotating(0);				//stop rotating when hits the negative y axis 
-
-		//double thetaCorrTo;							//second theta correction (first in USLocaliser)
-		
-		if (thetas[3]< thetas[1])					//if angle wraps around past 360 , undo the wrap
-			thetas[3] = thetas[3] + 360.0;
-		
-		xTheta = thetas[2] - thetas[0];				//getting xTheta
-		yTheta = thetas[3] - thetas[1];				//getting yTheta
-		y = (- lightMountOffSet * Math.cos(Math.toRadians(xTheta/2.0))); 		//get x
-		x = (- lightMountOffSet * Math.cos(Math.toRadians(yTheta/2.0)));		//get y (formula from tutorial notes)
-		//thetaCorrTo = 90.0 + yTheta/2.0 + (thetas[3] - 180.0);										//get corrected theta
-		//thetaCorrTo = thetaCorrTo + thetas[3];
-		thetaCorrTo = 90.0 - yTheta/2.0;
-		
-		if (thetaCorrTo > 360)
-			thetaCorrTo = thetaCorrTo - 360.0;
-		
-		pos[0] = x;
-		pos[1] = y;
-		pos[2] = 360.0 - thetaCorrTo;											//setting pos so to set odometer
-				
+		pos[0] = 0;
+		pos[2] = 0;
 		update[0] = true;
-		update[1] = true;
 		update[2] = true;
-		odo.setPosition(pos, update);											//setting odometer with new values
 		
-		ls.setFloodlight(false);												//turn off light sensor to save battery
+		odo.setPosition(pos, update);
+		nav.turnTo(90);
+		nav.goforward(ROTATION_SPEED);
 		
-		nav.travelTo(0, 0);
+		isLineL = false;
+		isLineR = false;
 		
-	}
-	
-	public int getLightReading(LightSensor side){				//to read light sensor
-		 // wait for the ping to complete
-		try { Thread.sleep(50); } catch (InterruptedException e) {}		//50 milisecond sleep
-		
-		lightReading = side.getNormalizedLightValue();
-		//lightReading = ls.readValue();
-		
-		return lightReading;
-	}
-	
+		while (!isLineL && !isLineR){ //while not crossing the y axis 
+			
+			isLineL = LSDataL.getIsLine();
+			if (isLineL) {
+				nav.stop(Navigation.WheelSide.LEFT);
+				LSDataL.stop();
+			}
+			
+			isLineR = LSDataR.getIsLine();
+			if (isLineR){
+				nav.stop(Navigation.WheelSide.RIGHT);
+				LSDataR.stop();
+			}
+			
+		}
 
+	
+	}
 }
