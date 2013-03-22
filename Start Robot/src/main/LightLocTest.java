@@ -5,6 +5,7 @@ import lejos.nxt.SensorPort;
 import motion.Navigation;
 import localization.LightLocalizer;
 import odometry.Odometry;
+import data.LCDinfo;
 
 /*
  * Test class for lsData
@@ -20,6 +21,8 @@ public class LightLocTest{
 		Odometry odo = new Odometry();
 		
 		Navigation nav = new Navigation();
+		
+		LCDinfo info = new LCDinfo(odo);
 		
 		LightLocalizer lightLoc = new LightLocalizer(odo, nav, lsL, lsR);
 		lightLoc.doLocalization();

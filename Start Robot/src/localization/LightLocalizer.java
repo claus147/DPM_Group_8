@@ -65,7 +65,7 @@ public class LightLocalizer {
 		boolean isLineL = false;
 		boolean isLineR = false;
 		
-		while (!isLineL && !isLineR){ //while not crossing the negative x axis (left)
+		while (!isLineL || !isLineR){ //while not crossing the negative x axis (left)
 			
 			isLineL = LSDataL.getIsLine();
 			if (isLineL) {
@@ -80,19 +80,24 @@ public class LightLocalizer {
 			}
 			
 		}
+		
+		
 		pos[0] = 0;
 		pos[2] = 0;
 		update[0] = true;
 		update[2] = true;
 		
 		odo.setPosition(pos, update);
-		nav.turnTo(90);
+		nav.turnTo(97);
+		//Sound.buzz();
 		nav.goforward(ROTATION_SPEED);
 		
 		isLineL = false;
 		isLineR = false;
 		
-		while (!isLineL && !isLineR){ //while not crossing the y axis 
+		LSDataL.start();
+		LSDataR.start();
+		while (!isLineL || !isLineR){ //while not crossing the y axis 
 			
 			isLineL = LSDataL.getIsLine();
 			if (isLineL) {
@@ -107,7 +112,15 @@ public class LightLocalizer {
 			}
 			
 		}
-
+		
+		pos[1] = 0;
+		pos[2] = 90;
+		update[1] = true;
+		update[2] = true;
+		odo.setPosition(pos, update);
+		
+		nav.turnTo(355); //cant turnTo(0) something wrong with turnTo method.
 	
+		while(true){}
 	}
 }

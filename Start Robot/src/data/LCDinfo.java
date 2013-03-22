@@ -40,10 +40,11 @@ import lejos.util.TimerListener;
 		
 		public static final int LCD_REFRESH = 100;
 		private UltrasonicSensor us;
-		private Timer lcdTimer;
+		private Timer lcdTimer; 
 		
 		// arrays for displaying data
 		private double [] pos;
+		private boolean [] update = new boolean [3];
 		
 		public LCDinfo(Odometry odo) {
 			this.odo = odo;
@@ -51,6 +52,9 @@ import lejos.util.TimerListener;
 			
 			// initialise the arrays for displaying data
 			pos = new double [3];
+			update[0] = true;
+			update[1] = true;
+			update[2] = true;
 			
 			// start the timer
 			lcdTimer.start();
@@ -58,29 +62,33 @@ import lejos.util.TimerListener;
 		
 		
 		public void timedOut() { 
+			
+			odo.getPosition(pos, update);
+			
 			LCD.clear();
-			LCD.drawString("LM :", 0, 0);	LCD.drawString("Dis: ", 8,0); //left motor &distance (loc)
-			LCD.drawString("RM :", 0, 1);	LCD.drawString("Di2: ", 8,1); //right motor
-			LCD.drawString("US :", 0, 2);	//ultrasonic sensor
+			
+			LCD.drawString("X:  ", 0,0);		LCD.drawString("Dis: ", 8,0);  // X position&distance (loc)
+			LCD.drawString("Y:  ", 0,1);		LCD.drawString("Di2: ", 8,1); // y position
+			LCD.drawString("Th: ", 0,2); 	// theta 				
 			LCD.drawString("LSL:", 0, 3);	//light sensor left
 			LCD.drawString("LSR:", 0, 4);	//light sensor Right	
-			LCD.drawString("X:  ",0,5);	// X position
-			LCD.drawString("Y:  ",0,6);	// y position
-			LCD.drawString("Th: ", 0,7); // theta
+			LCD.drawString("LM :", 0, 5);	//left motor
+			LCD.drawString("RM :", 0, 6);	//right motor
+			LCD.drawString("US :", 0, 7);	//ultrasonic sensor
 			
-			
-			LCD.drawInt((int) wheels.getLTacho(), 4, 0);	LCD.drawInt((int)USLocalizer.distance, 11, 0);
-			LCD.drawInt((int) wheels.getRTacho(), 4, 1);	LCD.drawInt((int)USLocalizer.distance2, 11, 1);
-			LCD.drawInt((int) usData.getUSData(), 4, 2);
-			LCD.drawInt((int) lsDataL.getLSData(), 4, 3);
-			LCD.drawInt((int) lsDataR.getLSData(), 4, 4);
-			
-			/* START NOT TESTED YET*/
-			LCD.drawInt((int) odo.getX(), 4, 5);
-			LCD.drawInt((int) odo.getY(), 4, 6);
-			LCD.drawInt((int) odo.getTheta(), 4, 7);
+						/* START NOT TESTED YET*/
+			LCD.drawInt((int) pos[0], 4, 0);			LCD.drawInt((int)USLocalizer.distance, 11, 0);//this works 
+			LCD.drawInt((int) pos[1], 4, 1);			LCD.drawInt((int)USLocalizer.distance2, 11, 1);//this works
+			LCD.drawInt((int) pos[2], 4, 2);
 			
 			/* END NOT TESTED YET */
+
+			LCD.drawInt((int) lsDataL.getLSData(), 4, 3);
+			LCD.drawInt((int) lsDataR.getLSData(), 4, 4);
+			LCD.drawInt((int) wheels.getLTacho(), 4, 5);	
+			LCD.drawInt((int) wheels.getRTacho(), 4, 6);	
+			LCD.drawInt((int) usData.getUSData(), 4, 7);
+
 			
 			
 		}

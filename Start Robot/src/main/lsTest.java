@@ -29,7 +29,7 @@ public class lsTest{
 		lsDataL.start();
 		lsDataR.start();
 		
-		while(true){
+		while(!lsLState || !lsRState){
 			lsLState = lsDataL.getIsLine();
 			if (lsLState) {
 				nav.stop(Navigation.WheelSide.LEFT);
@@ -42,5 +42,7 @@ public class lsTest{
 				lsDataR.stop();
 			}
 		}
+		
+		nav.goforward(100);
 	}
 }

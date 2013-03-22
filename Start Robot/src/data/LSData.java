@@ -110,6 +110,7 @@ public class LSData implements TimerListener{
 	 */
 	public void start(){
 		timer.start();
+		setIsLine(false);
 	}
 	
 	/**
