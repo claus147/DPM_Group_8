@@ -9,6 +9,7 @@ package localization;
 
 import java.util.Arrays;
 
+import data.USData;
 import lejos.nxt.SensorPort;
 import lejos.nxt.UltrasonicSensor;
 import motion.Navigation;
@@ -29,17 +30,17 @@ public class USLocalizer {
 	private UltrasonicSensor usL = new UltrasonicSensor(SensorPort.S3);
 	private UltrasonicSensor usR = new UltrasonicSensor(SensorPort.S4);
 	private LocalizationType locType;
-	private int noWall = 80;				//distance to be considered "no wall" - for usSensor
+	private USData USDataL, USDataR;
+	
 	
 	public USLocalizer(Odometry odo, UltrasonicSensor usR,UltrasonicSensor usL, LocalizationType locType) {
 		this.odo = odo;
-		//this.usL = usL;
-		//this.usR = usR;
+		this.usL = usL;
+		this.usR = usR;
 		this.locType = locType;
 		this.nav = new Navigation(odo);
-		//makes sure us is working
-		//usL.reset();
-		//usR.reset();
+		this.USDataL = new USData(usL);
+		this.USDataR = new USData(usR);
 	}
 	
 	public void doLocalization() {
@@ -48,6 +49,8 @@ public class USLocalizer {
 		Arrays.fill(update, Boolean.TRUE);
 		double dtheta;							//the change in theta
 		
+		USDataL.start();
+		USDataR.start();
 		
 		if (locType == LocalizationType.FALLING_EDGE) {
 			// rotate the robot until it sees no wall
@@ -57,27 +60,24 @@ public class USLocalizer {
 			// angleA is clockwise from angleB, so assume the average of the
 			// angles to the right of angleB is 45 degrees past 'north'
 			
-			distance = getFilteredDataR();					//start getting distance from usSensor
-			nav.keepRotating(ROTATION_SPEED);
-			//robot.setRotationSpeed(ROTATION_SPEED); 			//rotate clockwise first
+			nav.keepRotating(ROTATION_SPEED);//rotate clockwise first		
 			
-			while (distance < noWall){ 							//while facing wall (can detect wall)
-				distance = getFilteredDataR();				//keep getting distance from usR
+			while (USDataR.getIsWall()){ 							//while facing wall (can detect wall)
+				//do nothing
 			}
 			odo.getPosition(pos, update);						//finally doesnt find the wall, record position from odometer
 			angleA = pos[2];									//set the angle given by odometer
 			
 			
 			
-			nav.keepRotating(-ROTATION_SPEED);
-			//robot.setRotationSpeed(-ROTATION_SPEED); 			//now anticlockwise
+			nav.keepRotating(-ROTATION_SPEED);					//now anticlockwise		
 				
 			//sleep so it doesnt think that the wall edge just detected is the other wall edge
-			try { Thread.sleep(3000); } catch (InterruptedException e) {}		
+			//try { Thread.sleep(3000); } catch (InterruptedException e) {}		
 			
-			distance2= getFilteredDataL();						//start getting distance from us again
-			while (distance2 < noWall){ 							//while facing wall (can detect wall)
-				distance2 = getFilteredDataL();				//keep getting distance from usL
+			//distance2= getFilteredDataL();						//start getting distance from us again
+			while (USDataL.getIsWall()){ 							//while facing wall (can detect wall)
+				//do nothing
 			}
 			odo.getPosition(pos, update);						//finally doesnt find the wall, record position from odometer
 			angleB = pos[2];									//set the angle given by odometer
@@ -91,31 +91,34 @@ public class USLocalizer {
 			 * will face toward the wall for most of it.
 			 */
 			
-			distance = getFilteredDataR();				//start getting distance from usSensor
+			//distance = getFilteredDataR();				//start getting distance from usSensor
 			nav.keepRotating(ROTATION_SPEED);
 			//robot.setRotationSpeed(ROTATION_SPEED); 		//rotate clockwise first
 			
-			while (distance >= noWall){ 					//while facing away from wall (cant detect wall)
-				distance = getFilteredDataR();			//keep getting distance from usSensor
+			while (!USDataR.getIsWall()){ 					//while facing away from wall (cant detect wall)
+				//do nothing
 			}
 			odo.getPosition(pos, update);							//finally finds the wall, record position from odometer
 			angleA = pos[2];								//set the angle given by odometer
 			
 			
-			distance2= noWall;								//set to noWall value so it doesnt accidently detect a wall
+			//distance2= noWall;								//set to noWall value so it doesnt accidently detect a wall
 			nav.keepRotating(-ROTATION_SPEED);
 			//robot.setRotationSpeed(-ROTATION_SPEED); 		//now anticlockwise
 			//sleep so it doesnt think that the wall edge just detected is the other wall edge
-			try { Thread.sleep(3000); } catch (InterruptedException e) {}
+			//try { Thread.sleep(3000); } catch (InterruptedException e) {}
 			
-			while (distance2 >= noWall){ 					//while facing away from wall (cant detect wall)
-				distance2 = getFilteredDataL();			//keep getting distance from usSensor
+			while (!USDataL.getIsWall()){ 					//while facing away from wall (cant detect wall)
+				//do nothing
 			}
 			
 			odo.getPosition(pos, update);					//finally finds the wall, record position from odometer
 			angleB = pos[2];								//set the angle given by odometer
 			
 		}
+		USDataL.stop();
+		USDataR.stop();
+		
 		
 		//Now calculations
 		double sumAngles = angleA + angleB;				//if added is more than 360, minus 360 from it
@@ -155,41 +158,6 @@ public class USLocalizer {
 		pos[2] = 0;
 		update [2] = true;
 		odo.setPosition(pos, update);
-	}
-	
-	private int getFilteredDataL() {			//do a reading every 50 miliseconds
-		int distanceL;
-
-		// do a ping
-		usL.ping();
-		
-		 // wait for the ping to complete
-		try { Thread.sleep(50); } catch (InterruptedException e) {}
-
-		distanceL = usL.getDistance();
-		
-		 if (distanceL > noWall)				//if distance > 80 (noWall) set it to 80
-			 distanceL = noWall;
-
-				
-		return distanceL;
-	}
-	private int getFilteredDataR() {			//do a reading every 50 miliseconds
-		int distanceR;
-
-		// do a ping
-		usR.ping();
-		
-		 // wait for the ping to complete
-		try { Thread.sleep(50); } catch (InterruptedException e) {}
-
-		distanceR = usR.getDistance();
-		
-		 if (distanceR > noWall)				//if distance > 80 (noWall) set it to 80
-			 distanceR = noWall;
-
-				
-		return distanceR;
 	}
 
 }
