@@ -1,6 +1,8 @@
 /**
+ * @author Kornpat Choy (Claus)
  * @author Tuan-Kiet Luu
- * @version 1.0
+ * 
+ * @version 2.0
  */
 package data;
 

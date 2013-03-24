@@ -3,11 +3,7 @@ package localization;
 /**
  * @author Kornpat Choy (Claus)
  *
- * code assumes the robot did USLocaliser successfully and it is facing the positive y axis
- * moves fowards to the x axis, as one light hits the line it will stop the wheel on that side 
- * and same for the other side.
- * repeat after rotating 90 degrees with y axis
- * 
+ * @version 2.0
  */
 
 import motion.Navigation;
