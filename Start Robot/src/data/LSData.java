@@ -1,5 +1,5 @@
 package data;
-import lejos.nxt.*;
+
 
 /**
  * Will take data from the Lightsensor
@@ -8,6 +8,9 @@ import lejos.nxt.*;
  * @version 2.0
  */
 
+import lejos.nxt.LightSensor;
+import lejos.nxt.SensorPort;
+import lejos.nxt.Sound;
 import lejos.util.TimerListener;
 import lejos.util.Timer;
 
@@ -106,7 +109,7 @@ public class LSData implements TimerListener{
 	}
 	
 	/**
-	 * starts the timer (default already started)
+	 * starts the timer
 	 */
 	public void start(){
 		timer.start();

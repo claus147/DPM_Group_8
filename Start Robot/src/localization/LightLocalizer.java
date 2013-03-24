@@ -23,18 +23,7 @@ public class LightLocalizer {
 	private LSData LSDataL, LSDataR;
 	public static double FORWARD_SPEED = 1;			
 	public static double ROTATION_SPEED = 40; //was 15
-	public static int lightReading;					//value from light sensor
-	public static int prevLR;
-	public static double darknessEdge = 510.0;		//the value the lightsensor reading must drop below to consider passing a line
-	private double lightMountOffSetL = 2.0;			//offset from center was 21.5
-	private double lightMountOffSetR = 2.0;
-	public static double [] thetas = new double [4]; //first 2 entries are for start for x then y last 2 are for end x then y
-	public static double x, y, xTheta, yTheta;
 	public static double [] pos = new double [3];	//to access x, y theta from 2 Wheeled robot
-	public static int average = 0;
-	public static double thetaCorrTo;
-	
-	
 	
 	public LightLocalizer(Odometry odo, Navigation nav, LightSensor lsL, LightSensor lsR) {
 		this.odo = odo;
