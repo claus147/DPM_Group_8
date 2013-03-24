@@ -68,7 +68,7 @@ public class USData implements TimerListener{
 	 * This method will take the distance using the ultrasonic Sensor
 	 * @return usData
 	 */
-	private double getUSData(int usData){
+	public double getUSData(int usData){
 		// do a ping
 		// us.ping();
 		usData = us.getDistance();

@@ -21,7 +21,7 @@ public class Avoid{
 	private final NXTRegulatedMotor leftMotor = Motor.A, rightMotor = Motor.B;
 	private int distance;
 	private int currentLeftSpeed;
-	
+	private int data;
 	USData usData = new USData();
 	
 	public Avoid(int bandCenter, int bandwith, int motorLow, int motorHigh) {
@@ -35,6 +35,7 @@ public class Avoid{
 		leftMotor.forward();
 		rightMotor.forward();
 		currentLeftSpeed = 0;
+		
 	}
 	
 	/**
@@ -48,7 +49,7 @@ public class Avoid{
 		
 		// This will read the distance from the sensor and store in the distance variable.
 		this.distance = distance;
-		distance = (int) usData.getUSData();
+		distance = (int) usData.getUSData(data);
 	
 		// error : the position of the robot compared to the bandCenter
 		int error = 0;

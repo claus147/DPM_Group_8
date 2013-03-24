@@ -36,7 +36,7 @@ import lejos.util.TimerListener;
 		LSData lsDataL = new LSData(lsL);
 		LSData lsDataR = new LSData(lsR);
 		Odometry odo = new Odometry();
-		
+		private int data;
 		
 		public static final int LCD_REFRESH = 100;
 		private UltrasonicSensor us;
@@ -87,7 +87,7 @@ import lejos.util.TimerListener;
 			LCD.drawInt((int) lsDataR.getLSData(), 4, 4);
 			LCD.drawInt((int) wheels.getLTacho(), 4, 5);	
 			LCD.drawInt((int) wheels.getRTacho(), 4, 6);	
-			LCD.drawInt((int) usData.getUSData(), 4, 7);
+			LCD.drawInt((int) usData.getUSData(data), 4, 7);
 
 			
 			

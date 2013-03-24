@@ -17,6 +17,7 @@ public class Controller {
 	
 	USData usData = new USData();
 	WheelsData wheels = new WheelsData();
+	int data;
 	
 	/**
 	 * Testing phase : linking controller to wheels
@@ -53,7 +54,7 @@ public class Controller {
 	
 	//WORKS!
 	public void callUSData(){
-		usData.getUSData();
+		usData.getUSData(data);
 	}
 	
 
