@@ -49,6 +49,8 @@ import lejos.nxt.NXTRegulatedMotor;
  	double destinationX;
  	double destinationY;
  	
+ 	public enum WheelSide { LEFT, RIGHT };
+ 	
  	//Class constructor has odometer as argument
  	public Navigation (Odometry odometer) {
  		
@@ -642,5 +644,35 @@ import lejos.nxt.NXTRegulatedMotor;
  		return angle * Math.PI * width / (180.0 * 2.0);
  	}
  	
+ 	
+ 	/**
+ 	 * Keeps going, does not stop - until stop method called
+ 	 * @param forwardSpeed
+ 	 */
+ 	public void goforward(double forwardSpeed){
+ 		leftMotor.setSpeed((int)forwardSpeed);
+ 		rightMotor.setSpeed((int)forwardSpeed);
+ 		leftMotor.forward();
+ 	    rightMotor.forward();
+ 	}
+ 	  
+ 	/**
+ 	  * for localization - stop a single wheel
+ 	  * @param side (LEFT, RIGHT)
+ 	  */
+ 	public void stop(WheelSide side){
+ 		if (side == WheelSide.LEFT)
+ 	      leftMotor.setSpeed(0);
+ 	    else
+ 	      rightMotor.setSpeed(0);
+ 	}
+ 	  
+ 	/**
+ 	 * stop both wheels
+ 	 */
+ 	public void stop(){
+ 		leftMotor.setSpeed(0);
+ 		rightMotor.setSpeed(0);
+ 	}
 
  }
