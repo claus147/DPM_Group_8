@@ -1,6 +1,7 @@
 package modes;
 import odometry.Odometry;
 import lejos.nxt.Sound;
+import motion.Navigation;
 
 
 /**
@@ -25,8 +26,23 @@ public class AttackerMode {
 	public void attackAlgorithm(){
 		
 		Odometry odo = new Odometry();
+		Navigation nav = new Navigation(odo);
 		odo.start();
-		control.travelTo(60, 60);
+		double headingAngle = nav.findHeadingAngle(-60,60,odo.getX(), odo.getY() );
+		control.turnTo(headingAngle);
+			
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				
+			}
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				
+			}
+ 		
+		control.travelTo(-60, 60);
 		
 	}
 	/**

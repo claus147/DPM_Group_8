@@ -112,20 +112,20 @@ import lejos.nxt.NXTRegulatedMotor;
  		destinationX = x;
  		destinationY = y;
  		
- 		double headingAngle = findHeadingAngle(x,y,odo.getX(), odo.getY() );
-		turnTo(headingAngle);
-			
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				
-			}
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				
-			}
- 		
+// 		double headingAngle = findHeadingAngle(x,y,odo.getX(), odo.getY() );
+//		turnTo(headingAngle);
+//			
+//			try {
+//				Thread.sleep(1000);
+//			} catch (InterruptedException e) {
+//				
+//			}
+//			try {
+//				Thread.sleep(1000);
+//			} catch (InterruptedException e) {
+//				
+//			}
+// 		
  		travelToCalled = true;
  		
  		
@@ -134,8 +134,8 @@ import lejos.nxt.NXTRegulatedMotor;
  		double initialY = odo.getY();
  		while(true){
  			//Draw on the screen the distance read by the sensor
- 			LCD.drawString(""+getFilteredDistA(), 0, 4 );
- 			LCD.drawString(""+getFilteredDistB(), 0, 5 );
+// 			LCD.drawString(""+getFilteredDistA(), 0, 4 );
+// 			LCD.drawString(""+getFilteredDistB(), 0, 5 );
  			//Set variables and initial speeds
  			
  			double currentX = odo.getX();
@@ -143,9 +143,6 @@ import lejos.nxt.NXTRegulatedMotor;
  			double currentT = odo.getTheta();
  			
  			
- 			headingAngle = findHeadingAngle(x,y,currentX,currentY);
- 			//Calls turnTo method to change the angle of the robot
- 			turnTo(headingAngle);
  			
  			leftMotor.forward();
  			rightMotor.forward();
@@ -154,6 +151,9 @@ import lejos.nxt.NXTRegulatedMotor;
  			leftMotor.setAcceleration(3000);
  			rightMotor.setSpeed(FORWARD_SPEED);
  			leftMotor.setSpeed(FORWARD_SPEED); /////////////////////////////////////////////////////////////////////////////////////*********************************************
+ 			double headingAngle = findHeadingAngle(x,y,currentX,currentY);
+ 			//Calls turnTo method to change the angle of the robot
+ 			turnTo(headingAngle);
  			
  			currentT = odo.getTheta();
 
@@ -196,7 +196,7 @@ import lejos.nxt.NXTRegulatedMotor;
  	}
  	
  	
- 	double findHeadingAngle(double destX, double destY, double curX, double curY){
+ 	public double findHeadingAngle(double destX, double destY, double curX, double curY){
  		//Calculates the angle and converts to degrees /////////////////////////////////////////////////////////////////////////////////////////CALCULATE HEADING ANGLE!!!!!!!!!!!
  		double headingAngle;
  		double deltaX = (destX - curX);

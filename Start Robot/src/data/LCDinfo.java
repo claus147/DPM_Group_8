@@ -85,11 +85,11 @@ import lejos.util.TimerListener;
 			
 			/* END NOT TESTED YET */
 
-			LCD.drawInt((int) lsDataL.getLSData(), 4, 3);
-			LCD.drawInt((int) lsDataR.getLSData(), 4, 4);
-			LCD.drawInt((int) wheels.getLTacho(), 4, 5);	
-			LCD.drawInt((int) wheels.getRTacho(), 4, 6);	
-			LCD.drawInt((int) usData.getUSData(data), 4, 7);
+//			LCD.drawInt((int) lsDataL.getLSData(), 4, 3);
+//			LCD.drawInt((int) lsDataR.getLSData(), 4, 4);
+//			LCD.drawInt((int) wheels.getLTacho(), 4, 5);	
+//			LCD.drawInt((int) wheels.getRTacho(), 4, 6);	
+//			LCD.drawInt((int) usData.getUSData(data), 4, 7);
 
 			
 			
