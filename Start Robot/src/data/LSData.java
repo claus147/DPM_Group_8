@@ -78,7 +78,7 @@ public class LSData implements TimerListener{
 		getAverage();
 		
 		counter++;								//increment to get to the next array location
-		threshold = (int) (average * 0.01); 	//1% threshold
+		threshold = (int) (average * 0.01); 	//5% threshold
 		
 		if((prevAvg - average) > threshold  ){
 			setIsLine(true);

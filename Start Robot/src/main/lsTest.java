@@ -5,6 +5,7 @@ import lejos.nxt.LightSensor;
 import lejos.nxt.SensorPort;
 import data.LSData;
 import motion.Navigation;
+import odometry.Odometry;
 
 /*
  * Test class for lsData
@@ -15,9 +16,11 @@ import motion.Navigation;
 public class lsTest{
 	public static void main (String args[]) {
 		LightSensor lsL = new LightSensor(SensorPort.S1);
-		LightSensor lsR = new LightSensor(SensorPort.S2);
+		LightSensor lsR = new LightSensor(SensorPort.S4);
 	
-		Navigation nav = new Navigation();
+		Odometry odo = new Odometry();
+		
+		Navigation nav = new Navigation(odo);
 		
 		LSData lsDataL = new LSData(lsL);
 		LSData lsDataR = new LSData(lsR);
