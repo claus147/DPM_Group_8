@@ -20,14 +20,16 @@ public class LightLocalizer {
 	public static double FORWARD_SPEED = 1;			
 	public static double ROTATION_SPEED = 40; //was 15
 	public static double [] pos = new double [3];	//to access x, y theta from 2 Wheeled robot
+	private double leftThreshold = 0.06;
+	private double rightThreshold = 0.01;
 	
 	public LightLocalizer(Odometry odo, Navigation nav, LightSensor lsL, LightSensor lsR) {
 		this.odo = odo;
 		this.nav = nav;
 		this.lsL = lsL;
 		this.lsR = lsR;
-		this.LSDataL = new LSData(lsL);
-		this.LSDataR = new LSData(lsR);
+		this.LSDataL = new LSData(lsL, leftThreshold);
+		this.LSDataR = new LSData(lsR, rightThreshold);
 		
 		// turn on the light
 		lsL.setFloodlight(true);
@@ -73,12 +75,15 @@ public class LightLocalizer {
 		update[2] = true;
 		
 		odo.setPosition(pos, update);
-		nav.turnTo(97);
+		nav.turnTo(90); //97
 		//Sound.buzz();
 		nav.goforward(ROTATION_SPEED);
 		
 		isLineL = false;
 		isLineR = false;
+		
+		LSDataL.setIsLine(false);
+		LSDataR.setIsLine(false);
 		
 		LSDataL.start();
 		LSDataR.start();
@@ -104,8 +109,8 @@ public class LightLocalizer {
 		update[2] = true;
 		odo.setPosition(pos, update);
 		
-		nav.turnTo(355); //cant turnTo(0) something wrong with turnTo method.
+		nav.turnTo(0); //cant turnTo(0) something wrong with turnTo method 355
 	
-		while(true){}
+		//while(true){}
 	}
 }

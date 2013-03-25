@@ -16,13 +16,13 @@ import data.LCDinfo;
 public class LightLocTest{
 	public static void main (String args[]) {
 		LightSensor lsL = new LightSensor(SensorPort.S1);
-		LightSensor lsR = new LightSensor(SensorPort.S2);
+		LightSensor lsR = new LightSensor(SensorPort.S4);
 	
 		Odometry odo = new Odometry();
 		
 		Navigation nav = new Navigation(odo);
 		
-		LCDinfo info = new LCDinfo(odo);
+		//LCDinfo info = new LCDinfo(odo);
 		
 		LightLocalizer lightLoc = new LightLocalizer(odo, nav, lsL, lsR);
 		lightLoc.doLocalization();
