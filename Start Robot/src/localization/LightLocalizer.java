@@ -7,10 +7,10 @@ package localization;
  */
 
 import motion.Navigation;
+import connection.StartCorner;
 import data.LSData;
 import odometry.Odometry;
 import lejos.nxt.LightSensor;
-import lejos.nxt.Sound;
 
 public class LightLocalizer {
 	private Odometry odo;
@@ -22,7 +22,40 @@ public class LightLocalizer {
 	public static double [] pos = new double [3];	//to access x, y theta from 2 Wheeled robot
 	private double leftThreshold = 0.06;
 	private double rightThreshold = 0.01;
+	private StartCorner sc = StartCorner.BOTTOM_LEFT; //set default as 0,0
+	private double angle1, angle2; //starting angle, second angle = start angle + 90
 	
+	/**
+	 * Constructor for Light localization - all params to be set
+	 * @param odo - the odometer
+	 * @param nav - navigation
+	 * @param lsL - left light sensor
+	 * @param lsR - right light sensor
+	 * @param sc - startCorner
+	 */
+	public LightLocalizer(Odometry odo, Navigation nav, LightSensor lsL, LightSensor lsR, StartCorner sc) {
+		this.odo = odo;
+		this.nav = nav;
+		this.lsL = lsL;
+		this.lsR = lsR;
+		this.sc = sc;
+		this.LSDataL = new LSData(lsL, leftThreshold);
+		this.LSDataR = new LSData(lsR, rightThreshold);
+		angle1 = (sc.getId()-1)*90;  //c1 facing 0, c2 facing 90, c3 facing 180, c4 facing 270
+		angle2 = (angle1 + 90)% 360; //wrap around to 0 if 360
+		
+		// turn on the light
+		lsL.setFloodlight(true);
+		lsR.setFloodlight(true);
+	}
+	
+	/**
+	 * Constructor for Light localization - all params to be set except StartCorner sc -> default 0,0
+	 * @param odo - the odometer
+	 * @param nav - navigation
+	 * @param lsL - left light sensor
+	 * @param lsR - right light sensor
+	 */
 	public LightLocalizer(Odometry odo, Navigation nav, LightSensor lsL, LightSensor lsR) {
 		this.odo = odo;
 		this.nav = nav;
@@ -30,6 +63,8 @@ public class LightLocalizer {
 		this.lsR = lsR;
 		this.LSDataL = new LSData(lsL, leftThreshold);
 		this.LSDataR = new LSData(lsR, rightThreshold);
+		angle1 = (sc.getId()-1)*90; //c1 facing 0, c2 facing 90, c3 facing 180, c4 facing 270
+		angle2 = (angle1 + 90)% 360; //wrap around to 0 if 360
 		
 		// turn on the light
 		lsL.setFloodlight(true);
@@ -68,10 +103,15 @@ public class LightLocalizer {
 			
 		}
 		
-		
-		pos[0] = 0;
-		pos[2] = 0;
-		update[0] = true;
+		if (sc.getId()<=2){
+			pos[0] = sc.getX();
+			update[0] = true;
+		} else {
+			pos[1] = sc.getY();
+			update[1] = true;
+		}
+
+		pos[2] = angle1;
 		update[2] = true;
 		
 		odo.setPosition(pos, update);
@@ -103,9 +143,14 @@ public class LightLocalizer {
 			
 		}
 		
-		pos[1] = 0;
-		pos[2] = 90;
-		update[1] = true;
+		if (sc.getId()<=2){
+			pos[1] = sc.getY();
+			update[1] = true;
+		} else {
+			pos[0] = sc.getX();
+			update[0] = true;
+		}
+		pos[2] = angle2;
 		update[2] = true;
 		odo.setPosition(pos, update);
 		

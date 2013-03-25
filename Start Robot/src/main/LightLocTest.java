@@ -2,10 +2,12 @@ package main;
 
 import lejos.nxt.LightSensor;
 import lejos.nxt.SensorPort;
+import lejos.nxt.Sound;
 import motion.Navigation;
 import localization.LightLocalizer;
 import odometry.Odometry;
 import data.LCDinfo;
+import connection.BluetoothConnection;
 
 /*
  * Test class for lsData
@@ -17,14 +19,17 @@ public class LightLocTest{
 	public static void main (String args[]) {
 		LightSensor lsL = new LightSensor(SensorPort.S1);
 		LightSensor lsR = new LightSensor(SensorPort.S4);
-	
+		
 		Odometry odo = new Odometry();
 		
 		Navigation nav = new Navigation(odo);
 		
-		//LCDinfo info = new LCDinfo(odo);
+		LCDinfo info = new LCDinfo(odo);
 		
-		LightLocalizer lightLoc = new LightLocalizer(odo, nav, lsL, lsR);
+		BluetoothConnection bc = new BluetoothConnection();
+		Sound.buzz();
+		
+		LightLocalizer lightLoc = new LightLocalizer(odo, nav, lsL, lsR, bc.getTransmission().startingCorner);
 		lightLoc.doLocalization();
 	}
 }
