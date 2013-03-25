@@ -3,7 +3,7 @@
 * @date November 3, 2011
 * @class ECSE 211 - Design Principle and Methods
 */
-package bluetooth;
+package connection;
 
 import java.io.DataInputStream;
 import java.io.IOException;

@@ -28,7 +28,7 @@ import lejos.nxt.comm.Bluetooth;
  */
 public class BTReceive {
 	
-	static int speed = 3000; //speed of launch
+	static int speed = 1100; //speed of launch
 	static int returnSpeed = 80;	 //speed of return to original position
 	static int angle = -80; //angle the arm turns to (final position of catapult arm) - negative because initally not geared 
 	static int reAdjust = 10;	
@@ -41,7 +41,13 @@ public class BTReceive {
     
 		while (true)
 		{
-			NXTRegulatedMotor leftMotor = Motor.A;
+			// Launcher motors
+			NXTRegulatedMotor leftMotor = Motor.B;
+			NXTRegulatedMotor rightMotor = Motor.C;
+			//Feeding mechanism
+			NXTRegulatedMotor turnMotor = Motor.A;
+			int turn = 180; 
+			int angle1 = 90;
 			LCD.drawString(waiting,0,0);
 			LCD.refresh();
 			
@@ -54,10 +60,38 @@ public class BTReceive {
 			/* START MOVE ROBOT HERE */ 
 			
 	//		LCD.drawString("got something", 4, 4);
-			leftMotor.rotate(720);
+	/*		leftMotor.rotate(-100);
+			rightMotor.rotate(-100);
+			turnMotor.rotate(360);
+			*/
 			LCD.refresh();	
 			
-			
+			for(int i= 0; i<5; i++){
+				turnMotor.setSpeed(turn);
+				//Motor.C.rotateTo(angle);
+				turnMotor.rotate(angle1);
+
+
+				try {
+				Thread.sleep(4000);
+				} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				}
+
+
+				rightMotor.setSpeed(speed);
+				leftMotor.setSpeed(speed);
+				rightMotor.rotateTo(angle, true);
+				leftMotor.rotateTo(angle);
+
+				//do return to original position
+				rightMotor.setSpeed(returnSpeed);
+				leftMotor.setSpeed(returnSpeed);
+				rightMotor.rotateTo(reAdjust, true);
+				leftMotor.rotateTo(reAdjust);
+
+
 			
 			
 			
@@ -95,5 +129,6 @@ public class BTReceive {
 			LCD.clear();
 		}
 	}
-}
+}}
+
 

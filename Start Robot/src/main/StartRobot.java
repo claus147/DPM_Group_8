@@ -83,6 +83,8 @@ public class StartRobot {
 		// Defender Mode
 		else{
 		
+			
+		// Testing the Launcher via bluetooth;
 		BTConnectTest connect = new BTConnectTest();
 		try {
 			connect.connect();

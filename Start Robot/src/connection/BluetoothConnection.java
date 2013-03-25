@@ -3,7 +3,7 @@
 * @date November 3, 2011
 * @class ECSE 211 - Design Principle and Methods
 */
-package bluetooth;
+package connection;
 
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -29,6 +29,7 @@ public class BluetoothConnection {
 	/**
 	 * Waits for connection from BT server indefinitely. Once connected, gets the transmission and closes the BT connection.
 	 */
+	
 	public BluetoothConnection() {
 		LCD.clear();
 		LCD.drawString("Starting BT connection", 0, 0);
@@ -45,6 +46,7 @@ public class BluetoothConnection {
 		}
 		conn.close();
 	}
+	
 	
 	public Transmission getTransmission() {
 		return this.trans;

@@ -37,7 +37,7 @@ import lejos.nxt.comm.NXTConnection;
 public class BTConnectTest {
 	private Transmission trans;
 	
-	
+	/*
 	public BTConnectTest(){
 		LCD.clear();
 		LCD.drawString("Starting BT connection", 0, 0);
@@ -55,11 +55,12 @@ public class BTConnectTest {
 		conn.close();
 		
 	}
+	*/
 	
 	
 	public void connect() throws Exception {
-		//slave name : headyin / T04M / ShootingBrick
-		String name = "headyin";
+		//slave name : headyin / T04M / ShootingBrick / ANTBOT
+		String name = "ANTBOT";
 		
 		
 		LCD.drawString("Connecting...", 0, 0);
