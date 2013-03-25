@@ -1,5 +1,6 @@
 package odometry;
 
+import data.WheelsData;
 import lejos.nxt.Motor;
 
 /**
@@ -10,7 +11,7 @@ import lejos.nxt.Motor;
  */
 
 
-public class Odometry {
+public class Odometry extends Thread{
 	// robot position
 	private double x, y, theta;
 	static double XPosTotal = 0;
@@ -66,9 +67,9 @@ public class Odometry {
 
 			
 			//left motor = Motor A, returns in degrees
-			 currentTachoL = Motor.A.getTachoCount();
+			 currentTachoL = WheelsData.getLTacho();
 			//right motor = Motor B
-			 currentTachoR = Motor.B.getTachoCount();
+			 currentTachoR = WheelsData.getRTacho();
 			 
 			 //Difference of tachometer degrees between the current reading and previous reading 
 			 tachoDiffL = currentTachoL - last_tacho_l;

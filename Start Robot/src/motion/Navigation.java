@@ -17,7 +17,7 @@ import lejos.nxt.NXTRegulatedMotor;
  import lejos.nxt.*;
 
  
- public class Navigation extends Thread{
+ public class Navigation{// extends Thread{
  	
  	//Variables Assignment
  	boolean travelToCalled = false;
@@ -34,9 +34,9 @@ import lejos.nxt.NXTRegulatedMotor;
  
  	/* START TODO : CLEAN THIS CODE */
  	
- 	final double leftRadius = 2.8;
- 	final double rightRadius = 2.8;
- 	final double width = 15.24;
+ 	final double leftRadius = 2.7;
+ 	final double rightRadius = 2.7;
+ 	final double width = 17.0;
  	
  	/* END TODO : CLEAN THIS CODE */
  	
@@ -54,7 +54,7 @@ import lejos.nxt.NXTRegulatedMotor;
  		
  		this.odo = odometer;
  	}
- 	
+ 	/*
  	// This method will run instructions to the targeted coordinates
  	public void run(){
 
@@ -97,7 +97,7 @@ import lejos.nxt.NXTRegulatedMotor;
  			
  	}
  	
- 	
+ 	*/
  	
 
  	//Will cause the robot to travel to an absolute destination. The coordinates in input is the destination.
@@ -113,14 +113,13 @@ import lejos.nxt.NXTRegulatedMotor;
  		destinationY = y;
  		
  		double headingAngle = findHeadingAngle(x,y,odo.getX(), odo.getY() );
-			
+		turnTo(headingAngle);
 			
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				
 			}
-			turnTo(headingAngle);
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {

@@ -76,8 +76,8 @@ public class StartRobot {
 		//Attacker Mode
 		if (buttonChoice == Button.ID_LEFT) {
 
-		Sound.beep();	
-		LCDinfo LCDinfo = new LCDinfo(odo);
+	//	Sound.beep();	
+	//	LCDinfo LCDinfo = new LCDinfo(odo);
 		attack.attackAlgorithm();
 		}
 		// Defender Mode

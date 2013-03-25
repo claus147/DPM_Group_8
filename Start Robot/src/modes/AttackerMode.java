@@ -1,4 +1,5 @@
 package modes;
+import odometry.Odometry;
 import lejos.nxt.Sound;
 
 
@@ -23,14 +24,16 @@ public class AttackerMode {
 	 */
 	public void attackAlgorithm(){
 		
-
-		
+		Odometry odo = new Odometry();
+		odo.start();
+		control.travelTo(60, 60);
 		
 	}
 	/**
 	 * TODO: Call the strategy established in AttackerStrat1
 	 */
 	public void setStrategy(){
+		
 		
 		
 	}
