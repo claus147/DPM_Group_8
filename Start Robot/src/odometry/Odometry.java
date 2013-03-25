@@ -22,6 +22,9 @@ public class Odometry {
 	// lock object for mutual exclusion
 	private Object lock;
 
+	double leftRadius = 2.8;
+	double rightRadius = 2.8;
+	
 	// default constructor
 	public Odometry() {
 		x = 0.0;

@@ -35,8 +35,8 @@ import lejos.nxt.comm.Bluetooth;
  */
 public class BTConnectTest {
 	public void connect() throws Exception {
-		//slave name : headyin / T04M
-		String name = "ShootingBrick";
+		//slave name : headyin / T04M / ShootingBrick
+		String name = "headyin";
 		
 		
 		LCD.drawString("Connecting...", 0, 0);
