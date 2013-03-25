@@ -45,8 +45,11 @@ static int reAdjust = 10;
 			
 			int turn = 180; 
 			int angle1 = 90;
-			NXTRegulatedMotor leftMotor = Motor.A;
-			NXTRegulatedMotor turnMotor = Motor.C;
+			// Launcher motors
+			NXTRegulatedMotor leftMotor = Motor.B;
+			NXTRegulatedMotor rightMotor = Motor.C;
+			//Feeding mechanism
+			NXTRegulatedMotor turnMotor = Motor.A;
 			LCD.drawString(waiting,0,0);
 			LCD.refresh();
 
@@ -71,9 +74,9 @@ static int reAdjust = 10;
 			}*/
 			
 			for(int i= 0; i<5; i++){
-			Motor.C.setSpeed(turn);
+			turnMotor.setSpeed(turn);
 			//Motor.C.rotateTo(angle);
-			Motor.C.rotate(angle1);
+			turnMotor.rotate(angle1);
 
 
 			try {
@@ -84,16 +87,16 @@ static int reAdjust = 10;
 			}
 
 
-			Motor.A.setSpeed(speed);
-			Motor.B.setSpeed(speed);
-			Motor.A.rotateTo(angle, true);
-			Motor.B.rotateTo(angle);
+			leftMotor.setSpeed(speed);
+			rightMotor.setSpeed(speed);
+			leftMotor.rotateTo(angle, true);
+			rightMotor.rotateTo(angle);
 
 			//do return to original position
-			Motor.A.setSpeed(returnSpeed);
-			Motor.B.setSpeed(returnSpeed);
-			Motor.A.rotateTo(reAdjust, true);
-			Motor.B.rotateTo(reAdjust);
+			leftMotor.setSpeed(returnSpeed);
+			rightMotor.setSpeed(returnSpeed);
+			leftMotor.rotateTo(reAdjust, true);
+			rightMotor.rotateTo(reAdjust);
 
 			/* END MOVE ROBOT HERE; INSERT ALGORITHM TODO */
 			
