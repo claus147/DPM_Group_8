@@ -1,17 +1,16 @@
-package connection;
 /*
 * @author Sean Lawlor
 * @date November 3, 2011
 * @class ECSE 211 - Design Principle and Methods
 */
-
+package bluetooth;
 
 import java.io.DataInputStream;
 import java.io.IOException;
 
 import lejos.nxt.LCD;
 
-/*
+/**
  * Static parsers for parsing data off the communication channel
  * 
  * The order of data is defined in the Server's Transmission class
@@ -27,9 +26,19 @@ public class ParseTransmission {
 				Thread.sleep(10); // spin waiting for data
 			
 			trans = new Transmission();
-			trans.goalX = dis.readInt();
+			trans.role = PlayerRole.lookupRole(dis.readInt());
 			ignore(dis);
-			trans.goalY = dis.readInt();
+			trans.startingCorner = StartCorner.lookupCorner(dis.readInt());
+			ignore(dis);
+			trans.bx = dis.readInt();
+			ignore(dis);
+			trans.by = dis.readInt();
+			ignore(dis);
+			trans.w1 = dis.readInt();
+			ignore(dis);
+			trans.w2 = dis.readInt();
+			ignore(dis);
+			trans.d1 = dis.readInt();
 			
 			return trans;
 		} catch (IOException e) {

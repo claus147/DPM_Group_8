@@ -1,18 +1,16 @@
-package connection;
-
 /*
 * @author Sean Lawlor
 * @date November 3, 2011
 * @class ECSE 211 - Design Principle and Methods
 */
-
+package bluetooth;
 
 import java.io.DataInputStream;
 import java.io.IOException;
 
 import lejos.nxt.LCD;
 import lejos.nxt.comm.*;
-/*
+/**
  * This class inits a bluetooth connection, waits for the data
  * and then allows access to the data after closing the BT channel.
  * 
@@ -21,10 +19,16 @@ import lejos.nxt.comm.*;
  * 
  * Then, once completed, it will allow access to an instance of the Transmission
  * class which has access to all of the data needed
+ * 
+ * @author Sean Lawlor, Stepan Salenikovich
+ * @version Fall 2012
  */
 public class BluetoothConnection {
 	private Transmission trans;
 	
+	/**
+	 * Waits for connection from BT server indefinitely. Once connected, gets the transmission and closes the BT connection.
+	 */
 	public BluetoothConnection() {
 		LCD.clear();
 		LCD.drawString("Starting BT connection", 0, 0);
@@ -46,14 +50,22 @@ public class BluetoothConnection {
 		return this.trans;
 	}
 	
+	/**
+	 * Prints the transmission: starting corner, role, bx, by, w1, w2, d1
+	 */
 	public void printTransmission() {
 		try {
 			LCD.clear();
 			LCD.drawString(("Transmitted Values"), 0, 0);
-			LCD.drawString("Goal X: " + trans.goalX, 0, 1);
-			LCD.drawString("Goal Y: " + trans.goalY, 0, 2);
+			LCD.drawString("Start: " + trans.startingCorner.toString(), 0, 1);
+			LCD.drawString("Role: " + trans.role.toString(), 0, 2);
+			LCD.drawString("bx: " + trans.bx, 0, 3);
+			LCD.drawString("by: " + trans.by, 0, 4);
+			LCD.drawString("w1: " + trans.w1, 0, 5);
+			LCD.drawString("w2: " + trans.w2, 0, 6);
+			LCD.drawString("d1: " + trans.d1, 0, 7);
 		} catch (NullPointerException e) {
-			LCD.drawString("Bad Trans", 0, 7);
+			LCD.drawString("Bad Trans", 0, 8);
 		}
 	}
 	
