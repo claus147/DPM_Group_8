@@ -23,9 +23,8 @@ public class AttackerMode {
 	 */
 	public void attackAlgorithm(){
 		
-		Sound.beep();
-		Sound.beep();
-		control.activateMotors();
+
+		
 		
 	}
 	/**

@@ -50,12 +50,29 @@ public class Controller {
 	public void travelTo(double x, double y){
 		navigate.travelTo(x, y);
 	}
+	
+	public void turnTo(double t){
+		navigate.turnTo(t);
+	}
+	
+	public void turn(double t){
+		navigate.turn(t);
+	}
+	
+	public void turnClockWise(){
+		navigate.turnClockWise();
+	}
+	
+	public void turnCounterClockWise(){
+		navigate.turnCounterClockWise();
+	}
+	
 	/* START METHODS TESTING */
 	
 	//WORKS!
-	public void callUSData(){
-		usData.getUSData(data);
-	}
+//	public void callUSData(){
+//		usData.getUSData(data);
+//	}
 	
 
 	

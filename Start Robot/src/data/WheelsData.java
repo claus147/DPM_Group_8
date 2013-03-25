@@ -14,20 +14,19 @@ import lejos.nxt.NXTRegulatedMotor;
  */
 public class WheelsData {
 
-	private final NXTRegulatedMotor leftMotor = Motor.A, rightMotor = Motor.B;
-	private int tachoWheelA;
-	private int tachoWheelB;
+	public static NXTRegulatedMotor leftMotor = Motor.A, rightMotor = Motor.B;
 	
-	public int getLTacho() {
-		tachoWheelA = leftMotor.getTachoCount();
-		try { Thread.sleep(50); } catch (InterruptedException e) {}
-		return tachoWheelA;
+	
+	public static int getLTacho() {
+		 
+//		try { Thread.sleep(50); } catch (InterruptedException e) {}
+		return leftMotor.getTachoCount();
 	}
 	
-	public int getRTacho() {
-		tachoWheelB = rightMotor.getTachoCount();
-		try { Thread.sleep(50); } catch (InterruptedException e) {}
-		return tachoWheelB;
+	public static int getRTacho() {
+		
+		//try { Thread.sleep(50); } catch (InterruptedException e) {}
+		return rightMotor.getTachoCount();
 	}
 
 	

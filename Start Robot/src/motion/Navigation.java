@@ -1,6 +1,6 @@
 package motion;
 
-import data.LCDinfo;
+import data.*;
 import odometry.Odometry;
 import lejos.nxt.Motor;
 import lejos.nxt.NXTRegulatedMotor;
@@ -28,16 +28,10 @@ import lejos.nxt.NXTRegulatedMotor;
  	private static final int FORWARD_SPEED = 180;
  	private static final int ROTATE_SPEED = 100;
  	
- 	NXTRegulatedMotor leftMotor = Motor.A;
- 	NXTRegulatedMotor rightMotor = Motor.B;
+ 	NXTRegulatedMotor leftMotor = WheelsData.leftMotor;
+ 	NXTRegulatedMotor rightMotor = WheelsData.rightMotor;
  	
- 	private static final SensorPort usPortA = SensorPort.S2;
- 	private static final SensorPort usPortB = SensorPort.S3;
- 	UltrasonicSensor usSensorA = new UltrasonicSensor(usPortA);
- 	UltrasonicSensor usSensorB = new UltrasonicSensor(usPortB);
- 	//WallDetector wDetect = new WallDetector(usSensor);
- 	
- 	
+ 
  	/* START TODO : CLEAN THIS CODE */
  	
  	final double leftRadius = 2.8;
@@ -78,20 +72,7 @@ import lejos.nxt.NXTRegulatedMotor;
  			double destinationY2 = 90;
  			int finalOrientation2 = 0;
  			
- 			double headingAngle = findHeadingAngle(destinationX1,destinationY1,odo.getX(), odo.getY() );
  			
- 			
- 			try {
- 				Thread.sleep(1000);
- 			} catch (InterruptedException e) {
- 				
- 			}
- 			turnTo(headingAngle);
- 			try {
- 				Thread.sleep(1000);
- 			} catch (InterruptedException e) {
- 				
- 			}
  			travelTo(destinationX1, destinationY1);
  			try {
  				Thread.sleep(3000);
@@ -100,13 +81,7 @@ import lejos.nxt.NXTRegulatedMotor;
  			}
  			turnTo(finalOrientation1);
  			
- 			headingAngle = findHeadingAngle(destinationX2,destinationY2,odo.getX(), odo.getY() );
- 			try {
- 				Thread.sleep(1000);
- 			} catch (InterruptedException e) {
- 				
- 			}
- 			turnTo(headingAngle);
+ 			
  			try {
  				Thread.sleep(1000);
  			} catch (InterruptedException e) {
@@ -122,6 +97,8 @@ import lejos.nxt.NXTRegulatedMotor;
  			
  	}
  	
+ 	
+ 	
 
  	//Will cause the robot to travel to an absolute destination. The coordinates in input is the destination.
  	
@@ -132,10 +109,27 @@ import lejos.nxt.NXTRegulatedMotor;
  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
  	public void travelTo( double x, double y){
- 		travelToCalled = true;
- 		
  		destinationX = x;
  		destinationY = y;
+ 		
+ 		double headingAngle = findHeadingAngle(x,y,odo.getX(), odo.getY() );
+			
+			
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				
+			}
+			turnTo(headingAngle);
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				
+			}
+ 		
+ 		travelToCalled = true;
+ 		
+ 		
  		
  		double initialX = odo.getX();
  		double initialY = odo.getY();
@@ -144,7 +138,7 @@ import lejos.nxt.NXTRegulatedMotor;
  			LCD.drawString(""+getFilteredDistA(), 0, 4 );
  			LCD.drawString(""+getFilteredDistB(), 0, 5 );
  			//Set variables and initial speeds
- 			double headingAngle;
+ 			
  			double currentX = odo.getX();
  			double currentY = odo.getY();	
  			double currentT = odo.getTheta();
@@ -221,10 +215,34 @@ import lejos.nxt.NXTRegulatedMotor;
  		return headingAngle;
  	}
  	
- 	void turn( double t){
- 		leftMotor.setAcceleration(50);
- 		rightMotor.setAcceleration(50);
- 		leftMotor.setSpeed(ROTATE_SPEED); ///////////////////////////////////////////////////////////////////////////****************************************************
+ 	public void turnClockWise(){
+ 		leftMotor.setAcceleration(3000);
+ 		rightMotor.setAcceleration(3000);
+ 		
+ 		
+ 		
+ 		leftMotor.forward();
+ 		rightMotor.backward();
+ 		leftMotor.setSpeed(ROTATE_SPEED); 
+ 		rightMotor.setSpeed(ROTATE_SPEED);
+ 	}
+ 	
+ 	public void turnCounterClockWise(){
+ 		leftMotor.setAcceleration(3000);
+ 		rightMotor.setAcceleration(3000);
+ 		
+ 		
+ 		
+ 		leftMotor.backward();
+ 		rightMotor.forward();
+ 		leftMotor.setSpeed(ROTATE_SPEED); 
+ 		rightMotor.setSpeed(ROTATE_SPEED);
+ 	}
+ 	
+ 	public void turn( double t){
+ 		leftMotor.setAcceleration(3000);
+ 		rightMotor.setAcceleration(3000);
+ 		leftMotor.setSpeed(ROTATE_SPEED); 
  		rightMotor.setSpeed(ROTATE_SPEED);
  		
  		
@@ -551,7 +569,7 @@ import lejos.nxt.NXTRegulatedMotor;
 // 		}
 // 		return filteredVal;
  		
- 		return usSensorA.getDistance(); 
+ 		return USData.getUS1Data(); 
  	}
  	
  	
@@ -612,7 +630,7 @@ import lejos.nxt.NXTRegulatedMotor;
 // 			
 // 		}
 // 		return filteredVal;
- 		return usSensorB.getDistance(); 
+ 		return USData.getUS2Data(); 
  	}
  	
  	// calculates the angle based on the radius and the distance
