@@ -10,6 +10,7 @@ import javax.bluetooth.RemoteDevice;
 import lejos.nxt.LCD;
 import lejos.nxt.comm.BTConnection;
 import lejos.nxt.comm.Bluetooth;
+import lejos.nxt.comm.NXTConnection;
 
 /**
  * 
@@ -34,6 +35,28 @@ import lejos.nxt.comm.Bluetooth;
  *
  */
 public class BTConnectTest {
+	private Transmission trans;
+	
+	
+	public BTConnectTest(){
+		LCD.clear();
+		LCD.drawString("Starting BT connection", 0, 0);
+		
+		NXTConnection conn = Bluetooth.waitForConnection();
+		DataInputStream dis = conn.openDataInputStream();
+		LCD.drawString("Opened DIS", 0, 1);
+		this.trans = ParseTransmission.parse(dis);
+		LCD.drawString("Finished Parsing", 0, 2);
+		try {
+			dis.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		conn.close();
+		
+	}
+	
+	
 	public void connect() throws Exception {
 		//slave name : headyin / T04M / ShootingBrick
 		String name = "headyin";
@@ -95,6 +118,7 @@ public class BTConnectTest {
 			LCD.refresh();
 			dis.close();
 			dos.close();
+			//conection close
 			btc.close();
 		} catch (IOException ioe) {
 			LCD.drawString("Close Exception", 0, 0);
