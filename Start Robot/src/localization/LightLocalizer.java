@@ -1,11 +1,8 @@
 package localization;
 
 /**
-<<<<<<< HEAD
  * @author Kornpat Choy (Claus)
-=======
- * @author Kornpat Choy (Claus) 
->>>>>>> update
+ * 
  * can localise at any corner, if at bottom of field will end facing upfield and vice versa
  * !!assumes starting location is with the wall to its left (at any corner)
  * corrects the direction it is facing first then turns 90 and corrects the next direction
@@ -31,11 +28,7 @@ public class LightLocalizer {
 	public static double ROTATION_SPEED = 40; 			//was 15
 	public static double [] pos = new double [3];		//to access x, y theta from 2 Wheeled robot
 	public static boolean[] update = new boolean [3]; 	//initialize the update
-<<<<<<< HEAD
-	private double leftThreshold = 0.01; 				//threshold of light sensor - left (larger value is larger tolerance - less sensitive)
-=======
 	private double leftThreshold = 0.03; 				//threshold of light sensor - left (larger value is larger tolerance - less sensitive)
->>>>>>> update
 	
 	/**----------------TODO------------------------------------
 	 * Change this leftThreshold value - fiddle around with it (its different 
@@ -43,11 +36,7 @@ public class LightLocalizer {
 	 * down on the left side (right is ok))
 	 * ----------------End TODO-------------------------------*/
 	
-<<<<<<< HEAD
-	private double rightThreshold = 0.01;				//threshold of light sensor - right (smaller value is smaller tolerance - more sensitive)
-=======
 	private double rightThreshold = 0.03;				//threshold of light sensor - right (smaller value is smaller tolerance - more sensitive)
->>>>>>> update
 	private StartCorner sc = StartCorner.BOTTOM_LEFT; 	//set default as 0,0
 	private double angle1, angle2; 						//starting angle, second angle = start angle + 90
 	private boolean isLineL = false; 					//assume not on a line (left)
@@ -61,13 +50,8 @@ public class LightLocalizer {
 	 * @param lsR - right light sensor
 	 * @param sc - startCorner
 	 */
-<<<<<<< HEAD
 	public LightLocalizer(Odometry odo, Navigation nav, LightSensor lsL, LightSensor lsR, StartCorner sc) {
 		this.odo = odo;
-=======
-	public LightLocalizer(Odometry odom ,Navigation nav, LightSensor lsL, LightSensor lsR, StartCorner sc) {
-		this.odo = odom;
->>>>>>> update
 		this.nav = nav;
 		this.lsL = lsL;
 		this.lsR = lsR;
@@ -131,11 +115,7 @@ public class LightLocalizer {
 			}
 			
 		}
-<<<<<<< HEAD
-		
-=======
-		try { Thread.sleep(2000); } catch (InterruptedException e) {}
->>>>>>> update
+
 		if (sc.getId()<=2){			//if localizing in left of field correct x first
 			pos[0] = sc.getX();
 			update[0] = true;
@@ -175,11 +155,7 @@ public class LightLocalizer {
 			}
 			
 		}
-<<<<<<< HEAD
 		
-=======
-		try { Thread.sleep(2000); } catch (InterruptedException e) {}
->>>>>>> update
 		//updating odometer
 		if (sc.getId()<=2){ 		//if localizing in left of field correct y second
 			pos[1] = sc.getY();
@@ -192,20 +168,11 @@ public class LightLocalizer {
 		update[2] = true;
 		odo.setPosition(pos, update);
 		
-<<<<<<< HEAD
-=======
-		
->>>>>>> update
+
 		if (sc.getId() == 1 || sc.getId() == 4)	//if at the bottom of the field we want to face upfield,
 			nav.turnTo(0);
 		else									//else at top of field so face downfield
 			nav.turnTo(180);
-<<<<<<< HEAD
-=======
-		odo.setX(0);
-		odo.setY(0);
-		odo.setTheta(0);
-		try { Thread.sleep(2000); } catch (InterruptedException e) {}
->>>>>>> update
+
 	}
 }
