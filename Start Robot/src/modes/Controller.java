@@ -14,10 +14,15 @@ public class Controller {
 
 	WheelAData leftMotor = new WheelAData();
 	WheelBData rightMotor = new WheelBData();
+<<<<<<< HEAD
 	public Odometry odo = new Odometry();
+=======
+	public Odometry odo = AttackerMode.odo;
+	USData usData = AttackerMode.usData;
+>>>>>>> update
 	Navigation navigate = new Navigation(odo);
 	
-	USData usData = new USData();
+	
 	WheelsData wheels = new WheelsData();
 	int data;
 	

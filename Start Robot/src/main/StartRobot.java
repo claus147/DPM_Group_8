@@ -21,7 +21,11 @@ import lejos.nxt.*;
  */
 public class StartRobot {
 
+<<<<<<< HEAD
 	static BluetoothConnection compConnect = new BluetoothConnection();	
+=======
+	//static BluetoothConnection compConnect = new BluetoothConnection();	*****Used!!!*
+>>>>>>> update
 	/*
 	 * Main function will ask the user to choose between attacker (left button) or defender mode (right button).
 	 * It will call AttackerMode and DefenderMode class.
@@ -29,7 +33,11 @@ public class StartRobot {
 	public static void main(String args[]){
 
 		
+<<<<<<< HEAD
 		compConnect.printTransmission();
+=======
+		//compConnect.printTransmission(); ****USED¡¡****
+>>>>>>> update
 		Start();
 	
 		
@@ -46,8 +54,8 @@ public class StartRobot {
 		AttackerMode attack = new AttackerMode();
 		DefenderMode defend = new DefenderMode();
 		Odometry odo = new Odometry();
-		Navigation navigate = new Navigation(odo);
-		USData usData = new USData();
+		
+		
 		WheelsData wheels = new WheelsData();
 		
 		UltrasonicSensor us = new UltrasonicSensor(SensorPort.S1);
@@ -58,6 +66,7 @@ public class StartRobot {
 		//LCDinfo LCDinfo = new LCDinfo(odo);
 		int buttonChoice;
 		
+<<<<<<< HEAD
 		if(compConnect.isAttacker()){
 			buttonChoice = Button.ID_RIGHT;
 		}else{
@@ -65,6 +74,15 @@ public class StartRobot {
 		}
 	
 
+=======
+//		if(compConnect.isAttacker()){
+//			buttonChoice = Button.ID_LEFT;
+//		}else{
+//			buttonChoice = Button.ID_RIGHT;
+//		} **USED!!!!!**
+	
+		buttonChoice = Button.ID_LEFT;
+>>>>>>> update
 		do {
 			// clear the display
 			LCD.clear();
@@ -83,7 +101,11 @@ public class StartRobot {
 		
 		//Attacker Mode
 		if (buttonChoice == Button.ID_LEFT) {
+<<<<<<< HEAD
 
+=======
+			try { Thread.sleep(10000); } catch (InterruptedException e) {} //********TAKE OFF 
+>>>>>>> update
 	//	Sound.beep();	
 	//	LCDinfo LCDinfo = new LCDinfo(odo);
 		attack.attackAlgorithm();

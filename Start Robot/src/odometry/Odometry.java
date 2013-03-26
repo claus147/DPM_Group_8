@@ -16,7 +16,8 @@ public class Odometry extends Thread{
 	private double x, y, theta;
 	static double XPosTotal = 0;
 	static double YPosTotal = 0;
-
+	static double thetaTotal = 0;
+	static double totalAngle = 0;
 	// odometer update period, in ms
 	private static final long ODOMETER_PERIOD = 25;
 
@@ -53,7 +54,7 @@ public class Odometry extends Thread{
 		double tachoDiffR = 0;
 		double instantDistanceDiff = 0;
 		double instantAngle = 0;
-		double totalAngle = 0;
+		
 		
 		double XPos = 0;
 		
@@ -130,7 +131,7 @@ public class Odometry extends Thread{
 				}
 			}
 			try {
-				Thread.sleep(200);
+				Thread.sleep(25);
 			} catch (InterruptedException e) {
 				// there is nothing to be done here because it is not expected that
 				// the odometer will be interrupted by another thread
@@ -196,20 +197,20 @@ public class Odometry extends Thread{
 	public void setX(double x) {
 		//XPosTotal = x;
 		synchronized (lock) {
-			this.x = x;
+			this.XPosTotal = x;
 		}
 	}
 
 	public void setY(double y) {
 		//YPosTotal = y;
 		synchronized (lock) {
-			this.y = y;
+			this.YPosTotal = y;
 		}
 	}
 
 	public void setTheta(double theta) {
 		synchronized (lock) {
-			this.theta = theta;
+			this.totalAngle = theta;
 		}
 	}
 }

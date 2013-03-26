@@ -10,22 +10,22 @@ import lejos.nxt.Sound;
 public class DefenderMode {
 
 	
-	Controller control = new Controller();
-	
-
-	
-	/**
-	 * TODO : develop a defender algorithm
-	 * Testing class;
-	 * Activate motors
-	 */
-	public void defendAlgorithm(){
-		
-		Sound.beep();
-		control.activateMotors();
-		
-		
-	}
+//	Controller control = new Controller();
+//	
+//
+//	
+//	/**
+//	 * TODO : develop a defender algorithm
+//	 * Testing class;
+//	 * Activate motors
+//	 */
+//	public void defendAlgorithm(){
+//		
+//		Sound.beep();
+//		control.activateMotors();
+//		
+//		
+//	}
 	/**
 	 * TODO: Call the strategy established in the DefenderStrat1
 	 */

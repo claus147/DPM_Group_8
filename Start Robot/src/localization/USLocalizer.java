@@ -18,7 +18,11 @@ import modes.Controller;
 import motion.Navigation;
 import odometry.Odometry;
 
+<<<<<<< HEAD
 public class USLocalizer {
+=======
+public class USLocalizer extends Thread{
+>>>>>>> update
 	
 	
 	
@@ -26,6 +30,7 @@ public class USLocalizer {
 //	public enum LocalizationType { FALLING_EDGE, RISING_EDGE };
 	public static double ROTATION_SPEED = 30;
 
+<<<<<<< HEAD
 	Odometry odo;
 	Controller control;
 	
@@ -38,6 +43,35 @@ public class USLocalizer {
 		
 		this.odo = odom;
 		this.control = cont;
+=======
+	Odometry odo = new Odometry();
+	Controller control = new Controller(odo);
+	
+	static double angleA = 0, angleB = 0;
+	
+	int filterControl = 0;
+	int FILTER_OUT = 20;
+	
+	USData USData;
+	
+//	public UltrasonicSensor us1 = new UltrasonicSensor(SensorPort.S2);
+//	public UltrasonicSensor us2  = new UltrasonicSensor(SensorPort.S3);
+//	
+//	
+//	public int getUS1Data (){
+//		return us1.getDistance();
+//	}
+//	public int getUS2Data (){
+//		return us2.getDistance();
+//	}
+	
+	
+	public USLocalizer(Odometry odom, Controller cont, USData usD){
+		
+		this.odo = odom;
+		this.control = cont;
+		this.USData = usD;
+>>>>>>> update
 	}
 
 //	public USLocalizer(Odometer odo, UltrasonicSensor us, LocalizationType locType) {
@@ -50,12 +84,21 @@ public class USLocalizer {
 //		us.off();
 //	}
 	
+<<<<<<< HEAD
 	public void doLocalization() {
 		
 		
 		
 		double detect = 50;
 		double margin = 10;
+=======
+	public void run() {
+		
+		
+		
+		double detect = 20;
+		double margin = 5;
+>>>>>>> update
 		
 		control.turnClockWise();
 		
@@ -65,35 +108,67 @@ public class USLocalizer {
 			
 		boolean wall = true;
 		while(true){
+<<<<<<< HEAD
 				
 				
 			if(USData.getFilteredUS1Data() > (detect + margin)){
 					wall = false;
 			}
 			if(!wall && USData.getFilteredUS2Data() < (detect - margin)){
+=======
+			
+//			if(USData.getUS1Data() != 255 ){
+//				Sound.beep();
+//			}
+			if(USData.us1Data > 100 && USData.us2Data > 100){
+					wall = false;
+					
+			}
+			if(!wall && USData.us1Data < (detect - margin)){
+>>>>>>> update
 					wall = true;
 					angleA = odo.getTheta();
 					control.motorsStop();
 					Sound.beep();
 					
 
+<<<<<<< HEAD
+=======
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {	}
+>>>>>>> update
 					
 					control.turnCounterClockWise();
 					
 					
 					while(true){
+<<<<<<< HEAD
 						if(USData.getFilteredUS2Data() > detect + margin){
 							wall = false;
 							
 						}
 						if(!wall && USData.getFilteredUS1Data() < detect - margin){
+=======
+						if(USData.us2Data > 100 && USData.us1Data > 100){
+							wall = false;
+							
+						}
+						if(!wall && USData.us2Data < detect - margin){
+>>>>>>> update
 							wall = true;
 							Sound.beep();
 							angleB = odo.getTheta();
 							
 							control.motorsStop();
+<<<<<<< HEAD
 							Motor.A.stop();
 							Motor.B.stop();
+=======
+							try {
+								Thread.sleep(1000);
+							} catch (InterruptedException e) {	}
+>>>>>>> update
 							
 							break;
 						}

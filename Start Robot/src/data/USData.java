@@ -1,5 +1,9 @@
 package data;
 
+<<<<<<< HEAD
+=======
+import lejos.nxt.LCD;
+>>>>>>> update
 import lejos.nxt.SensorPort; 
 import lejos.nxt.Sound;
 import lejos.nxt.UltrasonicSensor;
@@ -16,6 +20,7 @@ import lejos.util.TimerListener;
  */
 
 
+<<<<<<< HEAD
 public class USData {//implements TimerListener{
 
 	
@@ -36,6 +41,84 @@ public class USData {//implements TimerListener{
 		int filterControl = 0;
 		int FILTER_OUT = 20;
 	    // there will be a delay here
+		distance = us1.getDistance();
+		
+		// rudimentary filter
+		if (distance == 255 && filterControl < FILTER_OUT) {
+			// bad value, do not set the distance var, however do increment the filter value
+			filterControl ++;
+		} else if (distance == 255){
+			// true 255, therefore set distance to 255
+			filtered = distance;
+		} else {
+			// distance went below 255, therefore reset everything.
+			filterControl = 0;
+			filtered = distance;
+		}
+		
+		return filtered;
+	}
+	
+	public static int getFilteredUS2Data(){
+=======
+public class USData extends Thread{//implements TimerListener{
+
+	
+	public static int us1Data = 0;
+	public static int us2Data = 0;
+	public static UltrasonicSensor us1 = new UltrasonicSensor(SensorPort.S2);
+	public static UltrasonicSensor us2  = new UltrasonicSensor(SensorPort.S3);
+	public USData(){
+		
+	}
+	
+	public void run(){
+		while(true){
+			us1Data = us1.getDistance();
+			us2Data = us2.getDistance();
+			try {
+ 			Thread.sleep(50);
+			} catch (InterruptedException e) {
+ 			
+			}
+			LCD.drawString(""+us1Data, 0, 8);
+		}
+		
+	}
+	
+	
+	public static int getFilteredUS1Data(){
+>>>>>>> update
+		int distance;
+		int filtered = 0;
+		int filterControl = 0;
+		int FILTER_OUT = 20;
+	    // there will be a delay here
+<<<<<<< HEAD
+		distance = us2.getDistance();
+		
+		// rudimentary filter
+		if (distance == 255 && filterControl < FILTER_OUT) {
+			// bad value, do not set the distance var, however do increment the filter value
+			filterControl ++;
+		} else if (distance == 255){
+			// true 255, therefore set distance to 255
+			filtered = distance;
+		} else {
+			// distance went below 255, therefore reset everything.
+			filterControl = 0;
+			filtered = distance;
+		}
+		
+		return filtered;
+	}
+
+	
+	public static int getUS2Data (){
+		return us2.getDistance();
+	}
+	
+=======
 		distance = us1.getDistance();
 		
 		// rudimentary filter
@@ -78,11 +161,14 @@ public class USData {//implements TimerListener{
 		return filtered;
 	}
 
-	
-	public static int getUS2Data (){
+	public int getUS1Data (){
+		return us1.getDistance();
+	}
+	public int getUS2Data (){
 		return us2.getDistance();
 	}
 	
+>>>>>>> update
 	
 	
 	
