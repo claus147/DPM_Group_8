@@ -8,6 +8,7 @@ import localization.LightLocalizer;
 import odometry.Odometry;
 import data.LCDinfo;
 import connection.BluetoothConnection;
+import connection.StartCorner;
 
 /*
  * Test class for lsData
@@ -24,12 +25,16 @@ public class LightLocTest{
 		
 		Navigation nav = new Navigation(odo);
 		
+		//BluetoothConnection bc = new BluetoothConnection();
+		//Sound.buzz();
+		
 		LCDinfo info = new LCDinfo(odo);
 		
-		BluetoothConnection bc = new BluetoothConnection();
-		Sound.buzz();
+		StartCorner sc = StartCorner.TOP_RIGHT;
 		
-		LightLocalizer lightLoc = new LightLocalizer(odo, nav, lsL, lsR, bc.getTransmission().startingCorner);
+		LightLocalizer lightLoc = new LightLocalizer(odo, nav, lsL, lsR, sc); //bc.getTransmission().startingCorner
 		lightLoc.doLocalization();
+		
+		while(true){}
 	}
 }
