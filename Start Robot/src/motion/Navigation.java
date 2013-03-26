@@ -1,8 +1,7 @@
 package motion;
 
-import data.*;
+import data.*; 
 import odometry.Odometry;
-import lejos.nxt.Motor;
 import lejos.nxt.NXTRegulatedMotor;
 
 /*
@@ -13,8 +12,8 @@ import lejos.nxt.NXTRegulatedMotor;
  * @author Yu Yang Liu
  * @version 2.0
  */
- import lejos.nxt.LCD;
- import lejos.nxt.*;
+import lejos.nxt.*;
+import modes.Controller;
 
  
  public class Navigation{// extends Thread{
@@ -23,7 +22,7 @@ import lejos.nxt.NXTRegulatedMotor;
  	boolean travelToCalled = false;
  	boolean turnToCalled = false;//
  	
- 	private Odometry odo = new Odometry();
+ 	Odometry odo;
 
  	private static final int FORWARD_SPEED = 180;
  	private static final int ROTATE_SPEED = 100;
@@ -34,8 +33,8 @@ import lejos.nxt.NXTRegulatedMotor;
  
  	/* START TODO : CLEAN THIS CODE */
  	
- 	final double leftRadius = 2.38;
- 	final double rightRadius = 2.38;
+ 	final double leftRadius = 2.7;
+ 	final double rightRadius = 2.7;
  	final double width = 17.0;
  	
  	/* END TODO : CLEAN THIS CODE */
@@ -113,20 +112,24 @@ import lejos.nxt.NXTRegulatedMotor;
  	public void travelTo( double x, double y){
  		destinationX = x;
  		destinationY = y;
+ 		try { Thread.sleep(1000);} catch (InterruptedException e) {}
+ 		Sound.beep();
+ 		double headingAngle = findHeadingAngle(x,y,odo.getX(), odo.getY() );
  		
-// 		double headingAngle = findHeadingAngle(x,y,odo.getX(), odo.getY() );
-//		turnTo(headingAngle);
-//			
-//			try {
-//				Thread.sleep(1000);
-//			} catch (InterruptedException e) {
-//				
-//			}
-//			try {
-//				Thread.sleep(1000);
-//			} catch (InterruptedException e) {
-//				
-//			}
+ 		try { Thread.sleep(1000);} catch (InterruptedException e) {}
+ 		Sound.beep();
+		turnTo(headingAngle);
+			
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				
+			}
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				
+			}
 // 		
  		travelToCalled = true;
  		
@@ -136,8 +139,8 @@ import lejos.nxt.NXTRegulatedMotor;
  		double initialY = odo.getY();
  		while(true){
  			//Draw on the screen the distance read by the sensor
-// 			LCD.drawString(""+getFilteredDistA(), 0, 4 );
-// 			LCD.drawString(""+getFilteredDistB(), 0, 5 );
+	    	LCD.drawString(""+getFilteredDistA(), 0, 4 );
+ 			LCD.drawString(""+getFilteredDistB(), 0, 5 );
  			//Set variables and initial speeds
  			
  			double currentX = odo.getX();
@@ -153,7 +156,8 @@ import lejos.nxt.NXTRegulatedMotor;
  			leftMotor.setAcceleration(3000);
  			rightMotor.setSpeed(FORWARD_SPEED);
  			leftMotor.setSpeed(FORWARD_SPEED); /////////////////////////////////////////////////////////////////////////////////////*********************************************
- 			double headingAngle = findHeadingAngle(x,y,currentX,currentY);
+ 			headingAngle = findHeadingAngle(x,y,currentX,currentY);
+ 			
  			//Calls turnTo method to change the angle of the robot
  			turnTo(headingAngle);
  			
@@ -214,6 +218,43 @@ import lejos.nxt.NXTRegulatedMotor;
  			headingAngle = atanTemp;
  		}
  		return headingAngle;
+ 	}
+ 	
+ 	
+ 	public void motorsStop(){
+ 		leftMotor.stop(true);
+ 		rightMotor.stop(true);
+ 	}
+ 	
+ 	public void leftMotorStop(){
+ 		leftMotor.stop(true);
+ 	}
+ 	public void rightMotorStop(){
+ 		rightMotor.stop(true);
+ 	}
+ 	
+ 	public void goForward(){
+ 		leftMotor.setAcceleration(3000);
+ 		rightMotor.setAcceleration(3000);
+ 		
+ 		
+ 		
+ 		leftMotor.forward();
+ 		rightMotor.forward();
+ 		leftMotor.setSpeed(FORWARD_SPEED); 
+ 		rightMotor.setSpeed(FORWARD_SPEED);
+ 	}
+ 	
+ 	public void goBackward(){
+ 		leftMotor.setAcceleration(3000);
+ 		rightMotor.setAcceleration(3000);
+ 		
+ 		
+ 		
+ 		leftMotor.backward();
+ 		rightMotor.backward();
+ 		leftMotor.setSpeed(FORWARD_SPEED); 
+ 		rightMotor.setSpeed(FORWARD_SPEED);
  	}
  	
  	public void turnClockWise(){
@@ -287,11 +328,14 @@ import lejos.nxt.NXTRegulatedMotor;
 // 			}
  			
  			if(angleDiff > 2){
- 				rightMotor.setAcceleration(800);
- 				rightMotor.setSpeed(FORWARD_SPEED - 50);
- 			}else if(angleDiff < -2 ){
  				leftMotor.setAcceleration(800);
  				leftMotor.setSpeed(FORWARD_SPEED - 50);
+ 				try { Thread.sleep(1000);} catch (InterruptedException e) {}
+ 				Sound.beep();
+ 				
+ 			}else if(angleDiff < -2 ){
+ 				rightMotor.setAcceleration(800);
+ 				rightMotor.setSpeed(FORWARD_SPEED - 50);
  			}else{}
  			
  			try {

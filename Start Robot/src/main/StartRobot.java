@@ -2,6 +2,7 @@ package main;
 
 import connection.BTConnectTest;
 import connection.BTReceive;
+import connection.BluetoothConnection;
 import odometry.Odometry;
 import data.*;
 import modes.*;
@@ -20,13 +21,15 @@ import lejos.nxt.*;
  */
 public class StartRobot {
 
-	
+	static BluetoothConnection compConnect = new BluetoothConnection();	
 	/*
 	 * Main function will ask the user to choose between attacker (left button) or defender mode (right button).
 	 * It will call AttackerMode and DefenderMode class.
 	 */
 	public static void main(String args[]){
-	 
+
+		
+		compConnect.printTransmission();
 		Start();
 	
 		
@@ -39,7 +42,7 @@ public class StartRobot {
 		
 		//BTConnectTest connect = new BTConnectTest();
 		BTReceive connectReceive = new BTReceive();
-		
+	
 		AttackerMode attack = new AttackerMode();
 		DefenderMode defend = new DefenderMode();
 		Odometry odo = new Odometry();
@@ -51,11 +54,16 @@ public class StartRobot {
 		LightSensor lsL = new LightSensor(SensorPort.S2);
 		LightSensor lsR = new LightSensor(SensorPort.S3);
 		
-		Controller control = new Controller();
+		Controller control = new Controller(odo);
 		//LCDinfo LCDinfo = new LCDinfo(odo);
-
-		
 		int buttonChoice;
+		
+		if(compConnect.isAttacker()){
+			buttonChoice = Button.ID_RIGHT;
+		}else{
+			buttonChoice = Button.ID_LEFT;
+		}
+	
 
 		do {
 			// clear the display
@@ -67,9 +75,9 @@ public class StartRobot {
 			LCD.drawString("        |         	 ", 0, 1);
 			LCD.drawString(" Mode   | Mode"			, 0, 2);
 			LCD.drawString(" edge   |  "			, 0, 3);
-				
+		
 
-			buttonChoice = Button.waitForAnyPress();
+		//	buttonChoice = Button.waitForAnyPress();
 		} while (buttonChoice != Button.ID_LEFT
 				&& buttonChoice != Button.ID_RIGHT);
 		
@@ -83,6 +91,7 @@ public class StartRobot {
 		// Defender Mode
 		else{
 		
+		//	compConnect.printTransmission();
 			
 		// Testing the Launcher via bluetooth;
 		BTConnectTest connect = new BTConnectTest();
@@ -92,6 +101,8 @@ public class StartRobot {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		
 		// turnTo works!
 		// navigate.turnTo(180);
 		
@@ -104,4 +115,4 @@ public class StartRobot {
 		
 			
 	}
-}
+		}

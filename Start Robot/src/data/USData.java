@@ -11,6 +11,7 @@ import lejos.util.TimerListener;
  * Will take the data from the Ultrasonic Sensor
  * @author Tuan-Kiet Luu
  * @author Kornpat Choy (Claus)
+ * @author Yu Yang Liu
  * @version 1.1
  */
 
@@ -19,8 +20,8 @@ public class USData {//implements TimerListener{
 
 	
 	
-	private static final SensorPort usPortA = SensorPort.S2;
- 	private static final SensorPort usPortB = SensorPort.S3;
+	public static SensorPort usPortA = SensorPort.S2;
+	public static SensorPort usPortB = SensorPort.S3;
 	public static UltrasonicSensor us1 = new UltrasonicSensor(usPortA);
 	public static UltrasonicSensor us2 = new UltrasonicSensor(usPortB);
 	
@@ -29,9 +30,60 @@ public class USData {//implements TimerListener{
 		return us1.getDistance();
 	}
 	
+	public static int getFilteredUS1Data(){
+		int distance;
+		int filtered = 0;
+		int filterControl = 0;
+		int FILTER_OUT = 20;
+	    // there will be a delay here
+		distance = us1.getDistance();
+		
+		// rudimentary filter
+		if (distance == 255 && filterControl < FILTER_OUT) {
+			// bad value, do not set the distance var, however do increment the filter value
+			filterControl ++;
+		} else if (distance == 255){
+			// true 255, therefore set distance to 255
+			filtered = distance;
+		} else {
+			// distance went below 255, therefore reset everything.
+			filterControl = 0;
+			filtered = distance;
+		}
+		
+		return filtered;
+	}
+	
+	public static int getFilteredUS2Data(){
+		int distance;
+		int filtered = 0;
+		int filterControl = 0;
+		int FILTER_OUT = 20;
+	    // there will be a delay here
+		distance = us2.getDistance();
+		
+		// rudimentary filter
+		if (distance == 255 && filterControl < FILTER_OUT) {
+			// bad value, do not set the distance var, however do increment the filter value
+			filterControl ++;
+		} else if (distance == 255){
+			// true 255, therefore set distance to 255
+			filtered = distance;
+		} else {
+			// distance went below 255, therefore reset everything.
+			filterControl = 0;
+			filtered = distance;
+		}
+		
+		return filtered;
+	}
+
+	
 	public static int getUS2Data (){
 		return us2.getDistance();
 	}
+	
+	
 	
 	
 //	

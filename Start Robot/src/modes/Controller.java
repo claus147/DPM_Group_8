@@ -9,16 +9,22 @@ import data.*;
  */
 
 public class Controller {
+	
+	
 
 	WheelAData leftMotor = new WheelAData();
 	WheelBData rightMotor = new WheelBData();
-	private Odometry odo = new Odometry();
+	public Odometry odo = new Odometry();
 	Navigation navigate = new Navigation(odo);
 	
 	USData usData = new USData();
 	WheelsData wheels = new WheelsData();
 	int data;
 	
+	
+	public Controller(Odometry odom){
+		this.odo = odom;
+	}
 	/**
 	 * Testing phase : linking controller to wheels
 	 */
@@ -47,6 +53,27 @@ public class Controller {
 		
 		
 	}
+	
+	public void goForward(){
+		navigate.goForward();
+	}
+	
+	public void goBackward(){
+		navigate.goBackward();
+	}
+	
+	public void motorsStop(){
+		navigate.motorsStop();
+	}
+	
+	public void leftMotorStop(){
+		navigate.leftMotorStop();
+	}
+	
+	public void rightMotorStop(){
+		navigate.rightMotorStop();
+	}
+	
 	public void travelTo(double x, double y){
 		navigate.travelTo(x, y);
 	}
@@ -66,6 +93,20 @@ public class Controller {
 	public void turnCounterClockWise(){
 		navigate.turnCounterClockWise();
 	}
+	
+//	
+//	public void setX(double x){
+//		odo.setX(x);
+//	}
+//	
+//	public void setY(double y){
+//		odo.setY(y);
+//	}
+//	
+//	public void setTheta (double t){
+//		odo.setTheta(t);
+//	}
+	
 	
 	/* START METHODS TESTING */
 	

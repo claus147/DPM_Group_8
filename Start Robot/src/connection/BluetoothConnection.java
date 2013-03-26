@@ -71,4 +71,13 @@ public class BluetoothConnection {
 		}
 	}
 	
+	public boolean isAttacker(){
+		
+		if(trans.role.toString().equals("Bessy")){
+			return true;
+		}
+		return false;
+		
+	}
+	
 }
