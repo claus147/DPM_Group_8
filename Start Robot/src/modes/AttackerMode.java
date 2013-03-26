@@ -28,7 +28,7 @@ public class AttackerMode {
 		Odometry odo = new Odometry();
 		Navigation nav = new Navigation(odo);
 		odo.start();
-		double headingAngle = nav.findHeadingAngle(-60,60,odo.getX(), odo.getY() );
+		double headingAngle = nav.findHeadingAngle(60,120,odo.getX(), odo.getY() );
 		control.turnTo(headingAngle);
 			
 			try {
@@ -42,7 +42,7 @@ public class AttackerMode {
 				
 			}
  		
-		control.travelTo(-60, 60);
+		control.travelTo(60, 120);
 		
 	}
 	/**
