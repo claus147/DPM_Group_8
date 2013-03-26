@@ -34,8 +34,8 @@ import lejos.nxt.NXTRegulatedMotor;
  
  	/* START TODO : CLEAN THIS CODE */
  	
- 	final double leftRadius = 2.7;
- 	final double rightRadius = 2.7;
+ 	final double leftRadius = 2.38;
+ 	final double rightRadius = 2.38;
  	final double width = 17.0;
  	
  	/* END TODO : CLEAN THIS CODE */
