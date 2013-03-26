@@ -23,8 +23,8 @@ public class Odometry extends Thread{
 	// lock object for mutual exclusion
 	private Object lock;
 
-	double leftRadius = 2.7;
-	double rightRadius = 2.7;
+	double leftRadius = 2.5;
+	double rightRadius = 2.5;
 	
 	// default constructor
 	public Odometry() {
@@ -40,9 +40,7 @@ public class Odometry extends Thread{
 		
 
 
-		double leftRadius = 2.7; // left wheel radius
-		double rightRadius = 2.7; // right wheel radius
-
+		
 		double WB = 17.0;
 
 		double currentTachoL = 0;

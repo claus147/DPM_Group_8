@@ -1,101 +1,101 @@
-/**
- * @author Kornpat Choy (Claus)
- * @author Tuan-Kiet Luu
- * 
- * @version 2.0
- */
 package data;
 
-import localization.USLocalizer;
 
-import java.util.*;
+import odometry.Odometry; 
+import lejos.nxt.LCD;
+import modes.Controller;
 
-import odometry.Odometry;
-import lejos.nxt.*;
-import lejos.util.TimerListener;
-
-/**
- * @author Tuan-Kiet
- * @author Yu Yang Liu
- * @author Kornpat Choy
- * @author Nabil Zoldjalali
- * This class will show all data on the LCD Screen
- */
-
-	import lejos.nxt.LCD;
-import lejos.nxt.LightSensor;
-import lejos.nxt.SensorPort;
-import lejos.nxt.UltrasonicSensor;
-import lejos.util.Timer;
-import lejos.util.TimerListener;
-
-	public class LCDinfo implements TimerListener{
-		private LightSensor lsL = new LightSensor(SensorPort.S1);
-		private LightSensor lsR = new LightSensor(SensorPort.S2);
-		
-		WheelsData wheels = new WheelsData();
-		USData usData = new USData();
-		LSData lsDataL = new LSData(lsL);
-		LSData lsDataR = new LSData(lsR);
-		Odometry odo = new Odometry();
-		private int data;
-		
-		public static final int LCD_REFRESH = 100;
-		private UltrasonicSensor us;
-		private Timer lcdTimer; 
-		
-		// arrays for displaying data
-		private double [] pos;
-		private boolean [] update = new boolean [3];
-		
-		public LCDinfo(Odometry odo) {
-			this.odo = odo;
-			this.lcdTimer = new Timer(LCD_REFRESH, this);
-			
-			// initialise the arrays for displaying data
-			pos = new double [3];
-			update[0] = true;
-			update[1] = true;
-			update[2] = true;
-			
-			// start the timer
-			lcdTimer.start();
-		}
-		
-		
-		public void timedOut() { 
-			
-			odo.getPosition(pos, update);
-			
-			LCD.clear();
-			
-			LCD.drawString("X:  ", 0,0);		LCD.drawString("Dis: ", 8,0);  // X position&distance (loc)
-			LCD.drawString("Y:  ", 0,1);		LCD.drawString("Di2: ", 8,1); // y position
-			LCD.drawString("Th: ", 0,2); 	// theta 				
-			LCD.drawString("LSL:", 0, 3);	//light sensor left
-			LCD.drawString("LSR:", 0, 4);	//light sensor Right	
-			LCD.drawString("LM :", 0, 5);	//left motor
-			LCD.drawString("RM :", 0, 6);	//right motor
-			LCD.drawString("US :", 0, 7);	//ultrasonic sensor
-			
-						/* START NOT TESTED YET*/
-			LCD.drawInt((int) pos[0], 4, 0);			LCD.drawInt((int)USLocalizer.distance, 11, 0);//this works 
-			LCD.drawInt((int) pos[1], 4, 1);			LCD.drawInt((int)USLocalizer.distance2, 11, 1);//this works
-			LCD.drawInt((int) pos[2], 4, 2);
-			
-			/* END NOT TESTED YET */
-
-//			LCD.drawInt((int) lsDataL.getLSData(), 4, 3);
-//			LCD.drawInt((int) lsDataR.getLSData(), 4, 4);
-//			LCD.drawInt((int) wheels.getLTacho(), 4, 5);	
-//			LCD.drawInt((int) wheels.getRTacho(), 4, 6);	
-//			LCD.drawInt((int) usData.getUSData(data), 4, 7);
-
-			
-			
-		}
-		
+public class LCDinfo extends Thread {
+	private static final long DISPLAY_PERIOD = 250;
+	public Odometry odo = new Odometry();;
+	public Controller control;
 	
+	
+	// constructor
+	public LCDinfo(Odometry odom, Controller cont) {
+		this.odo = odom;
+		this.control = cont;
+		
+	}
 
+	// run method (required for Thread)
+	public void run() {
+		long displayStart, displayEnd;
+		double[] position = new double[3];
+
+		// clear the display once
+		LCD.clearDisplay();
+
+		while (true) {
+			displayStart = System.currentTimeMillis();
+
+			// clear the lines for displaying odometry information
+			LCD.drawString("X:              ", 0, 0);
+			LCD.drawString("Y:              ", 0, 1);
+			LCD.drawString("T:              ", 0, 2);
+			
+
+			// get the odometry information
+			odo.getPosition(position, new boolean[] { true, true, true });
+
+			// display odometry information
+			for (int i = 0; i < 3; i++) {
+				LCD.drawString(formattedDoubleToString(position[i], 2), 3, i);
+			}
+
+			// throttle the OdometryDisplay
+			displayEnd = System.currentTimeMillis();
+			if (displayEnd - displayStart < DISPLAY_PERIOD) {
+				try {
+					Thread.sleep(DISPLAY_PERIOD - (displayEnd - displayStart));
+				} catch (InterruptedException e) {
+					// there is nothing to be done here because it is not
+					// expected that OdometryDisplay will be interrupted
+					// by another thread
+				}
+			}
+		}
 	}
 	
+	private static String formattedDoubleToString(double x, int places) {
+		String result = "";
+		String stack = "";
+		long t;
+		
+		// put in a minus sign as needed
+		if (x < 0.0)
+			result += "-";
+		
+		// put in a leading 0
+		if (-1.0 < x && x < 1.0)
+			result += "0";
+		else {
+			t = (long)x;
+			if (t < 0)
+				t = -t;
+			
+			while (t > 0) {
+				stack = Long.toString(t % 10) + stack;
+				t /= 10;
+			}
+			
+			result += stack;
+		}
+		
+		// put the decimal, if needed
+		if (places > 0) {
+			result += ".";
+		
+			// put the appropriate number of decimals
+			for (int i = 0; i < places; i++) {
+				x = Math.abs(x);
+				x = x - Math.floor(x);
+				x *= 10.0;
+				result += Long.toString((long)x);
+			}
+		}
+		
+		return result;
+	}
+
+}

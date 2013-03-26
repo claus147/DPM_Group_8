@@ -22,7 +22,7 @@ import modes.Controller;
  	boolean travelToCalled = false;
  	boolean turnToCalled = false;//
  	
- 	Odometry odo;
+ 	Odometry odo = new Odometry();
 
  	private static final int FORWARD_SPEED = 180;
  	private static final int ROTATE_SPEED = 100;
@@ -33,8 +33,8 @@ import modes.Controller;
  
  	/* START TODO : CLEAN THIS CODE */
  	
- 	final double leftRadius = 2.7;
- 	final double rightRadius = 2.7;
+ 	final double leftRadius = 2.5;
+ 	final double rightRadius = 2.5;
  	final double width = 17.0;
  	
  	/* END TODO : CLEAN THIS CODE */
@@ -330,8 +330,7 @@ import modes.Controller;
  			if(angleDiff > 2){
  				leftMotor.setAcceleration(800);
  				leftMotor.setSpeed(FORWARD_SPEED - 50);
- 				try { Thread.sleep(1000);} catch (InterruptedException e) {}
- 				Sound.beep();
+ 				
  				
  			}else if(angleDiff < -2 ){
  				rightMotor.setAcceleration(800);
