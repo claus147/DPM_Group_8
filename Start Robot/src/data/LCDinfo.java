@@ -7,11 +7,9 @@ import modes.Controller;
 
 public class LCDinfo extends Thread {
 	private static final long DISPLAY_PERIOD = 250;
-<<<<<<< HEAD
-	public Odometry odo = new Odometry();;
-=======
-	public Odometry odo;
->>>>>>> update
+	
+	public Odometry odo; //new Odometry();
+
 	public Controller control;
 	
 	
