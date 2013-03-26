@@ -13,10 +13,7 @@ import lejos.nxt.NXTRegulatedMotor;
  * @version 2.0
  */
 import lejos.nxt.*;
-<<<<<<< HEAD
-=======
 import modes.AttackerMode;
->>>>>>> update
 import modes.Controller;
 
  
@@ -54,19 +51,13 @@ import modes.Controller;
  	
  	public enum WheelSide { LEFT, RIGHT };
  	
-<<<<<<< HEAD
-=======
+
  	USData USData = AttackerMode.usData;
  	
->>>>>>> update
  	//Class constructor has odometer as argument
  	public Navigation (Odometry odometer) {
  		
  		this.odo = odometer;
-<<<<<<< HEAD
-=======
- 		
->>>>>>> update
  	}
  	/*
  	// This method will run instructions to the targeted coordinates
@@ -184,15 +175,11 @@ import modes.Controller;
  			//If sensor detects a wall, call the wall follower method                     make sure the wall is not the obstacle...	
  			int dataA = getFilteredDistA();
  			int dataB = getFilteredDistB();
-<<<<<<< HEAD
- 			if((dataA < 30 || dataB < 30) && Math.sqrt((currentX-x)*(currentX-x) + (currentY-y)*(currentY-y)) > 40){
- 				avoidWall(currentT);
- 			}
-=======
+
 // 			if((dataA < 30 || dataB < 30) && Math.sqrt((currentX-x)*(currentX-x) + (currentY-y)*(currentY-y)) > 40){
 // 				avoidWall(currentT);
 // 			}
->>>>>>> update
+
  			
 // 			leftMotor.stop();
 // 			rightMotor.stop();
@@ -392,11 +379,9 @@ import modes.Controller;
  			
  		}
  		if(getFilteredDistA() < 30 && getFilteredDistB() > 30){ // brick at LEFT
-<<<<<<< HEAD
- 			turn(70); //TURN RIGHT
-=======
+
  			turn(60); //TURN RIGHT
->>>>>>> update
+
  			try {
  				Thread.sleep(1000);
  			} catch (InterruptedException e) {
@@ -404,11 +389,9 @@ import modes.Controller;
  			}
  			leftMotor.forward();
  			rightMotor.forward();
-<<<<<<< HEAD
- 			leftMotor.setSpeed(FORWARD_SPEED - 30);  /////////////////////////////////////////////////////////////////////////
-=======
+
  			leftMotor.setSpeed(FORWARD_SPEED - 80);  /////////////////////////////////////////////////////////////////////////
->>>>>>> update
+
  			rightMotor.setSpeed(FORWARD_SPEED); /////////////////////////////////////////////////////////////////////////
  			while(true)
  			{
@@ -416,11 +399,9 @@ import modes.Controller;
  			}			
  			
  		}else if(getFilteredDistB() < 30 && getFilteredDistA() > 30){ // BRICK AT RIGHT
-<<<<<<< HEAD
- 			turn(-70); // TURN LEFT
-=======
+
  			turn(-60); // TURN LEFT
->>>>>>> update
+
  			try {
  				Thread.sleep(500);
  			} catch (InterruptedException e) {
@@ -432,11 +413,9 @@ import modes.Controller;
  			rightMotor.setAcceleration(800);
  			
  			leftMotor.setSpeed(FORWARD_SPEED);  /////////////////////////////////////////////////////////////////////////
-<<<<<<< HEAD
- 			rightMotor.setSpeed(FORWARD_SPEED - 30); /////////////////////////////////////////////////////////////////////////
-=======
+
  			rightMotor.setSpeed(FORWARD_SPEED - 80); /////////////////////////////////////////////////////////////////////////
->>>>>>> update
+
  			
  			while(true)
  			{
@@ -624,13 +603,6 @@ import modes.Controller;
  		}
  	}
  	
-<<<<<<< HEAD
- 	int getDist(UltrasonicSensor us){
- 		return us.getDistance();
- 	}
-=======
- 	
->>>>>>> update
  	
  	int getFilteredDistA(){
  		
@@ -652,11 +624,9 @@ import modes.Controller;
 // 		}
 // 		return filteredVal;
  		
-<<<<<<< HEAD
- 		return USData.getUS1Data(); 
-=======
- 		return USData.us1Data; 
->>>>>>> update
+
+ 		return -1;//USData.us1Data; 
+
  	}
  	
  	
@@ -666,11 +636,8 @@ import modes.Controller;
 // 		double distance = Math.sqrt((destX-curX)*(destX-curX)+(destY-curY)*(destY-curY));
 // 		double currentX = odo.getX();
 // 		double currentY = odo.getY();
-<<<<<<< HEAD
- 		double limit = 10;
-=======
  		double limit = 20;
->>>>>>> update
+ 		
  		//left-bottom ~ right-top
  		if(iniX <= destX 
  				&& iniY <= destY 
@@ -721,11 +688,9 @@ import modes.Controller;
 // 			
 // 		}
 // 		return filteredVal;
-<<<<<<< HEAD
- 		return USData.getUS2Data(); 
-=======
- 		return USData.us2Data; 
->>>>>>> update
+
+ 		return -1;//USData.us2Data; 
+
  	}
  	
  	// calculates the angle based on the radius and the distance
