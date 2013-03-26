@@ -75,7 +75,7 @@ public class AttackerMode {
 			7. Once at the launch position, the robot fires on the goal with one or more balls.
 			8. The robot then returns to the starting position and halts.
 		 */
-		
+	
 		//launch X and Y are the coordinates of the goal - 8 feet
 		double launchX = 0;
 		double launchY = 0;
@@ -84,6 +84,7 @@ public class AttackerMode {
 		/* step 3 */
 		// ???
 		/* step 4 */
+	
 		lightLocalizer.doLocalization();
 		try { Thread.sleep(2000); } catch (InterruptedException e) {}
 		/* step 5 + step 6, Obstacle avoidance not working yet */
@@ -98,7 +99,9 @@ public class AttackerMode {
 		}
 		/* step 8 */
 		control.travelTo(0, 0);
-		
+	
+	
+	
 		
 	}
 	
