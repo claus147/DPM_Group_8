@@ -119,10 +119,10 @@ public class USLocalizer {
 			angleA = pos[2];								//set the angle given by odometer
 			
 
+			nav.turnCounterClockWise();
+			
 			//sleep so it doesnt think that the wall edge just detected is the other wall edge
 			try { Thread.sleep(3000); } catch (InterruptedException e) {}	
-			
-			nav.turnCounterClockWise();
 			
 			while (!isWallL){ //while not crossing the negative x axis (left)
 				isWallL = USDataL.getIsWall();
