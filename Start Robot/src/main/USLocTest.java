@@ -16,8 +16,8 @@ import data.LCDinfo;
 
 public class USLocTest{
 	public static void main (String args[]) {
-		UltrasonicSensor usL = new UltrasonicSensor(SensorPort.S2);
-		UltrasonicSensor usR = new UltrasonicSensor(SensorPort.S3);
+		UltrasonicSensor usL = new UltrasonicSensor(SensorPort.S3);
+		UltrasonicSensor usR = new UltrasonicSensor(SensorPort.S2);
 	
 		Odometry odo = new Odometry(true);
 		

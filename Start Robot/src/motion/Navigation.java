@@ -26,7 +26,7 @@ import modes.Controller;
  	Odometry odo;// = new Odometry();
 
  	private static final int FORWARD_SPEED = 180;
- 	private static final int ROTATE_SPEED = 100;
+ 	private static final int ROTATE_SPEED = 80;
  	
  	NXTRegulatedMotor leftMotor = WheelsData.leftMotor;
  	NXTRegulatedMotor rightMotor = WheelsData.rightMotor;
@@ -264,27 +264,27 @@ import modes.Controller;
  	}
  	
  	public void turnClockWise(){
- 		leftMotor.setAcceleration(3000);
- 		rightMotor.setAcceleration(3000);
+ 		//leftMotor.setAcceleration(3000);
+ 		//rightMotor.setAcceleration(3000);
  		
  		
- 		
- 		leftMotor.forward();
- 		rightMotor.backward();
  		leftMotor.setSpeed(ROTATE_SPEED); 
  		rightMotor.setSpeed(ROTATE_SPEED);
+ 		leftMotor.forward();
+ 		rightMotor.backward();
+
  	}
  	
  	public void turnCounterClockWise(){
- 		leftMotor.setAcceleration(3000);
- 		rightMotor.setAcceleration(3000);
+ 		//leftMotor.setAcceleration(3000);
+ 		//rightMotor.setAcceleration(3000);
  		
  		
- 		
- 		leftMotor.backward();
- 		rightMotor.forward();
  		leftMotor.setSpeed(ROTATE_SPEED); 
  		rightMotor.setSpeed(ROTATE_SPEED);
+ 		leftMotor.backward();
+ 		rightMotor.forward();
+
  	}
  	
  	public void turn( double t){
@@ -733,5 +733,40 @@ import modes.Controller;
  		leftMotor.setSpeed(0);
  		rightMotor.setSpeed(0);
  	}
+ 	
+ 	public void keepRotating(double rotationalSpeed) {
+		double leftSpeed, rightSpeed;
+
+		leftSpeed = (rotationalSpeed * width * Math.PI / 360.0) *
+				180.0 / (leftRadius * Math.PI);
+		rightSpeed = (- rotationalSpeed * width * Math.PI / 360.0) *
+				180.0 / (rightRadius * Math.PI);
+
+		// set motor directions
+		if (leftSpeed > 0.0)
+			leftMotor.forward();
+		else {
+			leftMotor.backward();
+			leftSpeed = -leftSpeed;
+		}
+		
+		if (rightSpeed > 0.0)
+			rightMotor.forward();
+		else {
+			rightMotor.backward();
+			rightSpeed = -rightSpeed;
+		}
+		
+		// set motor speeds
+		if (leftSpeed > 900.0)
+			leftMotor.setSpeed(900);
+		else
+			leftMotor.setSpeed((int)leftSpeed);
+		
+		if (rightSpeed > 900.0)
+			rightMotor.setSpeed(900);
+		else
+			rightMotor.setSpeed((int)rightSpeed);
+	}
 
  }

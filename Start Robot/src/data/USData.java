@@ -17,7 +17,7 @@ import lejos.util.TimerListener;
 
 public class USData implements TimerListener{
 	
-	private int noWall = 80;
+	private int noWall = 30;
 	private Timer timer;
 	private int sleepTime = 50; //optimal sleepTime
 	private boolean isWall = false;
