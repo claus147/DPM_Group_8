@@ -2,6 +2,7 @@ package main;
 
 import lejos.nxt.SensorPort;
 import lejos.nxt.UltrasonicSensor;
+import modes.Controller;
 import motion.Navigation;
 import localization.USLocalizer;
 import odometry.Odometry;
@@ -22,7 +23,8 @@ public class USLocTest{
 		
 		Navigation nav = new Navigation(odo);
 		
-		LCDinfo info = new LCDinfo(odo);
+		Controller con = new Controller(odo);
+		LCDinfo info = new LCDinfo(odo, con);
 		
 		USLocalizer usLoc = new USLocalizer(odo, usL, usR, USLocalizer.LocalizationType.RISING_EDGE);
 		usLoc.doLocalization();
