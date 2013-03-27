@@ -18,7 +18,7 @@ public class lsTest{
 		LightSensor lsL = new LightSensor(SensorPort.S1);
 		LightSensor lsR = new LightSensor(SensorPort.S4);
 	
-		Odometry odo = new Odometry();
+		Odometry odo = new Odometry(true);
 		
 		Navigation nav = new Navigation(odo);
 		

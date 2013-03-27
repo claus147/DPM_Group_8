@@ -21,7 +21,7 @@ public class USData implements TimerListener{
 	private Timer timer;
 	private int sleepTime = 50; //optimal sleepTime
 	private boolean isWall = false;
-	private int usData;
+	private double usData;
 	private UltrasonicSensor us = new UltrasonicSensor(SensorPort.S1); //default port
 	
 	/**
@@ -57,9 +57,10 @@ public class USData implements TimerListener{
 	
 	public void timedOut() {
 		setIsWall(false);
-		if(getUSData(usData)<=noWall){
+		usData = getFilteredData();
+		if(usData<noWall){
 			setIsWall(true);
-			Sound.twoBeeps();
+			Sound.buzz();
 		}
 	}
 	
@@ -68,9 +69,9 @@ public class USData implements TimerListener{
 	 * This method will take the distance using the ultrasonic Sensor
 	 * @return usData
 	 */
-	public double getUSData(int usData){
+	public double getFilteredData(){
 		// do a ping
-		// us.ping();
+		//us.reset();
 		usData = us.getDistance();
 		
 		//TODO : CHANGE THIS CONDITION
