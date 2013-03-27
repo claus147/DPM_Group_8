@@ -12,7 +12,7 @@ package localization;
  * @version 3.0 - added the any corner localisation
  */
 
-import modes.AttackerMode; 
+//import modes.AttackerMode; 
 import motion.Navigation;
 import connection.StartCorner;
 import data.LSData;

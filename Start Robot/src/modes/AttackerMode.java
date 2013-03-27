@@ -25,7 +25,7 @@ import connection.StartCorner;
  */
 public class AttackerMode {
 
-	public static Odometry odo = new Odometry();
+	public static Odometry odo;
 	Controller control = new Controller(odo);
 	private LightSensor lsr = new LightSensor(SensorPort.S4);
 	private LightSensor lsl = new LightSensor(SensorPort.S1);
@@ -43,8 +43,7 @@ public class AttackerMode {
 	 */
 	public void attackAlgorithm(){
 		
-		
-		odo.start();
+		odo = new Odometry(true);
 		LCDinfo lcd = new LCDinfo(odo, control);
 		lcd.start();
 		

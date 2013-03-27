@@ -23,7 +23,7 @@ import modes.Controller;
  	boolean travelToCalled = false;
  	boolean turnToCalled = false;//
  	
- 	Odometry odo = new Odometry();
+ 	Odometry odo;// = new Odometry();
 
  	private static final int FORWARD_SPEED = 180;
  	private static final int ROTATE_SPEED = 100;
@@ -34,8 +34,8 @@ import modes.Controller;
  
  	/* START TODO : CLEAN THIS CODE */
  	
- 	final double leftRadius = 2.5;
- 	final double rightRadius = 2.5;
+ 	final double leftRadius = 2.4;
+ 	final double rightRadius = 2.4;
  	final double width = 17.0;
  	
  	/* END TODO : CLEAN THIS CODE */

@@ -1,9 +1,9 @@
 package data;
 
-<<<<<<< HEAD
-=======
+//<<<<<<< HEAD
+//=======
 import lejos.nxt.LCD;
->>>>>>> update
+//>>>>>>> update
 import lejos.nxt.SensorPort; 
 import lejos.nxt.Sound;
 import lejos.nxt.UltrasonicSensor;
@@ -20,7 +20,7 @@ import lejos.util.TimerListener;
  */
 
 
-<<<<<<< HEAD
+//<<<<<<< HEAD
 public class USData {//implements TimerListener{
 
 	
@@ -60,7 +60,7 @@ public class USData {//implements TimerListener{
 	}
 	
 	public static int getFilteredUS2Data(){
-=======
+//=======
 public class USData extends Thread{//implements TimerListener{
 
 	
@@ -88,13 +88,13 @@ public class USData extends Thread{//implements TimerListener{
 	
 	
 	public static int getFilteredUS1Data(){
->>>>>>> update
+//>>>>>>> update
 		int distance;
 		int filtered = 0;
 		int filterControl = 0;
 		int FILTER_OUT = 20;
 	    // there will be a delay here
-<<<<<<< HEAD
+//<<<<<<< HEAD
 		distance = us2.getDistance();
 		
 		// rudimentary filter
@@ -118,7 +118,7 @@ public class USData extends Thread{//implements TimerListener{
 		return us2.getDistance();
 	}
 	
-=======
+//=======
 		distance = us1.getDistance();
 		
 		// rudimentary filter
@@ -168,7 +168,7 @@ public class USData extends Thread{//implements TimerListener{
 		return us2.getDistance();
 	}
 	
->>>>>>> update
+//>>>>>>> update
 	
 	
 	
