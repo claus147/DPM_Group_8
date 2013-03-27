@@ -81,7 +81,7 @@ public class USLocalizer {
 			nav.turnCounterClockWise();					//now anticlockwise		
 				
 			//sleep so it doesnt think that the wall edge just detected is the other wall edge
-			//try { Thread.sleep(3000); } catch (InterruptedException e) {}		
+			try { Thread.sleep(3000); } catch (InterruptedException e) {}		
 			
 			//distance2= getFilteredDataL();						//start getting distance from us again
 			while (isWallL){ //while not crossing the negative x axis (left)
@@ -119,6 +119,9 @@ public class USLocalizer {
 			angleA = pos[2];								//set the angle given by odometer
 			
 
+			//sleep so it doesnt think that the wall edge just detected is the other wall edge
+			try { Thread.sleep(3000); } catch (InterruptedException e) {}	
+			
 			nav.turnCounterClockWise();
 			
 			while (!isWallL){ //while not crossing the negative x axis (left)
