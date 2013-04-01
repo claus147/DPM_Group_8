@@ -28,7 +28,7 @@ public class LightLocalizer {
 	public static double ROTATION_SPEED = 40; 			//was 15
 	public static double [] pos = new double [3];		//to access x, y theta from 2 Wheeled robot
 	public static boolean[] update = new boolean [3]; 	//initialize the update
-	private double leftThreshold = 0.03; 				//threshold of light sensor - left (larger value is larger tolerance - less sensitive)
+	private double leftThreshold = 0.05; 				//threshold of light sensor - left (larger value is larger tolerance - less sensitive)
 	
 	/**----------------TODO------------------------------------
 	 * Change this leftThreshold value - fiddle around with it (its different 

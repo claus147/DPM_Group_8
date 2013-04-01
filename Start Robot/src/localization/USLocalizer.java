@@ -19,41 +19,48 @@ import odometry.Odometry;
 public class USLocalizer {
 	public enum LocalizationType { FALLING_EDGE, RISING_EDGE };
 	public static double ROTATION_SPEED = 40;
-	public static double SECOND_ROTATION_SPEED = 20;
 
-	public static double angleA, angleB;	//made public so set/get methods dont need to be written to display
-	public static double turn = 0.0;		//turn to value (the corrected theta)
-	public static int distance = 0;			//distance from wall measured by usSensor					
-	public static int distance2 = 0;	
+	//public static double angleA, angleB;	//made public so set/get methods dont need to be written to display
+	//public static double turn = 0.0;		//turn to value (the corrected theta)
 	private Odometry odo;
 	private Navigation nav;
-	
-	private UltrasonicSensor usL = new UltrasonicSensor(SensorPort.S3);
-	private UltrasonicSensor usR = new UltrasonicSensor(SensorPort.S4);
+	private UltrasonicSensor usL = new UltrasonicSensor(SensorPort.S2);
+	private UltrasonicSensor usR = new UltrasonicSensor(SensorPort.S3);
 	private LocalizationType locType;
 	private USData USDataL, USDataR;
 	
 	
-	public USLocalizer(Odometry odo, Navigation nav,UltrasonicSensor usR,UltrasonicSensor usL, LocalizationType locType) {
+	public USLocalizer(Odometry odo, Navigation nav,UltrasonicSensor usL,UltrasonicSensor usR, LocalizationType locType) {
 		this.odo = odo;
+		this.nav = nav;
 		this.usL = usL;
 		this.usR = usR;
 		this.locType = locType;
-		this.nav = nav;
-		this.USDataL = new USData(usL);
-		this.USDataR = new USData(usR);
+
+		int noWall;
+		if (locType == LocalizationType.FALLING_EDGE)
+			noWall = 25; //setting for noWall falling edge
+		else
+			noWall = 25; //setting for noWall rising edge
+		
+		this.USDataL = new USData(usL, noWall);
+		this.USDataR = new USData(usR, noWall);
 	}
 	
 	public void doLocalization() {
+		
+		double angleA, angleB, turn;
 		double [] pos = new double [3];			//to get/set odometer x,y, theta values
 		boolean[] update = new boolean [3];		//tells which of x,y,theta to update
 		Arrays.fill(update, Boolean.TRUE);
 		double dtheta;							//the change in theta
+		boolean isWallL;
+		boolean isWallR;
 		
-		USDataL.start();
-		USDataR.start();
-		boolean isWallL = false;
-		boolean isWallR = false;
+		//USDataL.start();
+		//USDataR.start();
+		
+		
 		
 		if (locType == LocalizationType.FALLING_EDGE) {
 			// rotate the robot until it sees no wall
@@ -63,7 +70,38 @@ public class USLocalizer {
 			// angleA is clockwise from angleB, so assume the average of the
 			// angles to the right of angleB is 45 degrees past 'north'
 			
-			nav.turnClockWise();//rotate clockwise first		
+
+			
+			isWallL = true;
+			isWallR = true;
+			
+			//USDataL.start();
+			nav.turnCounterClockWise();					//now anticlockwise		
+			USDataL.start();
+			try { Thread.sleep(3000); } catch (InterruptedException e) {}
+			
+			//sleep so it doesnt think that the wall edge just detected is the other wall edge
+			//try { Thread.sleep(8000); } catch (InterruptedException e) {}		
+			
+			//distance2= getFilteredDataL();						//start getting distance from us again
+			while (isWallL){ //while not crossing the negative x axis (left)
+				isWallL = USDataL.getIsWall();
+				if (!isWallL){
+					nav.stop();
+					USDataL.stop();
+				}	
+			}
+			odo.getPosition(pos);						//finally doesnt find the wall, record position from odometer
+			angleA = pos[2];									//set the angle given by odometer
+			//nav.stop();
+			
+			
+			nav.turnClockWise();//rotate clockwise first	
+			USDataR.start();
+			try { Thread.sleep(6000); } catch (InterruptedException e) {} // wait for the sensors to initialise
+			
+				
+			//try { Thread.sleep(5000); } catch (InterruptedException e) {}
 			
 			//nav.turnClockWise();
 			while (isWallR){ //while not crossing the negative x axis (left)
@@ -75,25 +113,8 @@ public class USLocalizer {
 				
 			}
 			odo.getPosition(pos);						//finally doesnt find the wall, record position from odometer
-			angleA = pos[2];									//set the angle given by odometer
-			
-			
-			nav.turnCounterClockWise();					//now anticlockwise		
-				
-			//sleep so it doesnt think that the wall edge just detected is the other wall edge
-			//try { Thread.sleep(3000); } catch (InterruptedException e) {}		
-			
-			//distance2= getFilteredDataL();						//start getting distance from us again
-			while (isWallL){ //while not crossing the negative x axis (left)
-				isWallL = USDataL.getIsWall();
-				if (!isWallL){
-					nav.stop();
-					USDataL.stop();
-				}	
-			}
-			odo.getPosition(pos);						//finally doesnt find the wall, record position from odometer
 			angleB = pos[2];									//set the angle given by odometer
-			//nav.stop();
+			
 
 		} else {
 			/*
@@ -104,31 +125,39 @@ public class USLocalizer {
 			 */
 			
 			//distance = getFilteredDataR();				//start getting distance from usSensor
+			isWallL = false;
+			isWallR = false;
+			
+			USDataL.start();
+			try { Thread.sleep(3000); } catch (InterruptedException e) {} // wait for the sensors to initialise																					`
 			nav.turnClockWise();
-			while (!isWallR){ //while not crossing the negative x axis (left)
-				isWallR = USDataR.getIsWall();
-				if (isWallR){
-					nav.stop();
-					USDataR.stop();
-				}
-				
-			}
-		
-			Sound.beepSequence();
-			odo.getPosition(pos);							//finally finds the wall, record position from odometer
-			angleA = pos[2];								//set the angle given by odometer
-			
-
-			nav.turnCounterClockWise();
-			
 			while (!isWallL){ //while not crossing the negative x axis (left)
 				isWallL = USDataL.getIsWall();
 				if (isWallL){
 					nav.stop();
 					USDataL.stop();
+				}
+				
+			}
+		
+			//Sound.beepSequence();
+			odo.getPosition(pos);							//finally finds the wall, record position from odometer
+			angleA = pos[2];								//set the angle given by odometer
+			
+			
+			nav.turnCounterClockWise();
+			USDataR.start();
+			//sleep so it doesnt think that the wall edge just detected is the other wall edge
+			try { Thread.sleep(3000); } catch (InterruptedException e) {}	
+			
+			while (!isWallR){ //while not crossing the negative x axis (left)
+				isWallR = USDataR.getIsWall();
+				if (isWallR){
+					nav.stop();
+					USDataR.stop();
 				}	
 			}
-			Sound.beepSequence();
+			//Sound.beepSequence();
 			odo.getPosition(pos);					//finally finds the wall, record position from odometer
 			angleB = pos[2];						//set the angle given by odometer
 			//nav.stop();

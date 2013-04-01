@@ -1,5 +1,6 @@
 package localization;
 
+import connection.StartCorner;
 import data.LCDinfo;
 import odometry.Odometry;
 import lejos.nxt.Button;
@@ -8,6 +9,8 @@ import lejos.nxt.LightSensor;
 import lejos.nxt.Motor;
 import lejos.nxt.SensorPort;
 import lejos.nxt.UltrasonicSensor;
+import modes.Controller;
+import motion.Navigation;
 
 /**
  * This class will serve as a map for the robot. It will localize itself, the ball dispenser, the
@@ -22,12 +25,16 @@ public class Localization {
 	public static void main(String[] args) {
 		// setup the odometer, display, and ultrasonic and light sensors
 		
-		Odometry odo = new Odometry();
+		Odometry odo = new Odometry(true);
+		Navigation nav = new Navigation(odo);
+		Controller con = new Controller(odo);
 		
-		//LightSensor lsL = new LightSensor(SensorPort.S1);
-		//LightSensor lsR = new LightSensor(SensorPort.S2);
-		UltrasonicSensor usLeft = new UltrasonicSensor(SensorPort.S2);
-		UltrasonicSensor usR = new UltrasonicSensor(SensorPort.S4);
+		LightSensor lsL = new LightSensor(SensorPort.S1);
+		LightSensor lsR = new LightSensor(SensorPort.S4);
+		UltrasonicSensor usL = new UltrasonicSensor(SensorPort.S2);
+		UltrasonicSensor usR = new UltrasonicSensor(SensorPort.S3);
+		
+		StartCorner sc = StartCorner.BOTTOM_LEFT;
 		
 		USLocalizer usloc;
 		
@@ -46,10 +53,10 @@ public class Localization {
 				&& buttonChoice != Button.ID_RIGHT);
 		
 		if (buttonChoice == Button.ID_LEFT) {					//for the auto selector
-			if (usR.getDistance() < 80||usLeft.getDistance() < 80){							//80 is the number specified to be the "end" of wall
-				usloc = new USLocalizer(odo, usLeft, usR, USLocalizer.LocalizationType.FALLING_EDGE);
+			if (usR.getDistance() < 80||usL.getDistance() < 80){							//80 is the number specified to be the "end" of wall
+				usloc = new USLocalizer(odo, nav, usL, usR, USLocalizer.LocalizationType.FALLING_EDGE);
 			} else {
-				usloc = new USLocalizer(odo, usLeft, usR, USLocalizer.LocalizationType.RISING_EDGE);
+				usloc = new USLocalizer(odo, nav, usL, usR, USLocalizer.LocalizationType.RISING_EDGE);
 			}
 		} else {												//brings into new menu if "selection" is selected	
 			buttonChoice = -1;									//not left id or right id
@@ -66,20 +73,20 @@ public class Localization {
 					&& buttonChoice != Button.ID_RIGHT);
 
 			if (buttonChoice == Button.ID_LEFT) {
-				usloc = new USLocalizer(odo, usR, usLeft, USLocalizer.LocalizationType.RISING_EDGE);		//set to rising edge
+				usloc = new USLocalizer(odo, nav, usL, usR, USLocalizer.LocalizationType.RISING_EDGE);		//set to rising edge
 			} else {
-				usloc = new USLocalizer(odo, usR, usLeft, USLocalizer.LocalizationType.FALLING_EDGE);		//set to falling edge
+				usloc = new USLocalizer(odo, nav, usL, usR, USLocalizer.LocalizationType.FALLING_EDGE);		//set to falling edge
 			}
 		}
 		
-		LCDinfo lcd = new LCDinfo(odo);								//start the display
-		
+		LCDinfo lcd = new LCDinfo(odo, con);								//start the display
+		lcd.start();
 		// perform the ultrasonic localization
 		usloc.doLocalization();												
 		
 		// perform the light sensor localization
-		//LightLocalizer lsl = new LightLocalizer(odo, ls);
-		//lsl.doLocalization();
+		LightLocalizer lsl = new LightLocalizer(odo, nav, lsL, lsR, sc);
+		lsl.doLocalization();
 		
 		
 		

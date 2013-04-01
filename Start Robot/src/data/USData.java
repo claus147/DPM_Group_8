@@ -17,12 +17,14 @@ import lejos.util.TimerListener;
 
 public class USData implements TimerListener{
 	
-	private int noWall = 30;
+	private int noWall = 30; //the distance a wall is
 	private Timer timer;
 	private int sleepTime = 50; //optimal sleepTime
 	private boolean isWall = false;
-	private double usData;
+	private double usData = 0;
 	private UltrasonicSensor us = new UltrasonicSensor(SensorPort.S1); //default port
+	private int filterControl = 0;
+	private static int FILTER_OUT = 20;
 	
 	/**
 	 * constructor
@@ -36,7 +38,7 @@ public class USData implements TimerListener{
 	/**
 	 * constructor
 	 * pass in US sensor w/ default 50 sleep time (optimal)
-	 * @param us - the light sensor to use
+	 * @param us - the us sensor to use (default port1)
 	 */
 	public USData(UltrasonicSensor us){	
 		this.us = us;
@@ -45,40 +47,74 @@ public class USData implements TimerListener{
 	
 	/**
 	 * constructor
-	 * pass in US sensor & user defined sleep time
-	 * @param us - the light sensor to use
-	 * @param sleepTime - can choose the sleep time
+	 * pass in US sensor & user defined noWall barrier w/ default 50 sleep time (optimal)
+	 * @param us - the us sensor to use (default port1)
+	 * @param noWall - distance where wall barrier is (default 30)
 	 */
-	public USData(UltrasonicSensor us, int sleepTime){	
+	public USData(UltrasonicSensor us, int noWall){	
+		this.us =us;
+		this.noWall = noWall;
+		this.timer = new Timer(this.sleepTime,this);
+	}
+	
+	/**
+	 * constructor
+	 * pass in US sensor & user defined noWall barrier & user defined sleep time
+	 * @param us - the us sensor to use (default port1)
+	 * @param noWall - distance where wall barrier is (default 30)
+	 * @param sleepTime - can choose the sleep time (default 50)
+	 */
+	public USData(UltrasonicSensor us, int noWall, int sleepTime){	
 		this.us =us;
 		this.sleepTime = sleepTime;
+		this.noWall = noWall;
 		this.timer = new Timer(this.sleepTime,this);
 	}
 	
 	public void timedOut() {
-		setIsWall(false);
-		usData = getFilteredData();
-		if(usData<noWall){
+	
+		boolean prevWall = getIsWall();
+		
+		getFilteredData();
+		if(usData==noWall){
+			setIsWall(false);
+			if (prevWall)
+				Sound.beep();
+		} else{
 			setIsWall(true);
-			Sound.buzz();
+			if (!prevWall)
+				Sound.buzz();
 		}
+
 	}
+		
 	
 	
 	/**
 	 * This method will take the distance using the ultrasonic Sensor
 	 * @return usData
 	 */
-	public double getFilteredData(){
+	public void getFilteredData(){
 		// do a ping
 		//us.reset();
-		usData = us.getDistance();
+		int distance = us.getDistance();
 		
-		//TODO : CHANGE THIS CONDITION
-		 if (usData > noWall){				//if distance > 80 (noWall) set it to 80
+		// rudimentary filter
+		if (distance == 255 && filterControl < FILTER_OUT) {
+		// bad value, do not set the usData var, however do increment the filter value
+			filterControl ++;
+		} else if (distance == 255){
+		// true 255, therefore set usData to 255
+				this.usData = distance;
+			} else {
+				// usData went below 255, therefore reset everything.
+				filterControl = 0;
+				this.usData = distance;
+			}
+
+		 if (usData > noWall){				//if distance > noWall set it to noWall
 			 usData = noWall;
 		 }
-		return usData;
 	}
 	
 	/**
@@ -112,7 +148,9 @@ public class USData implements TimerListener{
 		return isWall;
 	}
 
-
+//	public void setTF(boolean tf){
+//		this.tf = tf;
+//	}
 
 	
 

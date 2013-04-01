@@ -90,7 +90,7 @@ public class Odometry implements TimerListener {
 		double result;
 
 		synchronized (lock) {
-			result = x;
+			result = x/10.0; //compensation to cm
 		}
 
 		return result;
@@ -100,7 +100,7 @@ public class Odometry implements TimerListener {
 		double result;
 
 		synchronized (lock) {
-			result = y;
+			result = y/10.0; //compensation to cm
 		}
 
 		return result;

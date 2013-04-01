@@ -36,24 +36,30 @@ public class USTest{
 		USData usDataR = new USData(usR);
 		
 		nav.turnClockWise();
-		boolean usLState = false;
-		boolean usRState = false;  
+		boolean usLState = true;
+		boolean usRState = true;  
 		
+		usDataL.setIsWall(true);
+		usDataR.setIsWall(true);
 		usDataL.start();
 		usDataR.start();
 		
-		while(!usLState || !usRState){
+		try {Thread.sleep(60);}catch(InterruptedException e){}
+
+		
+		while(usLState || usRState){
 			usLState = usDataL.getIsWall();
-			if (usLState) {
-				nav.stop();
+			if (!usLState) {
+				nav.stop(Navigation.WheelSide.LEFT);
 				usDataL.stop();
 			}
 			
 			usRState = usDataR.getIsWall();
-			if (usRState){
-				nav.stop();
+			if (!usRState){
+				nav.stop(Navigation.WheelSide.RIGHT);
 				usDataR.stop();
 			}
+			//Sound.buzz();
 		}
 		
 		//nav.goforward(100);

@@ -58,9 +58,10 @@ public class StartRobot {
 		
 		WheelsData wheels = new WheelsData();
 		
-		UltrasonicSensor us = new UltrasonicSensor(SensorPort.S1);
-		LightSensor lsL = new LightSensor(SensorPort.S2);
-		LightSensor lsR = new LightSensor(SensorPort.S3);
+		UltrasonicSensor usL = new UltrasonicSensor(SensorPort.S2);
+		UltrasonicSensor usR = new UltrasonicSensor(SensorPort.S3);
+		LightSensor lsL = new LightSensor(SensorPort.S1);
+		LightSensor lsR = new LightSensor(SensorPort.S4);
 		
 		Controller control = new Controller(odo);
 		//LCDinfo LCDinfo = new LCDinfo(odo);

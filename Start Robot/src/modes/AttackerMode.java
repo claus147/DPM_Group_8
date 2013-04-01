@@ -29,6 +29,8 @@ public class AttackerMode {
 	Controller control = new Controller(odo);
 	private LightSensor lsr = new LightSensor(SensorPort.S4);
 	private LightSensor lsl = new LightSensor(SensorPort.S1);
+	UltrasonicSensor usL = new UltrasonicSensor(SensorPort.S2);
+	UltrasonicSensor usR = new UltrasonicSensor(SensorPort.S3);
 	
 	public static USData usData = new USData();
 	Navigation navigate = new Navigation(odo);
@@ -109,8 +111,8 @@ public class AttackerMode {
 		// ???
 		/* step 4 */// LOCALIZATIONS
 		//usData.start();
-		//USLocalizer usLoc = new USLocalizer(odo, control, usData);
-		//usLoc.start();
+		USLocalizer usLoc = new USLocalizer(odo, navigate ,usL, usR, USLocalizer.LocalizationType.RISING_EDGE);
+		usLoc.doLocalization();
 		LightLocalizer lightLocalizer = new LightLocalizer(odo, navigate, lsl, lsr, sc);
 		lightLocalizer.doLocalization();
 //		try { Thread.sleep(2000); } catch (InterruptedException e) {}
