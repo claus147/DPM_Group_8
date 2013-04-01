@@ -85,9 +85,9 @@ public class AttackerMode {
 		double launchX = 0;
 		double launchY = 0;
 		
-		//BluetoothConnection bc = new BluetoothConnection(); //must pass this in here somewhere /************used
+		BluetoothConnection bc = new BluetoothConnection(); //must pass this in here somewhere /************used
 		
-		//Transmission trans = bc.getTransmission();//new Transmission(); //**********used*******
+		Transmission trans = bc.getTransmission();//new Transmission(); //**********used*******
 		double goalXBlock = 5;//trans.w1;
 		double goalYBlock = 9;//trans.w2;
 		if(goalYBlock > 6){ 

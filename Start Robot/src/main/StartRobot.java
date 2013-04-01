@@ -29,8 +29,14 @@ public class StartRobot {
 	 */
 	public static void main(String args[]){
 
+	 
+		/* bluetooth testings + launcher*/
+	//	BTCompLauncherTest();
 		
-		//compConnect.printTransmission(); ****USED****
+		BluetoothConnection compConnect = new BluetoothConnection();
+		/* real test below*/
+		compConnect.printTransmission();
+		//****USED****
 
 		Start();
 	
@@ -47,7 +53,7 @@ public class StartRobot {
 	
 		AttackerMode attack = new AttackerMode();
 		DefenderMode defend = new DefenderMode();
-		Odometry odo = new Odometry();
+		Odometry odo = new Odometry(true);
 		
 		
 		WheelsData wheels = new WheelsData();
@@ -60,11 +66,16 @@ public class StartRobot {
 		//LCDinfo LCDinfo = new LCDinfo(odo);
 		int buttonChoice;
 		
-//		if(compConnect.isAttacker()){
-//			buttonChoice = Button.ID_LEFT;
-//		}else{
-//			buttonChoice = Button.ID_RIGHT;
-//		} **USED!!!!!**
+		
+		/**
+		 * MUST CHANGE TO ID_LEFT FOR DEMO
+		 */
+		if(compConnect.isAttacker()){
+			buttonChoice = Button.ID_RIGHT;
+		}else{
+			buttonChoice = Button.ID_LEFT;
+		} 
+		//**USED!!!!!**
 	
 		buttonChoice = Button.ID_LEFT;
 
@@ -95,8 +106,8 @@ public class StartRobot {
 		}
 		// Defender Mode
 		else{
-		
-		//	compConnect.printTransmission();
+			BluetoothConnection compConnect = new BluetoothConnection();
+			compConnect.printTransmission();
 			
 		// Testing the Launcher via bluetooth;
 		BTConnectTest connect = new BTConnectTest();
@@ -120,4 +131,79 @@ public class StartRobot {
 		
 			
 	}
-		}
+	public static void BTCompLauncherTest(){
+		
+		BluetoothConnection compConnect = new BluetoothConnection();
+		compConnect.printTransmission();
+		
+		BTReceive connectReceive = new BTReceive();
+			
+				AttackerMode attack = new AttackerMode();
+				DefenderMode defend = new DefenderMode();
+				Odometry odo = new Odometry(true);
+				
+				
+				WheelsData wheels = new WheelsData();
+				
+				UltrasonicSensor us = new UltrasonicSensor(SensorPort.S1);
+				LightSensor lsL = new LightSensor(SensorPort.S2);
+				LightSensor lsR = new LightSensor(SensorPort.S3);
+				
+				Controller control = new Controller(odo);
+				//LCDinfo LCDinfo = new LCDinfo(odo);
+				int buttonChoice;
+				
+				if(compConnect.isAttacker()){
+					buttonChoice = Button.ID_RIGHT;
+				}else{
+					buttonChoice = Button.ID_LEFT;
+				}
+			
+			//	buttonChoice = Button.ID_LEFT;
+
+				do {
+					// clear the display
+					LCD.clear();
+
+					// left : AttackerMode
+					// right : DefenderMode
+					LCD.drawString("<Atker  | Def>", 0, 0);
+					LCD.drawString("        |         	 ", 0, 1);
+					LCD.drawString(" Mode   | Mode"			, 0, 2);
+					LCD.drawString(" edge   |  "			, 0, 3);
+				
+
+				//	buttonChoice = Button.waitForAnyPress();
+				} while (buttonChoice != Button.ID_LEFT
+						&& buttonChoice != Button.ID_RIGHT);
+				
+				//Attacker Mode
+				if (buttonChoice == Button.ID_LEFT) {
+
+					try { Thread.sleep(10000); } catch (InterruptedException e) {} //********TAKE OFF 
+
+					//Sound.beep();	
+					//LCDinfo LCDinfo = new LCDinfo(odo);
+					attack.attackAlgorithm();
+				}
+				// Defender Mode
+				else{
+				
+					compConnect.printTransmission();
+					
+				// Testing the Launcher via bluetooth;
+				BTConnectTest connect = new BTConnectTest();
+				try {
+					connect.connect();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				
+				// turnTo works!
+				// navigate.turnTo(180);
+		
+	}
+		}}
+
