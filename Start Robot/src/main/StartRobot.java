@@ -43,21 +43,20 @@ public class StartRobot {
 	public static void Start(){
 		
 		//BTConnectTest connect = new BTConnectTest();
-		BTReceive connectReceive = new BTReceive();
+		//BTReceive connectReceive = new BTReceive();
 	
 		AttackerMode attack = new AttackerMode();
-		DefenderMode defend = new DefenderMode();
-		Odometry odo = new Odometry(true);
+//		DefenderMode defend = new DefenderMode();
+//		//Odometry odo = new Odometry(true);
+//		
+//		
+//		WheelsData wheels = new WheelsData();
+//		
+//		UltrasonicSensor us = new UltrasonicSensor(SensorPort.S1);
+//		LightSensor lsL = new LightSensor(SensorPort.S2);
+//		LightSensor lsR = new LightSensor(SensorPort.S3);
 		
-		
-		WheelsData wheels = new WheelsData();
-		
-		UltrasonicSensor usL = new UltrasonicSensor(SensorPort.S2);
-		UltrasonicSensor usR = new UltrasonicSensor(SensorPort.S3);
-		LightSensor lsL = new LightSensor(SensorPort.S1);
-		LightSensor lsR = new LightSensor(SensorPort.S4);
-		
-		Controller control = new Controller(odo);
+		//Controller control = new Controller(odo);
 		//LCDinfo LCDinfo = new LCDinfo(odo);
 		int buttonChoice;
 		
@@ -90,7 +89,7 @@ public class StartRobot {
 
 			try { Thread.sleep(10000); } catch (InterruptedException e) {} //********TAKE OFF 
 
-			//Sound.beep();	
+			Sound.beep();	
 			//LCDinfo LCDinfo = new LCDinfo(odo);
 			attack.attackAlgorithm();
 		}

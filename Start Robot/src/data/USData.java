@@ -17,9 +17,9 @@ import lejos.util.TimerListener;
 
 public class USData implements TimerListener{
 	
-	private int noWall = 30; //the distance a wall is
+	private int noWall = 50; //the distance a wall is
 	private Timer timer;
-	private int sleepTime = 50; //optimal sleepTime
+	private int sleepTime = 10; //optimal sleepTime (was 50)
 	private boolean isWall = false;
 	private double usData = 0;
 	private UltrasonicSensor us = new UltrasonicSensor(SensorPort.S1); //default port
