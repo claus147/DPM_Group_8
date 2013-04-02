@@ -25,7 +25,7 @@ public class USData implements TimerListener{
 	private UltrasonicSensor us = new UltrasonicSensor(SensorPort.S1); //default port
 	private int filterControl = 0;
 	private static int FILTER_OUT = 20;
-	private boolean loc = false;
+	private boolean regular = true;		//regular (not facing an obstacle most of the time)
 	
 	/**
 	 * constructor
@@ -65,35 +65,44 @@ public class USData implements TimerListener{
 	 * @param noWall - distance where wall barrier is (default 30)
 	 * @param sleepTime - can choose the sleep time (default 50)
 	 */
-	public USData(UltrasonicSensor us, int noWall, int sleepTime, boolean loc){	
+	public USData(UltrasonicSensor us, int noWall, int sleepTime){	
 		this.us =us;
 		this.sleepTime = sleepTime;
 		this.noWall = noWall;
-		this.loc = loc;
+		this.timer = new Timer(this.sleepTime,this);
+	}
+	
+	/**
+	 * constructor
+	 * pass in US sensor & user defined noWall barrier & user defined sleep time
+	 * @param us - the us sensor to use (default port1)
+	 * @param noWall - distance where wall barrier is (default 30)
+	 * @param sleepTime - can choose the sleep time (default 50)
+	 */
+	public USData(UltrasonicSensor us, int noWall, int sleepTime, boolean regular){	
+		this.us =us;
+		this.sleepTime = sleepTime;
+		this.noWall = noWall;
+		this.regular = regular;
+		setIsWall(regular);
 		this.timer = new Timer(this.sleepTime,this);
 	}
 	
 	public void timedOut() {
 	
-		if (loc){	
-			boolean prevWall = getIsWall();
-			
-			getFilteredData();
-			if(usData==noWall){
-				setIsWall(false);
-				if (prevWall)
-					Sound.beep();
-			} else{
-				setIsWall(true);
-				if (!prevWall)
-					Sound.buzz();
-			}	
-		} else {
+		if (regular){	
 			setIsWall(false);
 			getFilteredData();
 			if(usData<noWall){
 				setIsWall(true);
 				Sound.buzz();
+			}
+		} else {
+			setIsWall(true);
+			getFilteredData();
+			if(usData==noWall){
+				setIsWall(false);
+				Sound.beep();
 			}
 		}
 
