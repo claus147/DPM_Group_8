@@ -39,9 +39,9 @@ public class USLocalizer {
 
 		int noWall;
 		if (locType == LocalizationType.FALLING_EDGE)
-			noWall = 25; //setting for noWall falling edge
+			noWall = 25; //setting for noWall falling edge (facing wall most of time)
 		else
-			noWall = 25; //setting for noWall rising edge
+			noWall = 25; //setting for noWall rising edge (facing out most of time)
 		
 		this.USDataL = new USData(usL, noWall, 50, true);
 		this.USDataR = new USData(usR, noWall, 50, true);
