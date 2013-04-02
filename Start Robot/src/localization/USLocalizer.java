@@ -43,8 +43,8 @@ public class USLocalizer {
 		else
 			noWall = 25; //setting for noWall rising edge
 		
-		this.USDataL = new USData(usL, noWall);
-		this.USDataR = new USData(usR, noWall);
+		this.USDataL = new USData(usL, noWall, 50, true);
+		this.USDataR = new USData(usR, noWall, 50, true);
 	}
 	
 	public void doLocalization() {

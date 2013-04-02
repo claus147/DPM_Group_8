@@ -65,10 +65,11 @@ public class USData implements TimerListener{
 	 * @param noWall - distance where wall barrier is (default 30)
 	 * @param sleepTime - can choose the sleep time (default 50)
 	 */
-	public USData(UltrasonicSensor us, int noWall, int sleepTime){	
+	public USData(UltrasonicSensor us, int noWall, int sleepTime, boolean loc){	
 		this.us =us;
 		this.sleepTime = sleepTime;
 		this.noWall = noWall;
+		this.loc = loc;
 		this.timer = new Timer(this.sleepTime,this);
 	}
 	
