@@ -52,7 +52,7 @@ import modes.Controller;
  	public enum WheelSide { LEFT, RIGHT };
  	
 
- 	USData USData = AttackerMode.usData;
+ 	USData USData; //= //AttackerMode.usData; quick fix - class not used
  	
  	//Class constructor has odometer as argument
  	public Navigation (Odometry odometer) {

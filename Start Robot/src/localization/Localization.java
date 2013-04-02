@@ -79,7 +79,7 @@ public class Localization {
 			}
 		}
 		
-		LCDinfo lcd = new LCDinfo(odo, con);								//start the display
+		LCDinfo lcd = new LCDinfo(odo);								//start the display
 		lcd.start();
 		// perform the ultrasonic localization
 		usloc.doLocalization();												
