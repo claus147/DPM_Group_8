@@ -65,7 +65,7 @@ public class AttackerMode {
 		
 		//31 March test!
 		
-		sqrNav.travelTo(0, 210);
+		sqrNav.travelTo(0, 90);
 		
 		
 		

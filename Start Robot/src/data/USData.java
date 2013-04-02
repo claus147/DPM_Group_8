@@ -17,7 +17,7 @@ import lejos.util.TimerListener;
 
 public class USData implements TimerListener{
 	
-	private int noWall = 50; //the distance a wall is
+	private int noWall = 30; //the distance a wall is
 	private Timer timer;
 	private int sleepTime = 10; //optimal sleepTime (was 50)
 	private boolean isWall = false;
@@ -25,6 +25,7 @@ public class USData implements TimerListener{
 	private UltrasonicSensor us = new UltrasonicSensor(SensorPort.S1); //default port
 	private int filterControl = 0;
 	private static int FILTER_OUT = 20;
+	private boolean loc = false;
 	
 	/**
 	 * constructor
@@ -73,17 +74,26 @@ public class USData implements TimerListener{
 	
 	public void timedOut() {
 	
-		boolean prevWall = getIsWall();
-		
-		getFilteredData();
-		if(usData==noWall){
+		if (loc){	
+			boolean prevWall = getIsWall();
+			
+			getFilteredData();
+			if(usData==noWall){
+				setIsWall(false);
+				if (prevWall)
+					Sound.beep();
+			} else{
+				setIsWall(true);
+				if (!prevWall)
+					Sound.buzz();
+			}	
+		} else {
 			setIsWall(false);
-			if (prevWall)
-				Sound.beep();
-		} else{
-			setIsWall(true);
-			if (!prevWall)
+			getFilteredData();
+			if(usData<noWall){
+				setIsWall(true);
 				Sound.buzz();
+			}
 		}
 
 	}
