@@ -3,20 +3,20 @@ package data;
 
 import odometry.Odometry; 
 import lejos.nxt.LCD;
-import modes.Controller;
+
 
 public class LCDinfo extends Thread {
 	private static final long DISPLAY_PERIOD = 250;
 	
 	public Odometry odo; //new Odometry();
 
-	public Controller control;
+	
 	
 	
 	// constructor
-	public LCDinfo(Odometry odom, Controller cont) {
+	public LCDinfo(Odometry odom) {
 		this.odo = odom;
-		this.control = cont;
+		
 		
 	}
 
