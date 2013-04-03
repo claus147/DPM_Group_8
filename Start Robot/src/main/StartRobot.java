@@ -64,23 +64,6 @@ public class StartRobot {
 //		Transmission t = compConnect.getTransmission();
 		
 		
-		/**
-		 * our own defined t values - bypass the btooth
-		 */
-//		Transmission t = null;
-//		t.bx = 1*30;
-//		t.by = 2*30;
-//		t.d1 = 5*30;
-//		t.role = PlayerRole.ATTACKER;
-//		t.startingCorner = StartCorner.BOTTOM_LEFT;
-//		t.w1 = 5*30;
-//		t.w2 = 5*30;
-		
-		
-		/**
-		 * end own defined values
-		 */
-		
 		
 		Odometry odo = new Odometry(true);		//odo has started
 		Navigation navigate = new Navigation(odo);
@@ -103,24 +86,24 @@ public class StartRobot {
 		//init loc
 		USLocalizer usloc = new USLocalizer(odo, navigate, usl, usr);
 		LightLocalizer lsloc = new LightLocalizer(odo, navigate, lsl, lsr, StartCorner.BOTTOM_LEFT);
-		//LightLocalizer lsloc = new LightLocalizer(odo, navigate, lsl, lsr, t.startingCorner);
+		//LightLocalizer lsloc = new LightLocalizer(odo, navigate, lsl, lsr, t.startingCorner);	//--NEEDED
 		
 		//init modes
 		AttackerMode attack = new AttackerMode(30, 60, 0, 0, 0, sqrNav);
 		DefenderMode defend = new DefenderMode(0, 0, 0, sqrNav);
 		
-//		AttackerMode attack = new AttackerMode(t.bx, t.by, t.w1, t.w2, t.d1, sqrNav);
-//		DefenderMode defend = new DefenderMode(t.w1, t.w2, t.d1, sqrNav);
+//		AttackerMode attack = new AttackerMode(t.bx, t.by, t.w1, t.w2, t.d1, sqrNav); //--NEEDED for bt
+//		DefenderMode defend = new DefenderMode(t.w1, t.w2, t.d1, sqrNav);				//--NEEDED for bt
 		
 		//do the localizations
 		usloc.doLocalization();
 		lsloc.doLocalization();
 		
 		//chosing which role to do - attack/defense
-	//	if (t.role == PlayerRole.ATTACKER)
+	//	if (t.role == PlayerRole.ATTACKER) --NEEDED
 			attack.attackAlgorithm();		//do the attack
 		//else
-	//		defend.defenseAlgorithm();		//do the defense
+	//		defend.defenseAlgorithm();		//do the defense __NEEDED
 		
 		
 		//BTConnectTest connect = new BTConnectTest();
