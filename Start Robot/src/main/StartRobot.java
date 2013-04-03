@@ -248,7 +248,7 @@ public class StartRobot {
 	public static void Start(){
 
 		//BTConnectTest connect = new BTConnectTest();
-<<<<<<< HEAD
+
 		BTReceive connectReceive = new BTReceive();
 
 		AttackerMode attack = new AttackerMode();
@@ -263,10 +263,9 @@ public class StartRobot {
 		LightSensor lsR = new LightSensor(SensorPort.S3);
 
 		Controller control = new Controller(odo);
-=======
 		//BTReceive connectReceive = new BTReceive();
 	
-		AttackerMode attack = new AttackerMode();
+//		AttackerMode attack = new AttackerMode();
 //		DefenderMode defend = new DefenderMode();
 //		//Odometry odo = new Odometry(true);
 //		
@@ -278,7 +277,7 @@ public class StartRobot {
 //		LightSensor lsR = new LightSensor(SensorPort.S3);
 		
 		//Controller control = new Controller(odo);
->>>>>>> 1668534108f153c33e2e0e005e965343b40486d1
+
 		//LCDinfo LCDinfo = new LCDinfo(odo);
 
 
@@ -303,17 +302,16 @@ public class StartRobot {
 		//Attacker Mode
 		if (buttonChoice == Button.ID_LEFT) {
 
-<<<<<<< HEAD
 		Sound.beep();	
 		//LCDinfo LCDinfo = new LCDinfo(odo);
 		attack.attackAlgorithm();
-=======
+
 			try { Thread.sleep(10000); } catch (InterruptedException e) {} //********TAKE OFF 
 
 			Sound.beep();	
 			//LCDinfo LCDinfo = new LCDinfo(odo);
 			attack.attackAlgorithm();
->>>>>>> 1668534108f153c33e2e0e005e965343b40486d1
+
 		}
 		// Defender Mode
 		else{

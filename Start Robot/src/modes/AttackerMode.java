@@ -42,9 +42,7 @@ public class AttackerMode {
 
 	LCDinfo lcd = new LCDinfo(odo);
 	/**
-	 * TODO : develop an attacker algorithm
-	 * Testing class;
-	 * Activate motors
+	 * This method will combine many strategies in order to create a complete AI for the robot
 	 */
 	public void attackAlgorithm(){
 		
@@ -58,7 +56,7 @@ public class AttackerMode {
 		
 	}
 	/**
-	 * TODO: Call the strategy established in AttackerStrat1
+	 * This method will basically set a strategy for the robot
 	 */
 	public void setStrategy(){
 		
@@ -90,7 +88,7 @@ public class AttackerMode {
 			8. The robot then returns to the starting position and halts.
 		 */
 
-<<<<<<< HEAD
+
 		double launchingAngle = 0;
 		//launch X and Y are the coordinates of the goal - 8 feet
 		double launchXBlock = 0;
@@ -141,7 +139,6 @@ public class AttackerMode {
 		/* step 8 */
 		control.travelTo(0, 0);
 	
-=======
 //		double launchingAngle = 0;
 //		//launch X and Y are the coordinates of the goal - 8 feet
 //		double launchXBlock = 0;
@@ -192,7 +189,6 @@ public class AttackerMode {
 //		/* step 8 */
 //		control.travelTo(0, 0);
 //	
->>>>>>> 1668534108f153c33e2e0e005e965343b40486d1
 	
 	
 		

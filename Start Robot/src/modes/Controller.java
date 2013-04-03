@@ -24,75 +24,72 @@ public class Controller {
 	WheelsData wheels = new WheelsData();
 	int data;
 	
-	
+	/**
+	 * This is a constructor Controller taking as input an Odometry
+	 * @param Odometry
+	 */
 	public Controller(Odometry odom){
 		this.odo = odom;
 	}
-	/**
-	 * Testing phase : linking controller to wheels
-	 */
-	public void activateMotors(){
-		
-		leftMotor.TravelTo();
-		try { Thread.sleep(2000); } catch (InterruptedException e) {}
-		rightMotor.TravelTo();
-	
-		
-	}
-	
 
 	/**
-	 * Testing phase : linking controller to Light sensor
+	 * Simple command to go forward from the Navigation Class
 	 */
-	public void activateLS(){
-		
-		
-	}
-
-	/**
-	 * Testing phase : linking controller to Ultrasonic
-	 */
-	public void activateUS(){
-		
-		
-	}
-	
 	public void goForward(){
 		navigate.goForward();
 	}
-	
+	/**
+	 * Simple command to go backward from the Navigation Class
+	 */
 	public void goBackward(){
 		navigate.goBackward();
 	}
-	
+	/**
+	 * Simple command to stop motors from the Navigation Class
+	 */
 	public void motorsStop(){
 		navigate.motorsStop();
 	}
-	
+	/**
+	 * Simple command to stop left motor from the Navigation Class
+	 */
 	public void leftMotorStop(){
 		navigate.leftMotorStop();
 	}
-	
+	/**
+	 * Simple command to stop right motor from the Navigation Class
+	 */
 	public void rightMotorStop(){
 		navigate.rightMotorStop();
 	}
-	
+	/**
+	 * Simple command to go to a specific coordinate from the Navigation Class
+	 */
 	public void travelTo(double x, double y){
 		navigate.travelTo(x, y);
 	}
 	
+	/**
+	 * Simple command to turn the robot to a specific angle from the Navigation Class
+	 */
 	public void turnTo(double t){
 		navigate.turnTo(t);
 	}
-	
+	/**
+	 * Simple command to turn to a number of degrees from the Navigation Class
+	 */
 	public void turn(double t){
 		navigate.turn(t);
 	}
-	
+	/**
+	 * Simple command to turn clockwise from the Navigation Class
+	 */
 	public void turnClockWise(){
 		navigate.turnClockWise();
 	}
-	
+	/**
+	 * Simple command to turn counterclockwise from the Navigation Class
+	 */
 	public void turnCounterClockWise(){
 		navigate.turnCounterClockWise();
 	}
