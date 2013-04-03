@@ -49,7 +49,7 @@ public class Avoid{
 		
 		// This will read the distance from the sensor and store in the distance variable.
 		this.distance = distance;
-		distance = (int) usData.getUSData(data);
+		distance = (int) 0;//usData.getUSData(data); quick fix - class not used
 	
 		// error : the position of the robot compared to the bandCenter
 		int error = 0;

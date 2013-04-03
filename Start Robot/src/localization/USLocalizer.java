@@ -28,6 +28,7 @@ public class USLocalizer {
 	private UltrasonicSensor usR = new UltrasonicSensor(SensorPort.S3);
 	private LocalizationType locType;
 	private USData USDataL, USDataR;
+	private int sleepTime = 50;
 	
 	
 	public USLocalizer(Odometry odo, Navigation nav,UltrasonicSensor usL,UltrasonicSensor usR, LocalizationType locType) {
@@ -38,13 +39,19 @@ public class USLocalizer {
 		this.locType = locType;
 
 		int noWall;
-		if (locType == LocalizationType.FALLING_EDGE)
-			noWall = 25; //setting for noWall falling edge
-		else
-			noWall = 25; //setting for noWall rising edge
+		if (locType == LocalizationType.FALLING_EDGE){
+			noWall = 40; //setting for noWall falling edge (facing wall most of time)
 		
-		this.USDataL = new USData(usL, noWall);
-		this.USDataR = new USData(usR, noWall);
+			this.USDataL = new USData(usL, noWall, sleepTime, false);
+			this.USDataR = new USData(usR, noWall, sleepTime, false);
+		
+		}else{
+			noWall = 35; //setting for noWall rising edge (facing out most of time)
+		
+			this.USDataL = new USData(usL, noWall, sleepTime);
+			this.USDataR = new USData(usR, noWall, sleepTime);
+	
+		}
 	}
 	
 	public void doLocalization() {

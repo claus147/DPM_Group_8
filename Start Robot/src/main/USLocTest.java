@@ -24,7 +24,7 @@ public class USLocTest{
 		Navigation nav = new Navigation(odo);
 		
 		Controller con = new Controller(odo);
-		LCDinfo info = new LCDinfo(odo, con);
+		LCDinfo info = new LCDinfo(odo);
 		info.start();
 		
 		USLocalizer usLoc = new USLocalizer(odo, nav, usL, usR, USLocalizer.LocalizationType.RISING_EDGE);

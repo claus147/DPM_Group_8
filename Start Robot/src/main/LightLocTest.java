@@ -29,7 +29,7 @@ public class LightLocTest{
 		//BluetoothConnection bc = new BluetoothConnection();
 		//Sound.buzz();
 		Controller con = new Controller(odo);
-		LCDinfo info = new LCDinfo(odo,con);
+		LCDinfo info = new LCDinfo(odo);
 		info.start();
 		
 		StartCorner sc = StartCorner.BOTTOM_LEFT;

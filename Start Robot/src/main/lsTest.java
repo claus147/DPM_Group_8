@@ -22,30 +22,34 @@ public class lsTest{
 		
 		Navigation nav = new Navigation(odo);
 		
-		LSData lsDataL = new LSData(lsL);
-		LSData lsDataR = new LSData(lsR);
+		LSData lsDataL = new LSData(lsL,0.05);
+		LSData lsDataR = new LSData(lsR,0.05);
 		
-		nav.goforward(100);
+		
 		boolean lsLState = false;
 		boolean lsRState = false;
 		
 		lsDataL.start();
 		lsDataR.start();
 		
-		while(!lsLState || !lsRState){
-			lsLState = lsDataL.getIsLine();
-			if (lsLState) {
-				nav.stop(Navigation.WheelSide.LEFT);
-				lsDataL.stop();
-			}
-			
-			lsRState = lsDataR.getIsLine();
-			if (lsRState){
-				nav.stop(Navigation.WheelSide.RIGHT);
-				lsDataR.stop();
-			}
-		}
-		
 		nav.goforward(100);
+		
+		while(true){}
+		
+//		while(!lsLState || !lsRState){
+//			lsLState = lsDataL.getIsLine();
+//			if (lsLState) {
+//				nav.stop(Navigation.WheelSide.LEFT);
+//				lsDataL.stop();
+//			}
+//			
+//			lsRState = lsDataR.getIsLine();
+//			if (lsRState){
+//				nav.stop(Navigation.WheelSide.RIGHT);
+//				lsDataR.stop();
+//			}
+//		}
+//		
+//		nav.goforward(100);
 	}
 }

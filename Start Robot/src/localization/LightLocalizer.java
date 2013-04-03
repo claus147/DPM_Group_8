@@ -28,15 +28,15 @@ public class LightLocalizer {
 	public static double ROTATION_SPEED = 40; 			//was 15
 	public static double [] pos = new double [3];		//to access x, y theta from 2 Wheeled robot
 	public static boolean[] update = new boolean [3]; 	//initialize the update
-	private double leftThreshold = 0.05; 				//threshold of light sensor - left (larger value is larger tolerance - less sensitive)
+	private double leftThreshold = 0.04; 				//threshold of light sensor - left (larger value is larger tolerance - less sensitive)
 	
 	/**----------------TODO------------------------------------
 	 * Change this leftThreshold value - fiddle around with it (its different 
 	 * depending on where the card is stuck to it - we should tape the card 
-	 * down on the left side (right is ok))
+	 * down on the left side (right is ok)
 	 * ----------------End TODO-------------------------------*/
 	
-	private double rightThreshold = 0.03;				//threshold of light sensor - right (smaller value is smaller tolerance - more sensitive)
+	private double rightThreshold = 0.04;				//threshold of light sensor - right (smaller value is smaller tolerance - more sensitive)
 	private StartCorner sc = StartCorner.BOTTOM_LEFT; 	//set default as 0,0
 	private double angle1, angle2; 						//starting angle, second angle = start angle + 90
 	private boolean isLineL = false; 					//assume not on a line (left)
