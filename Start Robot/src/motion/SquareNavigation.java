@@ -37,7 +37,9 @@ public class SquareNavigation {
  	
  	Odometry odo;
  	
- 	
+ 	public double lastBrickX = 0;
+ 	public double lastBrickY = 0;
+ 	public double lastBrickT = 0;
  	
  	private static final int FORWARD_SPEED = 180;
  	private static final int ROTATE_SPEED = 80;
@@ -211,7 +213,9 @@ public class SquareNavigation {
 			}
 			//end of odo correction
 		
-			
+			lastBrickX = pos[0];
+			lastBrickY = pos[1];
+			lastBrickT = pos[2];
 			//re-localize
 			if( travelledBrickCount >= 4 ){
 				relocalize(pos[0],pos[1],pos[2]);
@@ -286,7 +290,7 @@ public class SquareNavigation {
 		
 	}//End of travelTo()
  	
- 	public void relocalize(double locX, double locY, double locT){
+ 	public void relocalize(double locX, double locY, double locT){ 
  		turn(90);
  		
  		lsDataL.start();
@@ -437,7 +441,7 @@ public class SquareNavigation {
 		}
 		
 		boolean[] upd = {true, true, true};
-		double[] pos = {locX,locY,locT};
+		double[] pos = {locX,locY, locT};
 		odo.setPosition(pos, upd);
 		travelledBrickCount = 0;
 	}//end of reloc method

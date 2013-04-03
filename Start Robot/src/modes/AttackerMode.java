@@ -39,17 +39,17 @@ public class AttackerMode {
 	 */
 	public void attackAlgorithm(){
 		
-		sqrNav.travelTo(bx, by); //bx + 1 because we will add a pushing button method
+		//sqrNav.travelTo(bx, by); //bx + 1 because we will add a pushing button method
 		//push button method here//
 		
 		//goal is at (5,10)
-		sqrNav.travelTo(5, d1 - 1); //travel to right in front of goal - 1 so it doesnt go in the "no go" zone
+		//sqrNav.travelTo(5, d1 - 1); //travel to right in front of goal - 1 so it doesnt go in the "no go" zone
 		
 		//btconnect stuff to slave here//
 		
-		sqrNav.travelTo(0, 0); //return home
+		//sqrNav.travelTo(0, 0); //return home
 		
-		//setStrategy();
+		setStrategy();
 		
 		
 	}
@@ -67,12 +67,15 @@ public class AttackerMode {
 //		
 
 		
-		sqrNav.travelTo(180, 90);
+		sqrNav.travelTo(90, 120);
+		try {Thread.sleep(500);} catch (InterruptedException e) {}
+		sqrNav.relocalize(sqrNav.lastBrickX, sqrNav.lastBrickY, sqrNav.lastBrickT);
 		try {Thread.sleep(500);} catch (InterruptedException e) {}
 		sqrNav.turnTo(270);
 		try {Thread.sleep(1000);} catch (InterruptedException e) {}
 		sqrNav.travelTo(0, 0);
 		try {Thread.sleep(500);} catch (InterruptedException e) {}
+		sqrNav.relocalize(sqrNav.lastBrickX, sqrNav.lastBrickY, sqrNav.lastBrickT);
 		sqrNav.turnTo(0);
 		try {Thread.sleep(500);} catch (InterruptedException e) {}
 		sqrNav.travelTo(0 , 0);

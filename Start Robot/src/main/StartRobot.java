@@ -96,8 +96,8 @@ public class StartRobot {
 //		DefenderMode defend = new DefenderMode(t.w1, t.w2, t.d1, sqrNav);				//--NEEDED for bt
 		
 		//do the localizations
-		usloc.doLocalization();
-		lsloc.doLocalization();
+		//usloc.doLocalization(); ******************************* LOCALIZATIONS!!!!!!!!!!!!!!!**********************************
+		//lsloc.doLocalization();
 		
 		//chosing which role to do - attack/defense
 	//	if (t.role == PlayerRole.ATTACKER) --NEEDED
