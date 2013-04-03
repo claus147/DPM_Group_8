@@ -14,11 +14,12 @@ import data.LCDinfo;
 public class NavTest{
 	public static void main (String args[]) {
 	
-		Odometry odo = new Odometry();
+		Odometry odo = new Odometry(true);
 		
 		Navigation nav = new Navigation(odo);
 		
 		LCDinfo info = new LCDinfo(odo);
+		info.start();
 		
 		nav.goforward(100);
 		nav.turnTo(100);
