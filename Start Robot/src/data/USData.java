@@ -119,18 +119,19 @@ public class USData implements TimerListener{
 		//us.reset();
 		int distance = us.getDistance();
 		
-		// rudimentary filter
-		if (distance == 255 && filterControl < FILTER_OUT) {
-		// bad value, do not set the usData var, however do increment the filter value
-			filterControl ++;
-		} else if (distance == 255){
-		// true 255, therefore set usData to 255
-				this.usData = distance;
-			} else {
-				// usData went below 255, therefore reset everything.
-				filterControl = 0;
-				this.usData = distance;
-			}
+		usData = distance;
+//		// rudimentary filter
+//		if (distance == 255 && filterControl < FILTER_OUT) {
+//		// bad value, do not set the usData var, however do increment the filter value
+//			filterControl ++;
+//		} else if (distance == 255){
+//		// true 255, therefore set usData to 255
+//				this.usData = distance;
+//			} else {
+//				// usData went below 255, therefore reset everything.
+//				filterControl = 0;
+//				this.usData = distance;
+//			}
 
 		 if (usData > noWall){				//if distance > noWall set it to noWall
 			 usData = noWall;
@@ -166,167 +167,6 @@ public class USData implements TimerListener{
 	 */
 	public boolean getIsWall(){
 		return isWall;
-	}
-
-//	public void setTF(boolean tf){
-//		this.tf = tf;
-//	}
-
-	
+	}	
 
 }
-
-
-////<<<<<<< HEAD
-//public class USData {//implements TimerListener{
-//
-//	
-//	
-//	public static SensorPort usPortA = SensorPort.S2;
-//	public static SensorPort usPortB = SensorPort.S3;
-//	public static UltrasonicSensor us1 = new UltrasonicSensor(usPortA);
-//	public static UltrasonicSensor us2 = new UltrasonicSensor(usPortB);
-//	
-//	
-//	public static int getUS1Data (){
-//		return us1.getDistance();
-//	}
-//	
-//	public static int getFilteredUS1Data(){
-//		int distance;
-//		int filtered = 0;
-//		int filterControl = 0;
-//		int FILTER_OUT = 20;
-//	    // there will be a delay here
-//		distance = us1.getDistance();
-//		
-//		// rudimentary filter
-//		if (distance == 255 && filterControl < FILTER_OUT) {
-//			// bad value, do not set the distance var, however do increment the filter value
-//			filterControl ++;
-//		} else if (distance == 255){
-//			// true 255, therefore set distance to 255
-//			filtered = distance;
-//		} else {
-//			// distance went below 255, therefore reset everything.
-//			filterControl = 0;
-//			filtered = distance;
-//		}
-//		
-//		return filtered;
-//	}
-//	
-//	public static int getFilteredUS2Data(){
-////=======
-//public class USData extends Thread{//implements TimerListener{
-//
-//	
-//	public static int us1Data = 0;
-//	public static int us2Data = 0;
-//	public static UltrasonicSensor us1 = new UltrasonicSensor(SensorPort.S2);
-//	public static UltrasonicSensor us2  = new UltrasonicSensor(SensorPort.S3);
-//	public USData(){
-//		
-//	}
-//	
-//	public void run(){
-//		while(true){
-//			us1Data = us1.getDistance();
-//			us2Data = us2.getDistance();
-//			try {
-// 			Thread.sleep(50);
-//			} catch (InterruptedException e) {
-// 			
-//			}
-//			LCD.drawString(""+us1Data, 0, 8);
-//		}
-//		
-//	}
-//	
-//	
-//	public static int getFilteredUS1Data(){
-////>>>>>>> update
-//		int distance;
-//		int filtered = 0;
-//		int filterControl = 0;
-//		int FILTER_OUT = 20;
-//	    // there will be a delay here
-////<<<<<<< HEAD
-//		distance = us2.getDistance();
-//		
-//		// rudimentary filter
-//		if (distance == 255 && filterControl < FILTER_OUT) {
-//			// bad value, do not set the distance var, however do increment the filter value
-//			filterControl ++;
-//		} else if (distance == 255){
-//			// true 255, therefore set distance to 255
-//			filtered = distance;
-//		} else {
-//			// distance went below 255, therefore reset everything.
-//			filterControl = 0;
-//			filtered = distance;
-//		}
-//		
-//		return filtered;
-//	}
-//
-//	
-//	public static int getUS2Data (){
-//		return us2.getDistance();
-//	}
-//	
-////=======
-//		distance = us1.getDistance();
-//		
-//		// rudimentary filter
-//		if (distance == 255 && filterControl < FILTER_OUT) {
-//			// bad value, do not set the distance var, however do increment the filter value
-//			filterControl ++;
-//		} else if (distance == 255){
-//			// true 255, therefore set distance to 255
-//			filtered = distance;
-//		} else {
-//			// distance went below 255, therefore reset everything.
-//			filterControl = 0;
-//			filtered = distance;
-//		}
-//		
-//		return filtered;
-//	}
-//	
-//	public static int getFilteredUS2Data(){
-//		int distance;
-//		int filtered = 0;
-//		int filterControl = 0;
-//		int FILTER_OUT = 20;
-//	    // there will be a delay here
-//		distance = us2.getDistance();
-//		
-//		// rudimentary filter
-//		if (distance == 255 && filterControl < FILTER_OUT) {
-//			// bad value, do not set the distance var, however do increment the filter value
-//			filterControl ++;
-//		} else if (distance == 255){
-//			// true 255, therefore set distance to 255
-//			filtered = distance;
-//		} else {
-//			// distance went below 255, therefore reset everything.
-//			filterControl = 0;
-//			filtered = distance;
-//		}
-//		
-//		return filtered;
-//	}
-//
-//	public int getUS1Data (){
-//		return us1.getDistance();
-//	}
-//	public int getUS2Data (){
-//		return us2.getDistance();
-//	}
-//	
-////>>>>>>> update
-	
-	
-	
-	

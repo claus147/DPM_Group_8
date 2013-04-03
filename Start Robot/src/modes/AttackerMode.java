@@ -42,7 +42,9 @@ public class AttackerMode {
 
 	LCDinfo lcd = new LCDinfo(odo);
 	/**
-	 * This method will combine many strategies in order to create a complete AI for the robot
+	 * TODO : develop an attacker algorithm
+	 * Testing class;
+	 * Activate motors
 	 */
 	public void attackAlgorithm(){
 		
@@ -52,18 +54,18 @@ public class AttackerMode {
 		
 		
 		setStrategy();
-	
+
 		
 	}
 	/**
-	 * This method will basically set a strategy for the robot
+	 * TODO: Call the strategy established in AttackerStrat1
 	 */
 	public void setStrategy(){
 		
 		
 		//31 March test!
 		
-		sqrNav.travelTo(0, 90);
+		sqrNav.travelTo(0, 210);
 		
 		
 		
@@ -88,57 +90,6 @@ public class AttackerMode {
 			8. The robot then returns to the starting position and halts.
 		 */
 
-
-		double launchingAngle = 0;
-		//launch X and Y are the coordinates of the goal - 8 feet
-		double launchXBlock = 0;
-		double launchYBlock = 0;
-		double launchX = 0;
-		double launchY = 0;
-		
-		BluetoothConnection bc = new BluetoothConnection(); //must pass this in here somewhere /************used
-		
-		Transmission trans = bc.getTransmission();//new Transmission(); //**********used*******
-		double goalXBlock = 5;//trans.w1;
-		double goalYBlock = 9;//trans.w2;
-		if(goalYBlock > 6){ 
-			launchXBlock = goalXBlock;
-			launchYBlock = goalYBlock - 8;
-			launchingAngle = 0;
-		}else{
-			launchXBlock = goalXBlock;
-			launchYBlock = goalYBlock - 8;
-			launchingAngle = 180;
-		}
-		launchX = launchXBlock * 30;
-		launchY = launchYBlock * 30;
-		/* step 1 */
-		
-		
-		/* step 2 DONE */
-		/* step 3 */
-		// ???
-		/* step 4 */// LOCALIZATIONS
-		//usData.start();
-		USLocalizer usLoc = new USLocalizer(odo, navigate ,usL, usR, USLocalizer.LocalizationType.RISING_EDGE);
-		usLoc.doLocalization();
-		LightLocalizer lightLocalizer = new LightLocalizer(odo, navigate, lsl, lsr, sc);
-		lightLocalizer.doLocalization();
-//		try { Thread.sleep(2000); } catch (InterruptedException e) {}
-		/* step 5 + step 6, Obstacle avoidance not working yet */
-			control.travelTo(60,60);
-			control.turnTo(launchingAngle );
-		/* step 7 */
-		BTConnectTest connect = new BTConnectTest();
-		try {
-			connect.connect();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		/* step 8 */
-		control.travelTo(0, 0);
-	
 //		double launchingAngle = 0;
 //		//launch X and Y are the coordinates of the goal - 8 feet
 //		double launchXBlock = 0;

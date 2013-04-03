@@ -20,9 +20,9 @@ public class Odometry implements TimerListener {
 	private double x, y, theta;
 	private double [] oldDH, dDH;
 	//added claus
-	private double leftRadius = 2.4;
-	private double rightRadius = 2.4;
-	private double width = 17.0;
+	private double leftRadius = 2.5;
+	private double rightRadius = 2.5;
+	private double width = 17.2;
 	private NXTRegulatedMotor leftMotor = Motor.A;
 	private NXTRegulatedMotor rightMotor = Motor.B;
 	
@@ -90,7 +90,7 @@ public class Odometry implements TimerListener {
 		double result;
 
 		synchronized (lock) {
-			result = x/10.0; //compensation to cm
+			result = x ; //compensation to cm
 		}
 
 		return result;
@@ -100,7 +100,7 @@ public class Odometry implements TimerListener {
 		double result;
 
 		synchronized (lock) {
-			result = y/10.0; //compensation to cm
+			result = y ; //compensation to cm
 		}
 
 		return result;
