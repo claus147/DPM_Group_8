@@ -11,7 +11,7 @@ import lejos.nxt.UltrasonicSensor;
 
 import lejos.nxt.*;
 import motion.Navigation.WheelSide;
-
+//test
 
 public class SquareNavigation {
 	
