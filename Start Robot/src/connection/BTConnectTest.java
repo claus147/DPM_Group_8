@@ -7,9 +7,11 @@ import java.io.IOException;
 import javax.bluetooth.RemoteDevice;
 
 import lejos.nxt.LCD;
+import lejos.nxt.Sound;
 import lejos.nxt.comm.BTConnection;
 import lejos.nxt.comm.Bluetooth;
 import lejos.nxt.comm.NXTConnection;
+import modes.Controller;
 
 /**
  * 
@@ -83,6 +85,7 @@ public class BTConnectTest {
 		
 		BTConnection btc = Bluetooth.connect(btrd);
 		DataOutputStream out = btc.openDataOutputStream();
+		DataInputStream in = btc.openDataInputStream();
 		if (btc == null) {
 			LCD.clear();
 			LCD.drawString("Connect fail", 0, 0);
@@ -91,7 +94,17 @@ public class BTConnectTest {
 			System.exit(1);
 		}
 		// START TEST 
+	//	Controller control = new Controller(null);
 		out.writeChars("a");
+	
+		/*
+		if(in.readInt()==10){
+			Sound.buzz();
+	//		control.travelTo(3, 3);
+		}
+		*/
+		in.close();
+		
 		
 		// END TEST 
 		LCD.clear();
@@ -101,7 +114,7 @@ public class BTConnectTest {
 		DataInputStream dis = btc.openDataInputStream();
 		DataOutputStream dos = btc.openDataOutputStream();
 				
-	
+	/*
 		for(int i=0;i<100;i++) {
 			try {
 				LCD.drawInt(i*30000, 8, 0, 2);
@@ -121,7 +134,7 @@ public class BTConnectTest {
 				LCD.refresh();
 			}
 		}
-		
+		*/
 		try {
 			LCD.drawString("Closing...    ", 0, 0);
 			LCD.refresh();

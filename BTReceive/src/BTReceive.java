@@ -1,6 +1,7 @@
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 
 import lejos.nxt.LCD;
 import lejos.nxt.Motor;
@@ -32,95 +33,105 @@ public class BTReceive {
 	static int speed = 1100; //speed of launch
 	static int returnSpeed = 80;	 //speed of return to original position
 	static int angle = -80; //angle the arm turns to (final position of catapult arm) - negative because initally not geared 
-	static int reAdjust = 10;	
-
+	static int reAdjust = 100;	
+	// Launcher motors
+	static NXTRegulatedMotor leftMotor = Motor.B;
+	static NXTRegulatedMotor rightMotor = Motor.C;
+	//Feeding mechanism
+	static NXTRegulatedMotor turnMotor = Motor.A;
+	static int turn = 180; 
+	static int angle1 = 90;
+	static String connected = "Connected";
+    static String waiting = "Waiting...!!!";
+    static String closing = "Closing...";
+	
 	public static void main(String [] args)  throws Exception 
 	{
-		String connected = "Connected";
-        String waiting = "Waiting...!!!";
-        String closing = "Closing...";
-    	
-
-    		
-    	
+		  BTConnection btc = Bluetooth.waitForConnection();
+	        DataInputStream input = btc.openDataInputStream();
     	
 		while (true)
 		{
-			// Launcher motors
-			NXTRegulatedMotor leftMotor = Motor.B;
-			NXTRegulatedMotor rightMotor = Motor.C;
-			//Feeding mechanism
-			NXTRegulatedMotor turnMotor = Motor.A;
-			int turn = 180; 
-			int angle1 = 90;
+
+	
 			LCD.drawString(waiting,0,0);
 			LCD.refresh();
-			
-
-	        BTConnection btc = Bluetooth.waitForConnection();
-	        DataInputStream input = btc.openDataInputStream();
 	    	
 	        //OPTION A
 	        if(input.readChar()=='a'){
-	    		Sound.beep();
-	    		Sound.beep();
 	    		Sound.buzz();
-	    		
-	    	}else{
-	    		
-	    	
-			LCD.clear();
-			LCD.drawString(connected,0,0);
-			
-			LCD.refresh();	
-			
-			for(int i= 0; i<5; i++){
-				turnMotor.setSpeed(turn);
-				//Motor.C.rotateTo(angle);
-				turnMotor.rotate(angle1);
-
-
-				try {
-				Thread.sleep(4000);
-				} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				}
-
-
-				rightMotor.setSpeed(speed);
-				leftMotor.setSpeed(speed);
-				rightMotor.rotateTo(angle, true);
-				leftMotor.rotateTo(angle);
-
-				//do return to original position
-				rightMotor.setSpeed(returnSpeed);
-				leftMotor.setSpeed(returnSpeed);
-				rightMotor.rotateTo(reAdjust, true);
-				leftMotor.rotateTo(reAdjust);
-
-
-			
-			
-			
-			
-			
-
-			/* END MOVE ROBOT HERE */
-			DataInputStream dis = btc.openDataInputStream();
-			DataOutputStream dos = btc.openDataOutputStream();
-
-			dis.close();
-			dos.close();
-			Thread.sleep(100); // wait for data to drain
-			LCD.clear();
-			LCD.drawString(closing,0,0);
-			LCD.refresh();
-			btc.close();
-			LCD.clear();
-		}
 	    	}
+	        
+	        if(input.readChar()=='b'){
+	        	launchSixBricks();
+	        	
+	        }
+	        
+	        if(input.readChar()=='c'){
+	        	launchSevenBricks();
+	        	
+	        }
+	        if(input.readChar()=='d'){
+	        	launchEightBricks();
+	        }
+	        Thread.sleep(100);
+	    	}
+		
+		// input.close();
+        // btc.close();
 	}
-}}
+
+	
+public static void launchFiveBricks(){
+	
+	Sound.buzz();
+}
+
+public static void launchSixBricks(){
+	
+}
+
+public static void launchSevenBricks() throws IOException, InterruptedException{
+	
+
+
+
+}
+public static void launchEightBricks() throws IOException, InterruptedException{
+	for(int i= 0; i<5; i++){
+		
+		//put the launcher down
+		rightMotor.rotateTo(reAdjust, true);
+		leftMotor.rotateTo(reAdjust);
+		
+		turnMotor.setSpeed(turn);
+		//Motor.C.rotateTo(angle);
+		turnMotor.rotate(angle1);
+
+
+		try {
+		Thread.sleep(4000);
+		} catch (InterruptedException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		}
+
+
+		rightMotor.setSpeed(speed);
+		leftMotor.setSpeed(speed);
+		rightMotor.rotateTo(angle, true);
+		leftMotor.rotateTo(angle);
+
+		//do return to original position
+		rightMotor.setSpeed(returnSpeed);
+		leftMotor.setSpeed(returnSpeed);
+		rightMotor.rotateTo(reAdjust, true);
+		leftMotor.rotateTo(reAdjust);
+	
+}
+	
+}
+
+}
 
 
