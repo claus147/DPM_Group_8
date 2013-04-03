@@ -1,6 +1,7 @@
-/*
+/**
 * @author Sean Lawlor
-* @date November 3, 2011
+* @author Tuan-Kiet Luu
+* @date March, 2013
 * @class ECSE 211 - Design Principle and Methods
 */
 package connection;
@@ -71,6 +72,12 @@ public class BluetoothConnection {
 		}
 	}
 	
+	/**
+	 * 
+	 * This method will check if the attacker string is our robot name. If it is, it means that we
+	 * are the attacker, if it is not, we are the defender.
+	 * @return
+	 */
 	public boolean isAttacker(){
 		
 		if(trans.role.toString().equals("Bessy")){

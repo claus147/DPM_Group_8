@@ -1,5 +1,4 @@
 
-
 package connection;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -32,6 +31,9 @@ import lejos.nxt.comm.NXTConnection;
  * master.
  * 
  * @author Lawrie Griffiths
+ * @author Tuan-Kiet Luu
+ * @date March, 2013
+ * @class ECSE 211 - Design Principle and Methods
  *
  */
 public class BTConnectTest {
@@ -56,12 +58,15 @@ public class BTConnectTest {
 		
 	}
 	*/
+
 	
 	
 	public void connect() throws Exception {
 		//slave name : headyin / T04M / ShootingBrick / ANTBOT
 		String name = "ANTBOT";
 		
+	//	NXTConnection conn = Bluetooth.waitForConnection();
+	
 		
 		LCD.drawString("Connecting...", 0, 0);
 		LCD.refresh();
@@ -77,7 +82,7 @@ public class BTConnectTest {
 		}
 		
 		BTConnection btc = Bluetooth.connect(btrd);
-		
+		DataOutputStream out = btc.openDataOutputStream();
 		if (btc == null) {
 			LCD.clear();
 			LCD.drawString("Connect fail", 0, 0);
@@ -85,7 +90,10 @@ public class BTConnectTest {
 			Thread.sleep(2000);
 			System.exit(1);
 		}
-	
+		// START TEST 
+		out.writeChars("a");
+		
+		// END TEST 
 		LCD.clear();
 		LCD.drawString("Connected", 0, 0);
 		LCD.refresh();
