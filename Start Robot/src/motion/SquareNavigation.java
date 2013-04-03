@@ -21,7 +21,7 @@ public class SquareNavigation {
 	
  	public LightSensor lsLeft, lsRight;
  	public LSData lsDataL, lsDataR;
- 	public double leftThreshold = 0.04; 				//threshold of light sensor - left (larger value is larger tolerance - less sensitive)
+ 	public double leftThreshold = 0.05; 				//threshold of light sensor - left (larger value is larger tolerance - less sensitive)
 	public double rightThreshold = 0.05;//threshold of light sensor - right (smaller value is smaller tolerance - more sensitive)
 	
  	
@@ -70,7 +70,8 @@ public class SquareNavigation {
 	boolean turnNotAvoidingObstacle = false;
  	public void travelTo( int x, int y){
 		
-		
+		usDataLeft.start();
+		usDataRight.start();
 		
  			
 		
@@ -96,8 +97,8 @@ public class SquareNavigation {
  			rightMotor.setSpeed(FORWARD_SPEED);
  			leftMotor.setSpeed(FORWARD_SPEED);
 			//
- 			leftMotor.rotate(toAngle(leftRadius, 37), true);
-			rightMotor.rotate(toAngle(rightRadius, 37), true); 
+ 			leftMotor.rotate(toAngle(leftRadius, 40), true);
+			rightMotor.rotate(toAngle(rightRadius, 40), true); 
 			
 			try {Thread.sleep(2500);} catch (InterruptedException e) {}
 			
@@ -150,10 +151,10 @@ public class SquareNavigation {
 					leftMotor.stop(true);
 					//Sound.beep();
 					
-					leftMotor.setSpeed(-80);
-					leftMotor.rotate(toAngle(leftRadius, -7), true);
+					leftMotor.setSpeed(-100);
+					leftMotor.rotate(toAngle(leftRadius, -10), true);
 					leftDetect = true;
-					try {Thread.sleep(2000);} catch (InterruptedException e) {}
+					try {Thread.sleep(3000);} catch (InterruptedException e) {}
 					
 				}
 				
@@ -162,10 +163,10 @@ public class SquareNavigation {
 					rightMotor.stop(true);
 					//Sound.beep();
 					
-					rightMotor.setSpeed(-80);
-					rightMotor.rotate(toAngle(rightRadius, -7), true);
+					rightMotor.setSpeed(-100);
+					rightMotor.rotate(toAngle(rightRadius, -10), true);
 					rightDetect = true;	
-					try {Thread.sleep(2000);} catch (InterruptedException e) {}
+					try {Thread.sleep(3000);} catch (InterruptedException e) {}
 				}
 			
 			}// end of motor control while loop
@@ -212,7 +213,7 @@ public class SquareNavigation {
 		
 			
 			//re-localize
-			if( travelledBrickCount >= 5 ){
+			if( travelledBrickCount >= 4 ){
 				relocalize(pos[0],pos[1],pos[2]);
 				
 			}
@@ -442,17 +443,11 @@ public class SquareNavigation {
 	}//end of reloc method
  	
 	
-	boolean flag0 = false;
-	boolean flag90 = false;
-	boolean flag180 = false;
-	boolean flag270 = false;
-		
-	boolean straightObstacleFlag = false;
+	
 	
 	public int supposedSquareHeading(int destX, int destY){
 		
-		usDataLeft.start();
-		usDataRight.start();
+		
 		try {Thread.sleep(500);} catch (InterruptedException e) {}
 		boolean isWallL = false;
 		boolean isWallR = false;
@@ -472,18 +467,7 @@ public class SquareNavigation {
 		//There is an OBSTACLE
 			//
 			if((isWallL || isWallR) && (currentT >= 0 && currentT < 30 || currentT > 330 && currentT <= 360) && (currentY < 280) && distance > 50){ //heading 0
-				if(straightObstacleFlag){
-					straightObstacleFlag = false;
-					if(flag0){				
-						return 0;
-					}else if(flag90){
-						return 90;
-					}else if(flag180){
-						return 180;
-					}else if(flag270){
-						return 270;
-					}
-				}
+				
 				if(destX - currentX > limit){ // at the right of robot, turn right 
 					heading = 90;
 				}else if(destX - currentX < -limit){// at the left of robot, turn left 
@@ -491,14 +475,28 @@ public class SquareNavigation {
 				}else if(destY - currentY < -limit){ // bottom, turn around
 					heading = 180;
 				}else if(destY - currentY > limit){// same direction
-					straightObstacleFlag = true;
 					if(currentX > 150){
-						heading = 270;
-						flag270 = true;
-					}else if(currentX >= 150){
-						heading = 90;
-						flag90 = true;
+						int check = checkObstacles(0);
+						if(check == 0){
+							heading = 270;
+						}else if(check == 1){
+							heading = 90;
+						}else{
+							heading = 270;
+						}
+						
+					}else if(currentX <= 150){
+						int check = checkObstacles(1);
+						if(check == 1){
+							heading = 90;
+						}else if(check == 0){
+							heading = 270;
+						}else{
+							heading = 90;
+						}
+						
 					}
+					
 				}else{
 					//???
 				}
@@ -512,15 +510,29 @@ public class SquareNavigation {
 				}else if(destX - currentX < -limit){ // 
 					heading = 270;
 				}else if(destX - currentX > limit){
-					straightObstacleFlag = true;
+					
 					if(currentY > 150){
-						heading = 180;
-						flag180 = true;
+						int check = checkObstacles(1);
+						if(check == 1){
+							heading = 180;
+						}else if(check == 0){
+							heading = 0;
+						}else{
+							heading = 180;
+						}
+						
+						
 					}
 					
 					else{
-						heading = 0;
-						flag0 = true;
+						int check = checkObstacles(0);
+						if(check == 0){
+							heading = 0;
+						}else if(check == 1){
+							heading = 180;
+						}else{
+							heading = 0;
+						}
 					}
 				}else{
 					//???
@@ -535,15 +547,27 @@ public class SquareNavigation {
 				}else if(destY - currentY > limit){ // 
 					heading = 0;
 				}else if(destY - currentY < -limit){//
-					straightObstacleFlag = true;
 					if(currentX > 150){
-						heading = 270;
-						flag270 = true;
+						int check = checkObstacles(1);
+						if(check == 1){
+							heading = 270;
+						}else if(check == 0){
+							heading = 90;
+						}else{
+							heading = 270;
+						}
+						
 					}
 						
 					else{
-						heading = 90;
-						flag90 = true;
+						int check = checkObstacles(0);
+						if(check == 0){
+							heading = 90;
+						}else if(check == 1){
+							heading = 270;
+						}else{
+							heading = 90;
+						}
 					}
 				}else{
 					//???
@@ -557,15 +581,27 @@ public class SquareNavigation {
 				}else if(destX - currentX > limit){ // 
 					heading = 90;
 				}else if(destX - currentX < -limit){
-					straightObstacleFlag = true;
 					if(currentY > 150){
-						heading = 180;
-						flag180 = true;
+						int check = checkObstacles(0);
+						if(check == 0){
+							heading = 180;
+						}else if(check == 1){
+							heading = 0;
+						}else{
+							heading = 180;
+						}
 					}
 						
 					else{
-						heading = 0;
-						flag0 = true;
+						int check = checkObstacles(1);
+						if(check == 1){
+							heading = 0;
+						}else if(check == 0){
+							heading = 180;
+						}else{
+							heading = 0;
+						}
+						
 					}
 				}else{
 					//???
@@ -575,7 +611,6 @@ public class SquareNavigation {
 		//There is NO OBSTACLE
 			
 			else if(currentT >= 0 && currentT < 30 || currentT > 330 && currentT <= 360){ //heading 0
-				straightObstacleFlag = false;
 				if(destY - currentY > limit){// infront of robot, can go in the same direction
 					heading = 0;
 					
@@ -593,7 +628,6 @@ public class SquareNavigation {
 				}
 				
 			}else if(currentT > 60 && currentT < 120){ // heading 90
-				straightObstacleFlag = false;
 				if(destX - currentX > limit){
 					heading = 90;
 				}else if(destY - currentY > limit){ //
@@ -610,7 +644,6 @@ public class SquareNavigation {
 				}
 				
 			}else if(currentT > 150 && currentT < 210){// heading 180
-				straightObstacleFlag = false;
 				if(destY - currentY < -limit){//
 					heading = 180;
 				}else if(destX - currentX > limit){ //  
@@ -626,7 +659,6 @@ public class SquareNavigation {
 					//???
 				}
 			}else if(currentT > 240 && currentT < 300){//heading 270
-				straightObstacleFlag = false;
 				if(destX - currentX < -limit){
 					heading = 270;
 				}else if(destY - currentY > limit){ //
@@ -646,14 +678,63 @@ public class SquareNavigation {
 			}
 			
 		//end of OBSTACLE? if-else's
-		usDataLeft.stop();
-		usDataRight.stop();
+		
 		
 		return heading;
 		
 	}// end of supposedSquareHeading() method
 	
-
+	
+	public int checkObstacles(int side){ //0 = left  , 1 = right , 2 = both return the side(s) that is clear priorityzing the larger side
+		int result = 0;
+		if(side == 0){ // turn left
+			turn(-90);
+			boolean isWallL = false;
+			boolean isWallR = false;
+			isWallL = usDataLeft.getIsWall();
+			isWallR = usDataRight.getIsWall();
+			
+			if(isWallL || isWallR){
+				turn(180);
+				isWallL = usDataLeft.getIsWall();
+				isWallR = usDataRight.getIsWall();
+				if(isWallL || isWallR){
+					result = 2;
+					return 2;
+				}else{
+					result = 1;
+					return 1;
+				}
+			}else{
+				result = 0;
+				return 0;
+			}
+		}else if(side == 1){ // turn right
+			turn(90);
+			boolean isWallL = false;
+			boolean isWallR = false;
+			isWallL = usDataLeft.getIsWall();
+			isWallR = usDataRight.getIsWall();
+			
+			if(isWallL || isWallR){
+				turn(180);
+				isWallL = usDataLeft.getIsWall();
+				isWallR = usDataRight.getIsWall();
+				if(isWallL || isWallR){
+					result = 2;
+					return 2;
+				}else{
+					result = 0;
+					return 0;
+				}
+			}else{
+				result = 1;
+				return 1;
+			}
+		}
+		return result;
+	}
+	
 	public void turnTo( double theta ){
  		
  		

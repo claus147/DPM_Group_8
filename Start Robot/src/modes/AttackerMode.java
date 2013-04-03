@@ -34,13 +34,12 @@ public class AttackerMode {
 	public UltrasonicSensor usl = new UltrasonicSensor(SensorPort.S2);
 	public UltrasonicSensor usr = new UltrasonicSensor(SensorPort.S3);
 	
-	public USData usDataL = new USData(usl , 40);
-	public USData usDataR = new USData(usr , 40);
+	public USData usDataL = new USData(usl );
+	public USData usDataR = new USData(usr);
 	Navigation navigate = new Navigation(odo);
 	StartCorner sc = StartCorner.BOTTOM_LEFT;
 	SquareNavigation sqrNav = new SquareNavigation(odo, lsl, lsr, usDataL, usDataR);
-	USLocalizer usloc = new USLocalizer(odo, navigate, usl, usr, USLocalizer.LocalizationType.RISING_EDGE);
-	LightLocalizer lsloc = new LightLocalizer(odo, navigate, lsl, lsr, sc);
+	
 	LCDinfo lcd = new LCDinfo(odo);
 	/**
 	 * TODO : develop an attacker algorithm
@@ -66,16 +65,16 @@ public class AttackerMode {
 		
 		//31 March test!
 		
-		usloc.doLocalization();
+//		usloc.doLocalization();
+//		
+//		lsloc.doLocalization();
+//		
 		
-		lsloc.doLocalization();
-		
-		
-		sqrNav.travelTo(0, 210);
+		sqrNav.travelTo(180, 90);
 		try {Thread.sleep(500);} catch (InterruptedException e) {}
 		sqrNav.turnTo(270);
 		try {Thread.sleep(1000);} catch (InterruptedException e) {}
-		sqrNav.travelTo(90, 90);
+		sqrNav.travelTo(0, 0);
 		try {Thread.sleep(500);} catch (InterruptedException e) {}
 		sqrNav.turnTo(0);
 		try {Thread.sleep(500);} catch (InterruptedException e) {}
