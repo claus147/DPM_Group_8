@@ -15,7 +15,7 @@ public class Controller {
 	WheelAData leftMotor = new WheelAData();
 	WheelBData rightMotor = new WheelBData();
 
-	public Odometry odo = AttackerMode.odo;
+	public Odometry odo;// = AttackerMode.odo; quick fix
 	USData usData; //= AttackerMode.usData; quick fix
 
 	Navigation navigate = new Navigation(odo);

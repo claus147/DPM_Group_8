@@ -1,20 +1,8 @@
 package modes;
 
-import connection.BTConnectTest; 
-import connection.BluetoothConnection;
-import connection.Transmission;
-import data.LCDinfo;
-import data.USData;
-import odometry.Odometry;
-import lejos.nxt.LightSensor;
-import lejos.nxt.SensorPort;
-import lejos.nxt.Sound;
-import lejos.nxt.UltrasonicSensor;
-import localization.LightLocalizer;
-import localization.USLocalizer;
-import motion.Navigation;
 import motion.SquareNavigation;
-import connection.StartCorner;
+
+
 
 
 /**
@@ -22,26 +10,27 @@ import connection.StartCorner;
  * This class will choose which strategy to play the game by
  * calling one of its subclasses
  * @author Tuan-Kiet 
+ * @author Kornpat Choy (Claus)
  * @version 1.0
  */
 public class AttackerMode {
 
-	public static Odometry odo = new Odometry(true);;
-	Controller control = new Controller(odo);
+	private int bx;	//the ball dispenser zones (bx, by)
+	private int by; 
+	private int w1;	//the ball bounce zone (w1,w2)
+	private int w2; //right now not used
+	private int d1; //the no go zone
+	private SquareNavigation sqrNav;
 	
-	private LightSensor lsl = new LightSensor(SensorPort.S1);
-	private LightSensor lsr = new LightSensor(SensorPort.S4);
-	public UltrasonicSensor usl = new UltrasonicSensor(SensorPort.S2);
-	public UltrasonicSensor usr = new UltrasonicSensor(SensorPort.S3);
+	public AttackerMode(int bx, int by, int w1, int w2, int d1, SquareNavigation sqrNav){
+		this.bx = bx;
+		this.by = by;
+		this.w1 = w1;
+		this.w2 = w2;
+		this.d1 = d1;
+		this.sqrNav = sqrNav;
+	}
 	
-	public USData usDataL = new USData(usl , 40);
-	public USData usDataR = new USData(usr , 40);
-	Navigation navigate = new Navigation(odo);
-	StartCorner sc = StartCorner.BOTTOM_LEFT;
-	SquareNavigation sqrNav = new SquareNavigation(odo, lsl, lsr, usDataL, usDataR);
-	USLocalizer usloc = new USLocalizer(odo, navigate, usl, usr, USLocalizer.LocalizationType.RISING_EDGE);
-	LightLocalizer lsloc = new LightLocalizer(odo, navigate, lsl, lsr, sc);
-	LCDinfo lcd = new LCDinfo(odo);
 	/**
 	 * TODO : develop an attacker algorithm
 	 * Testing class;
@@ -49,12 +38,17 @@ public class AttackerMode {
 	 */
 	public void attackAlgorithm(){
 		
+		sqrNav.travelTo(bx + 1, by); //bx + 1 because we will add a pushing button method
+		//push button method here//
 		
+		//goal is at (5,10)
+		sqrNav.travelTo(5, d1 - 1); //travel to right in front of goal - 1 so it doesnt go in the "no go" zone
 		
-		lcd.start();
+		//btconnect stuff to slave here//
 		
+		sqrNav.travelTo(0, 0); //return home
 		
-		setStrategy();
+		//setStrategy();
 		
 		
 	}
@@ -64,11 +58,9 @@ public class AttackerMode {
 	public void setStrategy(){
 		
 		
+		
+		
 		//31 March test!
-		
-		usloc.doLocalization();
-		
-		lsloc.doLocalization();
 		
 		
 		sqrNav.travelTo(0, 210);
