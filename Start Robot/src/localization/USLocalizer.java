@@ -48,14 +48,14 @@ public class USLocalizer {
 		if (usL.getDistance() < noWall||usR.getDistance() < noWall){
 			this.locType = USLocalizer.LocalizationType.FALLING_EDGE;
 			
-			noWall = 50; //setting for noWall falling edge (facing wall most of time)
+			noWall = 35; //setting for noWall falling edge (facing wall most of time)
 			
 			this.USDataL = new USData(usL, noWall, sleepTime, false);
 			this.USDataR = new USData(usR, noWall, sleepTime, false);
 		} else {
 			this.locType = USLocalizer.LocalizationType.RISING_EDGE;
 			
-			noWall = 35; //setting for noWall rising edge (facing out most of time)
+			noWall = 25; //setting for noWall rising edge (facing out most of time)
 			
 			this.USDataL = new USData(usL, noWall, sleepTime);
 			this.USDataR = new USData(usR, noWall, sleepTime);
@@ -80,13 +80,13 @@ public class USLocalizer {
 
 		int noWall;
 		if (locType == LocalizationType.FALLING_EDGE){
-			noWall = 50; //setting for noWall falling edge (facing wall most of time)
+			noWall = 35; //setting for noWall falling edge (facing wall most of time)
 		
 			this.USDataL = new USData(usL, noWall, sleepTime, false);
 			this.USDataR = new USData(usR, noWall, sleepTime, false);
 		
 		}else{
-			noWall = 35; //setting for noWall rising edge (facing out most of time)
+			noWall = 25; //setting for noWall rising edge (facing out most of time)
 		
 			this.USDataL = new USData(usL, noWall, sleepTime);
 			this.USDataR = new USData(usR, noWall, sleepTime);
