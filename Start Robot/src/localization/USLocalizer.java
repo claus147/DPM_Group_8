@@ -29,8 +29,48 @@ public class USLocalizer {
 	private LocalizationType locType;
 	private USData USDataL, USDataR;
 	private int sleepTime = 50;
+	private int noWall = 40;
 	
-	
+	/**
+	 * the automatically determined localization
+	 * @param odo - the odometer
+	 * @param nav - navigation
+	 * @param usL - Left us sensor
+	 * @param usR - right us sensor
+	 */
+	public USLocalizer(Odometry odo, Navigation nav,UltrasonicSensor usL,UltrasonicSensor usR) {
+		this.odo = odo;
+		this.nav = nav;
+		this.usL = usL;
+		this.usR = usR;
+		
+		//automatically determining if its rising or falling edge
+		if (usL.getDistance() < noWall||usR.getDistance() < noWall){
+			this.locType = USLocalizer.LocalizationType.FALLING_EDGE;
+			
+			noWall = 50; //setting for noWall falling edge (facing wall most of time)
+			
+			this.USDataL = new USData(usL, noWall, sleepTime, false);
+			this.USDataR = new USData(usR, noWall, sleepTime, false);
+		} else {
+			this.locType = USLocalizer.LocalizationType.RISING_EDGE;
+			
+			noWall = 35; //setting for noWall rising edge (facing out most of time)
+			
+			this.USDataL = new USData(usL, noWall, sleepTime);
+			this.USDataR = new USData(usR, noWall, sleepTime);
+			
+		}
+		
+	}
+	/**
+	 * manually determined localization type
+	 * @param odo - the odometer
+	 * @param nav - navigation
+	 * @param usL - Left us sensor
+	 * @param usR - right us sensor
+	 * @param locType - the type of localization (rising / falling)
+	 */
 	public USLocalizer(Odometry odo, Navigation nav,UltrasonicSensor usL,UltrasonicSensor usR, LocalizationType locType) {
 		this.odo = odo;
 		this.nav = nav;
@@ -194,21 +234,6 @@ public class USLocalizer {
 		}
 		
 		nav.turnTo(turn);
-		
-		
-//		//do the turns to get to the (0,0)
-//		while (pos[2] < turn){
-//			odo.getPosition(pos);
-//			nav.keepRotating(SECOND_ROTATION_SPEED);
-//			//robot.setRotationSpeed(SECOND_ROTATION_SPEED);
-//		}
-//		while (pos[2] > turn){
-//			odo.getPosition(pos, update);
-//			nav.keepRotating(-SECOND_ROTATION_SPEED);
-//			//robot.setRotationSpeed(-SECOND_ROTATION_SPEED);
-//		}
-//			
-//		nav.keepRotating(0);
 		
 		//set the new theta to 0
 		pos[2] = 0;

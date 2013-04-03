@@ -93,8 +93,8 @@ public class LightLocalizer {
 	 * corrects the direction it is facing first then turns 90 and corrects the next direction
 	 * after will face upfield or downfield depending on corner.
 	 */
-	public void doLocalization() { 
-
+	public void doLocalization() {
+		
 		nav.goforward(ROTATION_SPEED);
 		
 		LSDataL.start();
@@ -117,10 +117,10 @@ public class LightLocalizer {
 		}
 
 		if (sc.getId()<=2){			//if localizing in left of field correct x first
-			pos[0] = sc.getX();
+			pos[0] = sc.getX()*30;  //turning to cm
 			update[0] = true;
 		} else {					//else correct y first
-			pos[1] = sc.getY();
+			pos[1] = sc.getY()*30;	//turning to cm
 			update[1] = true;
 		}
 
@@ -159,10 +159,10 @@ public class LightLocalizer {
 		
 		//updating odometer
 		if (sc.getId()<=2){ 		//if localizing in left of field correct y second
-			pos[1] = sc.getY();
+			pos[1] = sc.getY()*30;	//turn to cm
 			update[1] = true;
 		} else {					//else correct x second
-			pos[0] = sc.getX();
+			pos[0] = sc.getX()*30;	//turn to cm
 			update[0] = true;
 		}
 		pos[2] = angle2;

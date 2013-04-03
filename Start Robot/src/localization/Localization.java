@@ -53,11 +53,9 @@ public class Localization {
 				&& buttonChoice != Button.ID_RIGHT);
 		
 		if (buttonChoice == Button.ID_LEFT) {					//for the auto selector
-			if (usR.getDistance() < 80||usL.getDistance() < 80){							//80 is the number specified to be the "end" of wall
-				usloc = new USLocalizer(odo, nav, usL, usR, USLocalizer.LocalizationType.FALLING_EDGE);
-			} else {
-				usloc = new USLocalizer(odo, nav, usL, usR, USLocalizer.LocalizationType.RISING_EDGE);
-			}
+			
+				usloc = new USLocalizer(odo, nav, usL, usR);
+		
 		} else {												//brings into new menu if "selection" is selected	
 			buttonChoice = -1;									//not left id or right id
 			do {
