@@ -68,13 +68,13 @@ public class StartRobot {
 		 * our own defined t values - bypass the btooth
 		 */
 		Transmission t = null;
-		t.bx = 5;
-		t.by = 5;
-		t.d1 = 5;
+		t.bx = 5*30;
+		t.by = 5*30;
+		t.d1 = 5*30;
 		t.role = PlayerRole.ATTACKER;
 		t.startingCorner = StartCorner.BOTTOM_LEFT;
-		t.w1 = 5;
-		t.w2 = 5;
+		t.w1 = 5*30;
+		t.w2 = 5*30;
 		
 		/**
 		 * end own defined values
