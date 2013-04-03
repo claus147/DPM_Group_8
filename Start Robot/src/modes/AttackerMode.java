@@ -38,7 +38,7 @@ public class AttackerMode {
 	 */
 	public void attackAlgorithm(){
 		
-		sqrNav.travelTo(bx + 1, by); //bx + 1 because we will add a pushing button method
+		sqrNav.travelTo(bx, by); //bx + 1 because we will add a pushing button method
 		//push button method here//
 		
 		//goal is at (5,10)
