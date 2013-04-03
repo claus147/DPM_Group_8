@@ -119,18 +119,19 @@ public class USData implements TimerListener{
 		//us.reset();
 		int distance = us.getDistance();
 		
-		// rudimentary filter
-		if (distance == 255 && filterControl < FILTER_OUT) {
-		// bad value, do not set the usData var, however do increment the filter value
-			filterControl ++;
-		} else if (distance == 255){
-		// true 255, therefore set usData to 255
-				this.usData = distance;
-			} else {
-				// usData went below 255, therefore reset everything.
-				filterControl = 0;
-				this.usData = distance;
-			}
+		usData = distance;
+//		// rudimentary filter
+//		if (distance == 255 && filterControl < FILTER_OUT) {
+//		// bad value, do not set the usData var, however do increment the filter value
+//			filterControl ++;
+//		} else if (distance == 255){
+//		// true 255, therefore set usData to 255
+//				this.usData = distance;
+//			} else {
+//				// usData went below 255, therefore reset everything.
+//				filterControl = 0;
+//				this.usData = distance;
+//			}
 
 		 if (usData > noWall){				//if distance > noWall set it to noWall
 			 usData = noWall;
