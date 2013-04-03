@@ -18,7 +18,7 @@ import odometry.Odometry;
 
 public class USLocalizer {
 	public enum LocalizationType { FALLING_EDGE, RISING_EDGE };
-	public static double ROTATION_SPEED = 40;
+	public static double ROTATION_SPEED = 60;
 
 	//public static double angleA, angleB;	//made public so set/get methods dont need to be written to display
 	//public static double turn = 0.0;		//turn to value (the corrected theta)
@@ -40,7 +40,7 @@ public class USLocalizer {
 
 		int noWall;
 		if (locType == LocalizationType.FALLING_EDGE){
-			noWall = 40; //setting for noWall falling edge (facing wall most of time)
+			noWall = 50; //setting for noWall falling edge (facing wall most of time)
 		
 			this.USDataL = new USData(usL, noWall, sleepTime, false);
 			this.USDataR = new USData(usR, noWall, sleepTime, false);

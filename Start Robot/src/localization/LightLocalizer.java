@@ -130,6 +130,7 @@ public class LightLocalizer {
 		odo.setPosition(pos, update);
 		nav.turnTo(angle2); //97
 		//Sound.buzz();
+		try { Thread.sleep(1000); } catch (InterruptedException e) {}
 		nav.goforward(ROTATION_SPEED);
 		
 		isLineL = false;
