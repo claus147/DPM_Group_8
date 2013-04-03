@@ -30,15 +30,7 @@ public class AttackerMode {
 		this.d1 = d1;
 		this.sqrNav = sqrNav;
 	}
-	
 
-	public USData usDataL = new USData(usl );
-	public USData usDataR = new USData(usr);
-	Navigation navigate = new Navigation(odo);
-	StartCorner sc = StartCorner.BOTTOM_LEFT;
-	SquareNavigation sqrNav = new SquareNavigation(odo, lsl, lsr, usDataL, usDataR);
-	
-	LCDinfo lcd = new LCDinfo(odo);
 
 	/**
 	 * TODO : develop an attacker algorithm
