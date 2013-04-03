@@ -34,8 +34,8 @@ public class AttackerMode {
 	public UltrasonicSensor usl = new UltrasonicSensor(SensorPort.S2);
 	public UltrasonicSensor usr = new UltrasonicSensor(SensorPort.S3);
 	
-	public USData usDataL = new USData(usl);
-	public USData usDataR = new USData(usr);
+	public USData usDataL = new USData(usl , 40);
+	public USData usDataR = new USData(usr , 40);
 	Navigation navigate = new Navigation(odo);
 	StartCorner sc = StartCorner.BOTTOM_LEFT;
 	SquareNavigation sqrNav = new SquareNavigation(odo, lsl, lsr, usDataL, usDataR);
@@ -66,6 +66,16 @@ public class AttackerMode {
 		//31 March test!
 		
 		sqrNav.travelTo(0, 210);
+		try {Thread.sleep(500);} catch (InterruptedException e) {}
+		sqrNav.turnTo(270);
+		try {Thread.sleep(1000);} catch (InterruptedException e) {}
+		sqrNav.travelTo(90, 90);
+		try {Thread.sleep(500);} catch (InterruptedException e) {}
+		sqrNav.turnTo(0);
+		try {Thread.sleep(500);} catch (InterruptedException e) {}
+		sqrNav.travelTo(0 , 0);
+		try {Thread.sleep(500);} catch (InterruptedException e) {}
+		sqrNav.turnTo(0);
 		
 		
 		

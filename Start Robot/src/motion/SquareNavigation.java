@@ -21,7 +21,7 @@ public class SquareNavigation {
 	
  	public LightSensor lsLeft, lsRight;
  	public LSData lsDataL, lsDataR;
- 	public double leftThreshold = 0.05; 				//threshold of light sensor - left (larger value is larger tolerance - less sensitive)
+ 	public double leftThreshold = 0.04; 				//threshold of light sensor - left (larger value is larger tolerance - less sensitive)
 	public double rightThreshold = 0.05;//threshold of light sensor - right (smaller value is smaller tolerance - more sensitive)
 	
  	
@@ -31,8 +31,8 @@ public class SquareNavigation {
 	public USData usDataLeft;// = new USData(new UltrasonicSensor(SensorPort.S2));
 	public USData usDataRight;// = new USData(new UltrasonicSensor(SensorPort.S3));
 	
-	final double leftRadius = 2.5;
- 	final double rightRadius = 2.5;
+	final double leftRadius = 2.4;
+ 	final double rightRadius = 2.4;
  	final double width = 17.2;
  	
  	Odometry odo;
@@ -73,8 +73,8 @@ public class SquareNavigation {
 		
 		
  			
-		boolean doubtful = false;
-		boolean reloc = false;
+		
+		
 		while(Math.sqrt( (odo.getX() - x) * (odo.getX() - x) + (odo.getY() - y) * (odo.getY() - y)) > 25){
 			Sound.beep();
 			double loopInitialX = odo.getX();
@@ -142,82 +142,7 @@ public class SquareNavigation {
 				
 			
 				
-				//if lost a line: re-find the line!
 				
-				
-//				//counter left
-//				if(leftMotor.getRotationSpeed() == 0  && leftCount >= 2){
-//					leftMotor.stop(false);
-//					//Sound.beep();
-//					
-//					leftMotor.setSpeed(80);
-//					leftMotor.rotate(toAngle(leftRadius, 5), true);
-//					leftDetect =  true;
-//					doubtful = true;
-//				}
-//				//counter right
-//				if(rightMotor.getRotationSpeed() == 0  && rightCount >= 2){
-//					rightMotor.stop(false);
-//					//Sound.beep();
-//					
-//					rightMotor.setSpeed(80);
-//					rightMotor.rotate(toAngle(rightRadius, 5), true);
-//					rightDetect = true;
-//					doubtful = true;
-//				}
-//				
-//				//left refind line
-//				if(leftMotor.getRotationSpeed() == 0 && !leftDetect && !leftTried){
-//					
-//					leftMotor.stop(false);
-//					//Sound.beep();
-//					
-//					leftMotor.setSpeed(-80);
-//					leftMotor.rotate(toAngle(leftRadius, -10), true);
-//					leftTried = true;
-//					leftReturnFrontTried = false;
-//					leftCount ++;
-//				}
-//				
-//				//left goes back front
-//				if(leftMotor.getRotationSpeed() == 0  && !leftDetect && !leftReturnFrontTried){
-//					
-//					leftMotor.stop(false);
-//					//Sound.beep();
-//					
-//					leftMotor.setSpeed(80);
-//					leftMotor.rotate(toAngle(leftRadius, 10), true);
-//					leftTried = false;
-//					leftReturnFrontTried = true;
-//					
-//				}
-//				
-//				
-//				
-//				//right refind line
-//				if(rightMotor.getRotationSpeed() == 0  && !rightDetect && !rightTried){
-//					
-//					rightMotor.stop(false);
-//					//Sound.beep();
-//					
-//					rightMotor.setSpeed(-80);
-//					rightMotor.rotate(toAngle(rightRadius, -10), true);
-//					rightTried = true;
-//					rightReturnFrontTried = false;
-//					rightCount++;
-//				}
-//				
-//				//right goes back front
-//				if(rightMotor.getRotationSpeed() == 0  && !rightDetect && !rightReturnFrontTried){
-//					
-//					rightMotor.stop(false);
-//					//Sound.beep();
-//					
-//					rightMotor.setSpeed(80);
-//					rightMotor.rotate(toAngle(rightRadius, 10), true);
-//					rightTried = false;
-//					rightReturnFrontTried = true;
-//				}
 				
 				//if lost a line, go back to assumed position
 				if(leftMotor.getRotationSpeed() == 0 && !leftDetect){
@@ -246,22 +171,6 @@ public class SquareNavigation {
 			}// end of motor control while loop
 			travelledBrickCount++;
 			try {Thread.sleep(300);} catch (InterruptedException e) {}
-			
-			
-			//re-localize
-//			if( travelledBrickCount >= 4 || reloc){
-//				
-//				turn(90);
-//				
-//				
-//				turn(-90);
-//				reloc = false;
-//			}
-			
-			if(doubtful){
-				reloc = true;
-				doubtful = false;
-			}
 			
 			//odometry correction
 			boolean[] upd = {false, false, false};
@@ -301,6 +210,12 @@ public class SquareNavigation {
 			}
 			//end of odo correction
 		
+			
+			//re-localize
+			if( travelledBrickCount >= 5 ){
+				relocalize(pos[0],pos[1],pos[2]);
+				
+			}
 			try {Thread.sleep(500);} catch (InterruptedException e) {}
 			
 			
@@ -381,7 +296,7 @@ public class SquareNavigation {
 		leftMotor.rotate(toAngle(leftRadius, 10), true);
 		rightMotor.rotate(toAngle(rightRadius, 10), true); 
 		
-		try {Thread.sleep(100);} catch (InterruptedException e) {}
+		try {Thread.sleep(200);} catch (InterruptedException e) {}
 		
 		boolean isLineL = false; 					//assume not on a line (left)
 	    boolean isLineR = false; 
@@ -454,7 +369,7 @@ public class SquareNavigation {
 			leftMotor.rotate(toAngle(leftRadius, -20), true);
 			rightMotor.rotate(toAngle(rightRadius, -20), true); 
 			
-			try {Thread.sleep(100);} catch (InterruptedException e) {}
+			try {Thread.sleep(200);} catch (InterruptedException e) {}
 			
 			
 			
@@ -505,7 +420,7 @@ public class SquareNavigation {
 				if(rightMotor.getRotationSpeed() == 0  && leftMotor.getRotationSpeed() == 0 && !rightDetect && !leftDetect){
 					notFoundBack = true;
 					rightMotor.setSpeed(100);
-					leftMotor.setSpeed(-00);
+					leftMotor.setSpeed(-100);
 				
 					leftMotor.rotate(toAngle(leftRadius, 10), true);
 					rightMotor.rotate(toAngle(rightRadius, 10), true); 
@@ -514,7 +429,16 @@ public class SquareNavigation {
 				}
 			}//end of while
 		}//end of if not found in front
-			
+		
+		turn(-90);
+		if(notFoundBack && notFoundFront){
+			return;
+		}
+		
+		boolean[] upd = {true, true, true};
+		double[] pos = {locX,locY,locT};
+		odo.setPosition(pos, upd);
+		travelledBrickCount = 0;
 	}//end of reloc method
  	
 	
@@ -548,17 +472,17 @@ public class SquareNavigation {
 		//There is an OBSTACLE
 			//
 			if((isWallL || isWallR) && (currentT >= 0 && currentT < 30 || currentT > 330 && currentT <= 360) && (currentY < 280) && distance > 50){ //heading 0
-				if(straightObstacleFlag){
-					if(flag0){
-						return 0;
-					}else if(flag90){
-						return 90;
-					}else if(flag180){
-						return 180;
-					}else if(flag270){
-						return 270;
-					}
-				}
+//				if(straightObstacleFlag){
+//					if(flag0){
+//						return 0;
+//					}else if(flag90){
+//						return 90;
+//					}else if(flag180){
+//						return 180;
+//					}else if(flag270){
+//						return 270;
+//					}
+//				}
 				if(destX - currentX > limit){ // at the right of robot, turn right 
 					heading = 90;
 				}else if(destX - currentX < -limit){// at the left of robot, turn left 
