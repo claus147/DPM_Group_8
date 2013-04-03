@@ -453,7 +453,7 @@ public class SquareNavigation {
 		
 		usDataLeft.start();
 		usDataRight.start();
-		try {Thread.sleep(1000);} catch (InterruptedException e) {}
+		try {Thread.sleep(500);} catch (InterruptedException e) {}
 		boolean isWallL = false;
 		boolean isWallR = false;
 		isWallL = usDataLeft.getIsWall();
@@ -472,17 +472,18 @@ public class SquareNavigation {
 		//There is an OBSTACLE
 			//
 			if((isWallL || isWallR) && (currentT >= 0 && currentT < 30 || currentT > 330 && currentT <= 360) && (currentY < 280) && distance > 50){ //heading 0
-//				if(straightObstacleFlag){
-//					if(flag0){
-//						return 0;
-//					}else if(flag90){
-//						return 90;
-//					}else if(flag180){
-//						return 180;
-//					}else if(flag270){
-//						return 270;
-//					}
-//				}
+				if(straightObstacleFlag){
+					straightObstacleFlag = false;
+					if(flag0){				
+						return 0;
+					}else if(flag90){
+						return 90;
+					}else if(flag180){
+						return 180;
+					}else if(flag270){
+						return 270;
+					}
+				}
 				if(destX - currentX > limit){ // at the right of robot, turn right 
 					heading = 90;
 				}else if(destX - currentX < -limit){// at the left of robot, turn left 
@@ -644,7 +645,7 @@ public class SquareNavigation {
 				//ERROR!!! if reaches here!
 			}
 			
-		//end of OBSTACLE? if-else
+		//end of OBSTACLE? if-else's
 		usDataLeft.stop();
 		usDataRight.stop();
 		
@@ -652,21 +653,7 @@ public class SquareNavigation {
 		
 	}// end of supposedSquareHeading() method
 	
-	
-//	public boolean wierdHeading(){
-//		boolean wierd = false;
-//		
-//		if(){
-//			
-//		}
-//		
-//		
-//		
-//		return wierd;
-//	}
-	
-	
-	
+
 	public void turnTo( double theta ){
  		
  		

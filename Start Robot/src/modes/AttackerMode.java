@@ -39,7 +39,8 @@ public class AttackerMode {
 	Navigation navigate = new Navigation(odo);
 	StartCorner sc = StartCorner.BOTTOM_LEFT;
 	SquareNavigation sqrNav = new SquareNavigation(odo, lsl, lsr, usDataL, usDataR);
-
+	USLocalizer usloc = new USLocalizer(odo, navigate, usl, usr, USLocalizer.LocalizationType.RISING_EDGE);
+	LightLocalizer lsloc = new LightLocalizer(odo, navigate, lsl, lsr, sc);
 	LCDinfo lcd = new LCDinfo(odo);
 	/**
 	 * TODO : develop an attacker algorithm
@@ -54,7 +55,7 @@ public class AttackerMode {
 		
 		
 		setStrategy();
-
+		
 		
 	}
 	/**
@@ -64,6 +65,11 @@ public class AttackerMode {
 		
 		
 		//31 March test!
+		
+		usloc.doLocalization();
+		
+		lsloc.doLocalization();
+		
 		
 		sqrNav.travelTo(0, 210);
 		try {Thread.sleep(500);} catch (InterruptedException e) {}
