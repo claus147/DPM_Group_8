@@ -170,6 +170,12 @@ public class BTReceive {
 	static int angle = -80; //angle the arm turns to (final position of catapult arm) - negative because initally not geared 
 	static int reAdjust = 10;	
 
+	// 6.5 feet
+	// angle = -60
+	// 7 feet
+	// angle = -65
+	// 7.5 feet
+	// - 75
 	public static void main(String [] args)  throws Exception 
 	{
 		String connected = "Connected";
