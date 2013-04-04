@@ -63,7 +63,7 @@ public class BTConnectTest {
 
 	
 	
-	public void connect() throws Exception {
+	public void connect(char x) throws Exception {
 		//slave name : headyin / T04M / ShootingBrick / ANTBOT
 		String name = "ANTBOT";
 		
@@ -95,7 +95,8 @@ public class BTConnectTest {
 		}
 		// START TEST 
 	//	Controller control = new Controller(null);
-		out.writeChars("a");
+		out.writeChar(x);
+
 	
 		/*
 		if(in.readInt()==10){
@@ -111,8 +112,8 @@ public class BTConnectTest {
 		LCD.drawString("Connected", 0, 0);
 		LCD.refresh();
 		
-		DataInputStream dis = btc.openDataInputStream();
-		DataOutputStream dos = btc.openDataOutputStream();
+	//	DataInputStream dis = btc.openDataInputStream();
+	//	DataOutputStream dos = btc.openDataOutputStream();
 				
 	/*
 		for(int i=0;i<100;i++) {
@@ -138,8 +139,8 @@ public class BTConnectTest {
 		try {
 			LCD.drawString("Closing...    ", 0, 0);
 			LCD.refresh();
-			dis.close();
-			dos.close();
+			in.close();
+			out.close();
 			//conection close
 			btc.close();
 		} catch (IOException ioe) {
@@ -150,6 +151,8 @@ public class BTConnectTest {
 		LCD.clear();
 		LCD.drawString("Finished",3, 4);
 		LCD.refresh();
-		Thread.sleep(2000);
+
+		//Thread.sleep(200);
+		Thread.sleep(3000);
 	}
 }
