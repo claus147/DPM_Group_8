@@ -23,7 +23,7 @@ public class LSData implements TimerListener{
 	private int counter = 0; 									//for the array, so it doesnt do null pointer (wrap around)
 	private int threshold;										//threshold level for line detection - tolerance
 	private Timer timer;										//timer for timedOut()
-	private int sleepTime = 10; 								//50 millisecond is optimal time for ls reading sleep
+	private int sleepTime = 50; 								//50 millisecond is optimal time for ls reading sleep
 	private boolean isLine = false;								//boolean for line detection
 	private double percentage;
 	
@@ -71,6 +71,14 @@ public class LSData implements TimerListener{
 		this.ls =ls;
 		this.sleepTime = sleepTime;
 		this.timer = new Timer(this.sleepTime,this);
+		initialise();
+	}
+	
+	public LSData(LightSensor ls, int sleepTime, double percentage){	
+		this.ls =ls;
+		this.sleepTime = sleepTime;
+		this.timer = new Timer(this.sleepTime,this);
+		this.percentage = percentage;
 		initialise();
 	}
 

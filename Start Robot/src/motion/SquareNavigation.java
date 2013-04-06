@@ -56,8 +56,8 @@ public class SquareNavigation {
 // 		this.usLeft = usL;
 // 		this.usRight = usR;
  		
- 		this.lsDataL = new LSData(lsL, leftThreshold);
-		this.lsDataR = new LSData(lsR, rightThreshold);
+ 		this.lsDataL = new LSData(lsL, 10, leftThreshold);
+		this.lsDataR = new LSData(lsR, 10, rightThreshold);
 		
 		lsLeft.setFloodlight(true);
 		lsRight.setFloodlight(true);
