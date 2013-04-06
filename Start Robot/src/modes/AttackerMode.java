@@ -86,7 +86,7 @@ public class AttackerMode {
 //		lsloc.doLocalization();
 //		
 
-<<<<<<< HEAD
+
 		/* ========================== BEFORE COMPETITION ALGO ============================
 		sqrNav.travelTo(90, 120);
 =======
