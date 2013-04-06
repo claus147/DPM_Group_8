@@ -22,7 +22,7 @@ public class SquareNavigation {
  	public LightSensor lsLeft, lsRight;
  	public LSData lsDataL, lsDataR;
  	public double leftThreshold = 0.05; 				//threshold of light sensor - left (larger value is larger tolerance - less sensitive)
-	public double rightThreshold = 0.05;//threshold of light sensor - right (smaller value is smaller tolerance - more sensitive)
+	public double rightThreshold = 0.06;//threshold of light sensor - right (smaller value is smaller tolerance - more sensitive)
 	
  	
  	

@@ -25,7 +25,7 @@ public class LSData implements TimerListener{
 	private Timer timer;										//timer for timedOut()
 	private int sleepTime = 50; 								//50 millisecond is optimal time for ls reading sleep
 	private boolean isLine = false;								//boolean for line detection
-	private double percentage = 0.01;
+	private double percentage;
 	
 	/**
 	 * constructor
