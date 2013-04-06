@@ -59,6 +59,26 @@ public class AttackerMode {
 	public void setStrategy(){
 		
 		
+		double bx = -1;
+		double by = 4;
+		double w1 = 4;
+		double w2 = 4;
+		double d1 = 8;
+		double totalY = 8;
+		
+		sqrNav.travelTo( (int)bx * 30, (int) by * 30);
+		try {Thread.sleep(500);} catch (InterruptedException e) {}
+		sqrNav.relocalize(sqrNav.lastBrickX, sqrNav.lastBrickY, sqrNav.lastBrickT);
+		/* PUSH THE DISPENSER */
+		
+		
+		/* */
+		// y = 11
+		sqrNav.travelTo( 5*30 , 2 ) ;
+		try {Thread.sleep(500);} catch (InterruptedException e) {}
+		sqrNav.turnTo(0);
+		
+		
 		
 
 //		usloc.doLocalization();
@@ -66,8 +86,13 @@ public class AttackerMode {
 //		lsloc.doLocalization();
 //		
 
+
+		/* ========================== BEFORE COMPETITION ALGO ============================
+		sqrNav.travelTo(90, 120);
+=======
 		
 		sqrNav.travelTo(180, 90);
+>>>>>>> 0eeae5a1936b850c38b4052bdc5f83b597d0dcc1
 		try {Thread.sleep(500);} catch (InterruptedException e) {}
 		sqrNav.relocalize(sqrNav.lastBrickX, sqrNav.lastBrickY, sqrNav.lastBrickT);
 		try {Thread.sleep(500);} catch (InterruptedException e) {}
@@ -81,7 +106,7 @@ public class AttackerMode {
 		sqrNav.travelTo(0 , 0);
 		try {Thread.sleep(500);} catch (InterruptedException e) {}
 		sqrNav.turnTo(0);
-		
+		*/
 		
 		
 		/**
