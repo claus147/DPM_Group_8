@@ -95,7 +95,7 @@ public class USData implements TimerListener{
 			getFilteredData();
 			if(usData<noWall){
 				setIsWall(true);
-				Sound.buzz();
+				//Sound.buzz();
 			}
 		} else {
 			setIsWall(true);

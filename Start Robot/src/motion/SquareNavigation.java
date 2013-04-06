@@ -22,7 +22,7 @@ public class SquareNavigation {
  	public LightSensor lsLeft, lsRight;
  	public LSData lsDataL, lsDataR;
  	public double leftThreshold = 0.05; 				//threshold of light sensor - left (larger value is larger tolerance - less sensitive)
-	public double rightThreshold = 0.05;//threshold of light sensor - right (smaller value is smaller tolerance - more sensitive)
+	public double rightThreshold = 0.06;//threshold of light sensor - right (smaller value is smaller tolerance - more sensitive)
 	
  	
  	
@@ -793,7 +793,89 @@ public class SquareNavigation {
 	 	}
 	
 	
-	
+	public void getBalls(double curX, double curY, double curT){
+		leftMotor.setSpeed(ROTATE_SPEED);
+		rightMotor.setSpeed(ROTATE_SPEED);
+		
+		
+		lsDataL.start();
+	    lsDataR.start();
+		
+		//
+		leftMotor.rotate(toAngle(leftRadius, 10), true);
+		rightMotor.rotate(toAngle(rightRadius, 10), false);
+		
+		try {Thread.sleep(30000);} catch (InterruptedException e) {}
+		leftMotor.setSpeed(-1*ROTATE_SPEED);
+		rightMotor.setSpeed(-1*ROTATE_SPEED);
+		leftMotor.rotate(toAngle(leftRadius, -15), true);
+		rightMotor.rotate(toAngle(rightRadius, -15), true);
+		
+		 boolean isLineL = false; 					//assume not on a line (left)
+		    boolean isLineR = false; 
+		    
+				
+			boolean leftDetect = false;
+			boolean rightDetect = false;
+
+			while (!leftDetect || !rightDetect){ //while not detected one of two sides
+				
+				
+				
+				isLineR = lsDataR.getIsLine();
+				if (isLineR && rightDetect == false){
+					rightMotor.stop(false);
+					lsDataR.stop();
+					rightDetect = true;
+				}
+				isLineL = lsDataL.getIsLine();
+				if (isLineL && leftDetect == false) {
+					leftMotor.stop(false);
+					lsDataL.stop();
+					leftDetect =  true;
+				}
+				
+			
+				
+				
+				
+				//if lost a line, go back to assumed position
+				if(leftMotor.getRotationSpeed() == 0 && !leftDetect){
+					
+					leftMotor.stop(true);
+					//Sound.beep();
+					
+					leftMotor.setSpeed(ROTATE_SPEED);
+					leftMotor.rotate(toAngle(leftRadius, 5), false);
+					leftDetect = true;
+					
+				}
+				
+				if(rightMotor.getRotationSpeed() == 0  && !rightDetect){
+					
+					rightMotor.stop(true);
+					//Sound.beep();
+					
+					rightMotor.setSpeed(ROTATE_SPEED);
+					rightMotor.rotate(toAngle(rightRadius, 5), false);
+					rightDetect = true;	
+					
+				}
+			
+			}// end of motor control while loop
+			
+			double[] pos = {0,0,0};
+			boolean[] upd = {false,false,false};
+			pos[0] = curX;
+			upd[0] = true;
+			pos[1] = curY;
+			upd[1] = true;
+			pos[2] = curT;
+			upd[2] = true;
+			odo.setPosition(pos, upd);
+		
+		
+	}
 	
 	public void goforward(double forwardSpeed){
  		leftMotor.setSpeed((int)forwardSpeed);

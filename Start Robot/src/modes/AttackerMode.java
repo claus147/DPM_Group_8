@@ -86,14 +86,19 @@ public class AttackerMode {
 //		lsloc.doLocalization();
 //		
 
+<<<<<<< HEAD
 		/* ========================== BEFORE COMPETITION ALGO ============================
 		sqrNav.travelTo(90, 120);
+=======
+		
+		sqrNav.travelTo(180, 90);
+>>>>>>> 0eeae5a1936b850c38b4052bdc5f83b597d0dcc1
 		try {Thread.sleep(500);} catch (InterruptedException e) {}
 		sqrNav.relocalize(sqrNav.lastBrickX, sqrNav.lastBrickY, sqrNav.lastBrickT);
 		try {Thread.sleep(500);} catch (InterruptedException e) {}
 		sqrNav.turnTo(270);
 		try {Thread.sleep(1000);} catch (InterruptedException e) {}
-		sqrNav.travelTo(0, 0);
+		sqrNav.travelTo(90, 90);
 		try {Thread.sleep(500);} catch (InterruptedException e) {}
 		sqrNav.relocalize(sqrNav.lastBrickX, sqrNav.lastBrickY, sqrNav.lastBrickT);
 		sqrNav.turnTo(0);
