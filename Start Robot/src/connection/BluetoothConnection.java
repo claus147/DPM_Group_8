@@ -58,6 +58,7 @@ public class BluetoothConnection {
 	 */
 	public void printTransmission() {
 		try {
+			
 			LCD.clear();
 			LCD.drawString(("Transmitted Values"), 0, 0);
 			LCD.drawString("Start: " + trans.startingCorner.toString(), 0, 1);

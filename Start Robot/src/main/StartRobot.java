@@ -101,7 +101,7 @@ public class StartRobot {
 		
 		//chosing which role to do - attack/defense
 	//	if (t.role == PlayerRole.ATTACKER) --NEEDED
-			attack.attackAlgorithm();		//do the attack
+//			attack.attackAlgorithm();		//do the attack
 		//else
 	//		defend.defenseAlgorithm();		//do the defense __NEEDED
 		
@@ -125,10 +125,11 @@ public class StartRobot {
 //		int buttonChoice;
 //		
 //		if(compConnect.isAttacker()){
-//			buttonChoice = Button.ID_LEFT;
+//			attack.attackAlgorithm();
 //		}else{
-//			buttonChoice = Button.ID_RIGHT;
-//		} **USED!!!!!**
+//			defend.defenseAlgorithm();
+//		}
+//			**USED!!!!!**
 //	
 //		buttonChoice = Button.ID_LEFT;
 //
@@ -160,7 +161,8 @@ public class StartRobot {
 //		// Defender Mode
 //		else{
 //		
-//		//	compConnect.printTransmission();
+		
+	//	compConnect.printTransmission();
 //			
 //		// Testing the Launcher via bluetooth;
 //		BTConnectTest connect = new BTConnectTest();
