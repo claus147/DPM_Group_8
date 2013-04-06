@@ -68,29 +68,86 @@ public class AttackerMode {
 		double currentX = sqrNav.lastBrickX;
 		double currentY = sqrNav.lastBrickY;
 		double currentT = sqrNav.lastBrickT;
+
+//		sqrNav.travelTo( (int)bx * 30, (int) by * 30);
+//		try {Thread.sleep(500);} catch (InterruptedException e) {}
+//		sqrNav.relocalize(sqrNav.lastBrickX, sqrNav.lastBrickY, sqrNav.lastBrickT);
+//		/* PUSH THE DISPENSER */
+//		
+//		
+//		/* */
+//		// y = 11
+//		sqrNav.travelTo( 5*30 , 2 ) ;
+//		try {Thread.sleep(500);} catch (InterruptedException e) {}
+//		sqrNav.turnTo(0);
+
+
 		
-		sqrNav.travelTo( (int)bx * 30, (int) by * 30);
+		// ==== TEST 1 : Square drive 3x3
+		
+		
+		
+		sqrNav.travelTo(0,90);
 		try {Thread.sleep(500);} catch (InterruptedException e) {}
-		sqrNav.relocalize(sqrNav.lastBrickX, sqrNav.lastBrickY, sqrNav.lastBrickT);
+		sqrNav.travelTo( 90,90);
 		try {Thread.sleep(500);} catch (InterruptedException e) {}
-		if(bx < 0){
-			sqrNav.turnTo(270);
-		}else{
-			sqrNav.turnTo(90);
-		}
+		sqrNav.travelTo( 90,0);
+		try {Thread.sleep(500);} catch (InterruptedException e) {}
+		sqrNav.travelTo( 0,0);
+		try {Thread.sleep(500);} catch (InterruptedException e) {}
+		double x = sqrNav.lastBrickX;
+		double y = sqrNav.lastBrickY;
+		double t = sqrNav.lastBrickT;
+		sqrNav.relocalize(x, y, t);
+
+		
+		// ==== TEST 2 : 7 points and go 0,0
+		
+		/*
+		sqrNav.travelTo(60, 90);
+		try {Thread.sleep(500);} catch (InterruptedException e) {}
+		sqrNav.travelTo(30, 60);
+		try {Thread.sleep(500);} catch (InterruptedException e) {}
+		sqrNav.travelTo(0,0);
+		try {Thread.sleep(500);} catch (InterruptedException e) {}
+		sqrNav.travelTo(90, 90);
+		try {Thread.sleep(500);} catch (InterruptedException e) {}
+		sqrNav.travelTo(0,30);
+		try {Thread.sleep(500);} catch (InterruptedException e) {}
+		sqrNav.travelTo(90,60);
+		try {Thread.sleep(500);} catch (InterruptedException e) {}
+		sqrNav.travelTo(0,0);
+		try {Thread.sleep(500);} catch (InterruptedException e) {}
+		*/
+		
+		// ==== TEST 3 : ADD BRICKS
+		
+		
+		// ================================================ START COMPETITION ALGO ===================================================
+		
+//		sqrNav.travelTo( (int)bx * 30, (int) by * 30);
+//		try {Thread.sleep(500);} catch (InterruptedException e) {}
+//		sqrNav.relocalize(sqrNav.lastBrickX, sqrNav.lastBrickY, sqrNav.lastBrickT);
+//		try {Thread.sleep(500);} catch (InterruptedException e) {}
+//		if(bx < 0){
+//			sqrNav.turnTo(270);
+//		}else{
+//			sqrNav.turnTo(90);
+//		}
+//	
+//		try {Thread.sleep(500);} catch (InterruptedException e) {}
+//
+//		/* START PUSH THE DISPENSER */
+//
+//		sqrNav.getBalls(currentX, currentY, currentT);
+//		/* END PUSH DISPENSER */
+//		try {Thread.sleep(500);} catch (InterruptedException e) {}
+//		sqrNav.travelTo( 5*30 , 2*30 );
+//		try {Thread.sleep(500);} catch (InterruptedException e) {}
+//		sqrNav.turnTo(0);
 	
-		try {Thread.sleep(500);} catch (InterruptedException e) {}
+		// ================================================ END COMPETITION ALGO ===================================================
 
-		/* START PUSH THE DISPENSER */
-
-		sqrNav.getBalls(currentX, currentY, currentT);
-		/* END PUSH DISPENSER */
-		try {Thread.sleep(500);} catch (InterruptedException e) {}
-		sqrNav.travelTo( 5*30 , 2*30 );
-		try {Thread.sleep(500);} catch (InterruptedException e) {}
-		sqrNav.turnTo(0);
-		
-		
 		
 
 //		usloc.doLocalization();

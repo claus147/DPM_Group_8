@@ -21,8 +21,8 @@ public class SquareNavigation {
 	
  	public LightSensor lsLeft, lsRight;
  	public LSData lsDataL, lsDataR;
- 	public double leftThreshold = 0.05; 				//threshold of light sensor - left (larger value is larger tolerance - less sensitive)
-	public double rightThreshold = 0.06;//threshold of light sensor - right (smaller value is smaller tolerance - more sensitive)
+ 	public double leftThreshold = 0.04; 				//threshold of light sensor - left (larger value is larger tolerance - less sensitive)
+	public double rightThreshold = 0.04;//threshold of light sensor - right (smaller value is smaller tolerance - more sensitive)
 	
  	
  	
@@ -44,7 +44,7 @@ public class SquareNavigation {
  	private static final int FORWARD_SPEED = 180;
  	private static final int ROTATE_SPEED = 80;
  	
- 	
+ 	public boolean justRelocalized = false;
  	public enum WheelSide { LEFT, RIGHT };
  	
  	
@@ -75,7 +75,7 @@ public class SquareNavigation {
 		usDataLeft.start();
 		usDataRight.start();
 		
- 			
+		justRelocalized = false;	
 		
 		
 		while(Math.sqrt( (odo.getX() - x) * (odo.getX() - x) + (odo.getY() - y) * (odo.getY() - y)) > 25){
@@ -291,93 +291,30 @@ public class SquareNavigation {
 	}//End of travelTo()
  	
  	public void relocalize(double locX, double locY, double locT){ 
- 		turn(90);
- 		
- 		lsDataL.start();
-	    lsDataR.start();
-		rightMotor.setSpeed(100);
-		leftMotor.setSpeed(100);
-	
-		leftMotor.rotate(toAngle(leftRadius, 10), true);
-		rightMotor.rotate(toAngle(rightRadius, 10), true); 
-		
-		try {Thread.sleep(200);} catch (InterruptedException e) {}
-		
-		boolean isLineL = false; 					//assume not on a line (left)
-	    boolean isLineR = false; 
-		    
-				
-		boolean leftDetect = false;
-		boolean rightDetect = false;
-			
-		boolean notFoundFront = false;
-		boolean notFoundBack = false;
-
-			
-		while(!rightDetect || !leftDetect){		
-				
-				
-			isLineR = lsDataR.getIsLine();
-			if (isLineR && rightDetect == false){
-				rightMotor.stop(false);
-				lsDataR.stop();
-				rightDetect = true;
-			}
-			isLineL = lsDataL.getIsLine();
-			if (isLineL && leftDetect == false) {
-				leftMotor.stop(false);
-				lsDataL.stop();
-				leftDetect =  true;
-			}
-				
-				
-
-				
-				//if lost a line, go back to assumed position
-			if(leftMotor.getRotationSpeed() == 0 && !leftDetect && rightDetect){
-						
-				leftMotor.stop(false);
-						//Sound.beep();
-						
-				leftMotor.setSpeed(-80);
-				leftMotor.rotate(toAngle(leftRadius, -8), false);
-				leftDetect = true;
-				
-						
-			}
-					
-			if(rightMotor.getRotationSpeed() == 0  && !rightDetect && leftDetect){
-						
-				rightMotor.stop(false);
-						//Sound.beep();
-						
-				rightMotor.setSpeed(-80);
-				rightMotor.rotate(toAngle(rightRadius, -8), true);
-				rightDetect = true;	
-				
-			}
-			
-			if(rightMotor.getRotationSpeed() == 0 && leftMotor.getRotationSpeed() == 0 && !rightDetect && !leftDetect){
-				notFoundFront = true;
-				break;
-				
-			}
-		}
-		
-		if(notFoundFront){
-
+	 	if(justRelocalized == false){	
+ 			turn(90);
+	 		
 	 		lsDataL.start();
 		    lsDataR.start();
-			rightMotor.setSpeed(-100);
-			leftMotor.setSpeed(-100);
+			rightMotor.setSpeed(180);
+			leftMotor.setSpeed(180);
 		
-			leftMotor.rotate(toAngle(leftRadius, -20), true);
-			rightMotor.rotate(toAngle(rightRadius, -20), true); 
-			
-			try {Thread.sleep(200);} catch (InterruptedException e) {}
-			
+			leftMotor.rotate(toAngle(leftRadius, 10), true);
+			rightMotor.rotate(toAngle(rightRadius, 10), true); 
+			try {Thread.sleep(500);} catch (InterruptedException e) {}
 			
 			
+			
+			boolean isLineL = false; 					//assume not on a line (left)
+		    boolean isLineR = false; 
+			    
+					
+			boolean leftDetect = false;
+			boolean rightDetect = false;
+				
+			boolean notFoundFront = false;
+			boolean notFoundBack = false;
+	
 				
 			while(!rightDetect || !leftDetect){		
 					
@@ -396,7 +333,7 @@ public class SquareNavigation {
 				}
 					
 					
-
+	
 					
 					//if lost a line, go back to assumed position
 				if(leftMotor.getRotationSpeed() == 0 && !leftDetect && rightDetect){
@@ -404,8 +341,9 @@ public class SquareNavigation {
 					leftMotor.stop(false);
 							//Sound.beep();
 							
-					leftMotor.setSpeed(-80);
-					leftMotor.rotate(toAngle(leftRadius, 5), false);
+					leftMotor.setSpeed(-180);
+					leftMotor.rotate(toAngle(leftRadius, -8), false);
+					
 					leftDetect = true;
 					
 							
@@ -416,34 +354,102 @@ public class SquareNavigation {
 					rightMotor.stop(false);
 							//Sound.beep();
 							
-					rightMotor.setSpeed(-80);
-					rightMotor.rotate(toAngle(rightRadius, 5), true);
+					rightMotor.setSpeed(-180);
+					rightMotor.rotate(toAngle(rightRadius, -8), true);
 					rightDetect = true;	
 					
 				}
 				
-				if(rightMotor.getRotationSpeed() == 0  && leftMotor.getRotationSpeed() == 0 && !rightDetect && !leftDetect){
-					notFoundBack = true;
-					rightMotor.setSpeed(100);
-					leftMotor.setSpeed(-100);
-				
-					leftMotor.rotate(toAngle(leftRadius, 10), true);
-					rightMotor.rotate(toAngle(rightRadius, 10), true); 
+				if(rightMotor.getRotationSpeed() == 0 && leftMotor.getRotationSpeed() == 0 && !rightDetect && !leftDetect){
+					notFoundFront = true;
 					break;
 					
 				}
-			}//end of while
-		}//end of if not found in front
-		
-		turn(-90);
-		if(notFoundBack && notFoundFront){
-			return;
-		}
-		
-		boolean[] upd = {true, true, true};
-		double[] pos = {locX,locY, locT};
-		odo.setPosition(pos, upd);
-		travelledBrickCount = 0;
+			}
+			
+			if(notFoundFront){
+	
+		 		lsDataL.start();
+			    lsDataR.start();
+				rightMotor.setSpeed(-100);
+				leftMotor.setSpeed(-100);
+			
+				leftMotor.rotate(toAngle(leftRadius, -20), true);
+				rightMotor.rotate(toAngle(rightRadius, -20), true); 
+				
+				try {Thread.sleep(200);} catch (InterruptedException e) {}
+				
+				
+				
+					
+				while(!rightDetect || !leftDetect){		
+						
+						
+					isLineR = lsDataR.getIsLine();
+					if (isLineR && rightDetect == false){
+						rightMotor.stop(false);
+						lsDataR.stop();
+						rightDetect = true;
+					}
+					isLineL = lsDataL.getIsLine();
+					if (isLineL && leftDetect == false) {
+						leftMotor.stop(false);
+						lsDataL.stop();
+						leftDetect =  true;
+					}
+						
+						
+	
+						
+						//if lost a line, go back to assumed position
+					if(leftMotor.getRotationSpeed() == 0 && !leftDetect && rightDetect){
+								
+						leftMotor.stop(false);
+								//Sound.beep();
+								
+						leftMotor.setSpeed(-80);
+						leftMotor.rotate(toAngle(leftRadius, 5), false);
+						leftDetect = true;
+						
+								
+					}
+							
+					if(rightMotor.getRotationSpeed() == 0  && !rightDetect && leftDetect){
+								
+						rightMotor.stop(false);
+								//Sound.beep();
+								
+						rightMotor.setSpeed(-80);
+						rightMotor.rotate(toAngle(rightRadius, 5), true);
+						rightDetect = true;	
+						
+					}
+					
+					if(rightMotor.getRotationSpeed() == 0  && leftMotor.getRotationSpeed() == 0 && !rightDetect && !leftDetect){
+						notFoundBack = true;
+						rightMotor.setSpeed(100);
+						leftMotor.setSpeed(-100);
+					
+						leftMotor.rotate(toAngle(leftRadius, 10), true);
+						rightMotor.rotate(toAngle(rightRadius, 10), true); 
+						break;
+						
+					}
+				}//end of while
+			}//end of if not found in front
+			
+			turn(-90);
+			if(notFoundBack && notFoundFront){
+				return;
+			}
+			
+			boolean[] upd = {true, true, true};
+			double[] pos = {locX,locY, locT};
+			odo.setPosition(pos, upd);
+			travelledBrickCount = 0;
+			justRelocalized = true;
+	 	}
+	 	
 	}//end of reloc method
  	
 	
