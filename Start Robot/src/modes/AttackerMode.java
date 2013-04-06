@@ -65,16 +65,28 @@ public class AttackerMode {
 		double w2 = 4;
 		double d1 = 8;
 		double totalY = 8;
+		double currentX = sqrNav.lastBrickX;
+		double currentY = sqrNav.lastBrickY;
+		double currentT = sqrNav.lastBrickT;
 		
 		sqrNav.travelTo( (int)bx * 30, (int) by * 30);
 		try {Thread.sleep(500);} catch (InterruptedException e) {}
 		sqrNav.relocalize(sqrNav.lastBrickX, sqrNav.lastBrickY, sqrNav.lastBrickT);
-		/* PUSH THE DISPENSER */
-		
-		
-		/* */
-		// y = 11
-		sqrNav.travelTo( 5*30 , 2 ) ;
+		try {Thread.sleep(500);} catch (InterruptedException e) {}
+		if(bx < 0){
+			sqrNav.turnTo(270);
+		}else{
+			sqrNav.turnTo(90);
+		}
+	
+		try {Thread.sleep(500);} catch (InterruptedException e) {}
+
+		/* START PUSH THE DISPENSER */
+
+		sqrNav.getBalls(currentX, currentY, currentT);
+		/* END PUSH DISPENSER */
+		try {Thread.sleep(500);} catch (InterruptedException e) {}
+		sqrNav.travelTo( 5*30 , 2*30 );
 		try {Thread.sleep(500);} catch (InterruptedException e) {}
 		sqrNav.turnTo(0);
 		
@@ -92,7 +104,6 @@ public class AttackerMode {
 =======
 		
 		sqrNav.travelTo(180, 90);
->>>>>>> 0eeae5a1936b850c38b4052bdc5f83b597d0dcc1
 		try {Thread.sleep(500);} catch (InterruptedException e) {}
 		sqrNav.relocalize(sqrNav.lastBrickX, sqrNav.lastBrickY, sqrNav.lastBrickT);
 		try {Thread.sleep(500);} catch (InterruptedException e) {}

@@ -101,7 +101,7 @@ public class StartRobot {
 		
 		//chosing which role to do - attack/defense
 	//	if (t.role == PlayerRole.ATTACKER) --NEEDED
-//			attack.attackAlgorithm();		//do the attack
+			attack.attackAlgorithm();		//do the attack
 		//else
 	//		defend.defenseAlgorithm();		//do the defense __NEEDED
 		
