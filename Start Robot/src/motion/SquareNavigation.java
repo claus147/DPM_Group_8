@@ -42,7 +42,9 @@ public class SquareNavigation {
  	public double lastBrickT = 0;
  	
  	private static final int FORWARD_SPEED = 180;
- 	private static final int ROTATE_SPEED = 80;
+
+ 	private static final int ROTATE_SPEED = 130;
+
  	
  	public boolean justRelocalized = false;
  	public enum WheelSide { LEFT, RIGHT };
@@ -75,7 +77,7 @@ public class SquareNavigation {
 		usDataLeft.start();
 		usDataRight.start();
 		
-		justRelocalized = false;	
+
 		
 		
 		while(Math.sqrt( (odo.getX() - x) * (odo.getX() - x) + (odo.getY() - y) * (odo.getY() - y)) > 25){
@@ -173,6 +175,7 @@ public class SquareNavigation {
 			
 			}// end of motor control while loop
 			travelledBrickCount++;
+			justRelocalized = false;	
 			try {Thread.sleep(300);} catch (InterruptedException e) {}
 			
 			//odometry correction
@@ -296,12 +299,14 @@ public class SquareNavigation {
 	 		
 	 		lsDataL.start();
 		    lsDataR.start();
-			rightMotor.setSpeed(180);
-			leftMotor.setSpeed(180);
+
+			rightMotor.setSpeed(150);
+			leftMotor.setSpeed(150);
 		
 			leftMotor.rotate(toAngle(leftRadius, 10), true);
 			rightMotor.rotate(toAngle(rightRadius, 10), true); 
-			try {Thread.sleep(500);} catch (InterruptedException e) {}
+			try {Thread.sleep(2000);} catch (InterruptedException e) {}
+
 			
 			
 			
@@ -340,8 +345,10 @@ public class SquareNavigation {
 							
 					leftMotor.stop(false);
 							//Sound.beep();
-							
-					leftMotor.setSpeed(-180);
+
+					leftMotor.setSpeed(-150);
+
+
 					leftMotor.rotate(toAngle(leftRadius, -8), false);
 					
 					leftDetect = true;
@@ -354,7 +361,9 @@ public class SquareNavigation {
 					rightMotor.stop(false);
 							//Sound.beep();
 							
-					rightMotor.setSpeed(-180);
+
+					rightMotor.setSpeed(-150);
+
 					rightMotor.rotate(toAngle(rightRadius, -8), true);
 					rightDetect = true;	
 					
@@ -371,13 +380,15 @@ public class SquareNavigation {
 	
 		 		lsDataL.start();
 			    lsDataR.start();
-				rightMotor.setSpeed(-100);
-				leftMotor.setSpeed(-100);
+				rightMotor.setSpeed(-150);
+				leftMotor.setSpeed(-150);
+
 			
 				leftMotor.rotate(toAngle(leftRadius, -20), true);
 				rightMotor.rotate(toAngle(rightRadius, -20), true); 
-				
-				try {Thread.sleep(200);} catch (InterruptedException e) {}
+
+				try {Thread.sleep(800);} catch (InterruptedException e) {}
+
 				
 				
 				
@@ -406,8 +417,9 @@ public class SquareNavigation {
 								
 						leftMotor.stop(false);
 								//Sound.beep();
-								
-						leftMotor.setSpeed(-80);
+
+						leftMotor.setSpeed(-150);
+
 						leftMotor.rotate(toAngle(leftRadius, 5), false);
 						leftDetect = true;
 						
@@ -419,7 +431,9 @@ public class SquareNavigation {
 						rightMotor.stop(false);
 								//Sound.beep();
 								
-						rightMotor.setSpeed(-80);
+
+						rightMotor.setSpeed(-150);
+
 						rightMotor.rotate(toAngle(rightRadius, 5), true);
 						rightDetect = true;	
 						
@@ -427,8 +441,10 @@ public class SquareNavigation {
 					
 					if(rightMotor.getRotationSpeed() == 0  && leftMotor.getRotationSpeed() == 0 && !rightDetect && !leftDetect){
 						notFoundBack = true;
-						rightMotor.setSpeed(100);
-						leftMotor.setSpeed(-100);
+
+						rightMotor.setSpeed(150);
+						leftMotor.setSpeed(-150);
+
 					
 						leftMotor.rotate(toAngle(leftRadius, 10), true);
 						rightMotor.rotate(toAngle(rightRadius, 10), true); 
@@ -770,7 +786,7 @@ public class SquareNavigation {
 		leftMotor.rotate(toAngle(leftRadius, toDistForRotationLeft( width, angleDiff)), true);
  		rightMotor.rotate(toAngle(rightRadius, - 1 * toDistForRotationLeft( width, angleDiff)), false);
  			
- 			
+ 		lastBrickT = theta;	
  			
  		
  		
@@ -778,6 +794,7 @@ public class SquareNavigation {
  	}
 	
 	public void turn( double t){
+		double theta = odo.getTheta();
  		leftMotor.setAcceleration(3000);
  		rightMotor.setAcceleration(3000);
  		leftMotor.setSpeed(ROTATE_SPEED); 
@@ -786,6 +803,8 @@ public class SquareNavigation {
  		
  		leftMotor.rotate(toAngle(leftRadius, toDistForRotationLeft( width, t)), true);
  		rightMotor.rotate(toAngle(rightRadius, - 1 * toDistForRotationLeft( width, t)), false);
+ 		
+ 		lastBrickT = theta + t;	
  	}
 	
 	// calculates the angle based on the radius and the distance
@@ -800,23 +819,25 @@ public class SquareNavigation {
 	
 	
 	public void getBalls(double curX, double curY, double curT){
-		leftMotor.setSpeed(ROTATE_SPEED);
-		rightMotor.setSpeed(ROTATE_SPEED);
+		leftMotor.setSpeed(80);
+		rightMotor.setSpeed(80);
 		
 		
-		lsDataL.start();
-	    lsDataR.start();
+		
 		
 		//
-		leftMotor.rotate(toAngle(leftRadius, 10), true);
-		rightMotor.rotate(toAngle(rightRadius, 10), false);
+		leftMotor.rotate(toAngle(leftRadius, 8), true);
+		rightMotor.rotate(toAngle(rightRadius, 8), false);
 		
-		try {Thread.sleep(30000);} catch (InterruptedException e) {}
-		leftMotor.setSpeed(-1*ROTATE_SPEED);
-		rightMotor.setSpeed(-1*ROTATE_SPEED);
+		try {Thread.sleep(3000);} catch (InterruptedException e) {} //********************************** GETBALLS SLEEPTIME!!!
+		Sound.buzz();
+		lsDataL.start();
+	    lsDataR.start();
+		leftMotor.setSpeed(-1*150);
+		rightMotor.setSpeed(-1*150);
 		leftMotor.rotate(toAngle(leftRadius, -15), true);
 		rightMotor.rotate(toAngle(rightRadius, -15), true);
-		
+		try {Thread.sleep(1000);} catch (InterruptedException e) {} 
 		 boolean isLineL = false; 					//assume not on a line (left)
 		    boolean isLineR = false; 
 		    
@@ -830,13 +851,13 @@ public class SquareNavigation {
 				
 				isLineR = lsDataR.getIsLine();
 				if (isLineR && rightDetect == false){
-					rightMotor.stop(false);
+					rightMotor.stop(true);
 					lsDataR.stop();
 					rightDetect = true;
 				}
 				isLineL = lsDataL.getIsLine();
 				if (isLineL && leftDetect == false) {
-					leftMotor.stop(false);
+					leftMotor.stop(true);
 					lsDataL.stop();
 					leftDetect =  true;
 				}
@@ -852,7 +873,7 @@ public class SquareNavigation {
 					//Sound.beep();
 					
 					leftMotor.setSpeed(ROTATE_SPEED);
-					leftMotor.rotate(toAngle(leftRadius, 5), false);
+					leftMotor.rotate(toAngle(leftRadius, 7), false);
 					leftDetect = true;
 					
 				}
@@ -863,7 +884,7 @@ public class SquareNavigation {
 					//Sound.beep();
 					
 					rightMotor.setSpeed(ROTATE_SPEED);
-					rightMotor.rotate(toAngle(rightRadius, 5), false);
+					rightMotor.rotate(toAngle(rightRadius, 7), false);
 					rightDetect = true;	
 					
 				}

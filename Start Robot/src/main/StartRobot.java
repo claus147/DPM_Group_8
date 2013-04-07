@@ -77,8 +77,8 @@ public class StartRobot {
 		UltrasonicSensor usr = new UltrasonicSensor(SensorPort.S3);
 		
 		//init the data collection
-		USData usDataL = new USData(usl , 40);
-		USData usDataR = new USData(usr , 40);
+		USData usDataL = new USData(usl , 45, 20);
+		USData usDataR = new USData(usr , 45, 20);
 		
 		//init navigation
 		SquareNavigation sqrNav = new SquareNavigation(odo, lsl, lsr, usDataL, usDataR);
@@ -89,15 +89,15 @@ public class StartRobot {
 		//LightLocalizer lsloc = new LightLocalizer(odo, navigate, lsl, lsr, t.startingCorner);	//--NEEDED
 		
 		//init modes
-		AttackerMode attack = new AttackerMode(30, 60, 0, 0, 0, sqrNav);
+		AttackerMode attack = new AttackerMode(2,11, 0, 0, 0, sqrNav);
 		DefenderMode defend = new DefenderMode(0, 0, 0, sqrNav);
 		
 //		AttackerMode attack = new AttackerMode(t.bx, t.by, t.w1, t.w2, t.d1, sqrNav); //--NEEDED for bt
 //		DefenderMode defend = new DefenderMode(t.w1, t.w2, t.d1, sqrNav);				//--NEEDED for bt
 		
 		//do the localizations
-		//usloc.doLocalization(); ******************************* LOCALIZATIONS!!!!!!!!!!!!!!!**********************************
-		//lsloc.doLocalization();
+		usloc.doLocalization(); //******************************* LOCALIZATIONS!!!!!!!!!!!!!!!**********************************
+		lsloc.doLocalization();
 		
 		//chosing which role to do - attack/defense
 	//	if (t.role == PlayerRole.ATTACKER) --NEEDED
