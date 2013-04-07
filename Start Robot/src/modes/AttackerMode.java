@@ -85,7 +85,7 @@ public class AttackerMode {
 		
 		// ==== TEST 1 : Square drive 3x3
 		
-		
+		/*
 		
 		sqrNav.travelTo(0,90);
 		try {Thread.sleep(500);} catch (InterruptedException e) {}
@@ -98,27 +98,25 @@ public class AttackerMode {
 		double x = sqrNav.lastBrickX;
 		double y = sqrNav.lastBrickY;
 		double t = sqrNav.lastBrickT;
-		sqrNav.relocalize(x, y, t);
+	//	sqrNav.relocalize(x, y, t);
+		*/
 
 		
 		// ==== TEST 2 : 7 points and go 0,0
 		
-		/*
+		
 		sqrNav.travelTo(60, 90);
 		try {Thread.sleep(500);} catch (InterruptedException e) {}
-		sqrNav.travelTo(30, 60);
+		sqrNav.travelTo(0, 90);
 		try {Thread.sleep(500);} catch (InterruptedException e) {}
 		sqrNav.travelTo(0,0);
 		try {Thread.sleep(500);} catch (InterruptedException e) {}
-		sqrNav.travelTo(90, 90);
-		try {Thread.sleep(500);} catch (InterruptedException e) {}
-		sqrNav.travelTo(0,30);
-		try {Thread.sleep(500);} catch (InterruptedException e) {}
-		sqrNav.travelTo(90,60);
+		sqrNav.travelTo(60,60);
 		try {Thread.sleep(500);} catch (InterruptedException e) {}
 		sqrNav.travelTo(0,0);
 		try {Thread.sleep(500);} catch (InterruptedException e) {}
-		*/
+
+		
 		
 		// ==== TEST 3 : ADD BRICKS
 		
