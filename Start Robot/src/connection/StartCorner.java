@@ -47,6 +47,10 @@ public enum StartCorner {
 		return this.id;
 	}
 	
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 	public static StartCorner lookupCorner(int cornerId) {
 		for (StartCorner corner : StartCorner.values())
 			if (corner.id == cornerId)
