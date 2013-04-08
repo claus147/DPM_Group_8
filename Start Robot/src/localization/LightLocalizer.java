@@ -58,15 +58,7 @@ public class LightLocalizer {
 		this.sc = sc;
 		this.LSDataL = new LSData(lsL, leftThreshold);
 		this.LSDataR = new LSData(lsR, rightThreshold);
-		
-		if (sc.getId() == 1)
-			angle1 = 0;  		//c1 facing 0, c2 facing 270, c3 facing 180, c4 facing 90
-		else if (sc.getId() == 2)
-			angle1 = 270;
-		else if (sc.getId() == 3)
-			angle1 = 180;
-		else
-			angle1 = 90;
+		angle1 = (sc.getId()-1)*90;  		//c1 facing 0, c2 facing 90, c3 facing 180, c4 facing 270
 		angle2 = (angle1 + 90)% 360; 		//wrap around to 0 if 360
 		
 		// turn on the light
@@ -124,7 +116,7 @@ public class LightLocalizer {
 			
 		}
 
-		if (sc.getId()==1 || sc.getId()==4){			//if localizing in left of field correct x first
+		if (sc.getId()<=2){			//if localizing in left of field correct x first
 			pos[0] = sc.getX()*30;  //turning to cm
 			update[0] = true;
 		} else {					//else correct y first
@@ -166,7 +158,7 @@ public class LightLocalizer {
 		}
 		
 		//updating odometer
-		if (sc.getId()==1 || sc.getId()==4 ){ 		//if localizing in left of field correct y second
+		if (sc.getId()<=2){ 		//if localizing in left of field correct y second
 			pos[1] = sc.getY()*30;	//turn to cm
 			update[1] = true;
 		} else {					//else correct x second
@@ -178,7 +170,7 @@ public class LightLocalizer {
 		odo.setPosition(pos, update);
 		
 
-		if (sc.getId() <= 2)	//if at the bottom of the field we want to face upfield,
+		if (sc.getId() == 1 || sc.getId() == 4)	//if at the bottom of the field we want to face upfield,
 			nav.turnTo(0);
 		else									//else at top of field so face downfield
 			nav.turnTo(180);
