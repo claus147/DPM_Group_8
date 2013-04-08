@@ -33,7 +33,7 @@ public class SquareNavigation {
 	
 	final double leftRadius = 2.4;
  	final double rightRadius = 2.4;
- 	final double width = 17.2;
+ 	final double width = 17.5;
  	
  	Odometry odo;
  	
