@@ -829,7 +829,7 @@ public class SquareNavigation {
 		leftMotor.rotate(toAngle(leftRadius, 8), true);
 		rightMotor.rotate(toAngle(rightRadius, 8), false);
 		
-		try {Thread.sleep(3000);} catch (InterruptedException e) {} //********************************** GETBALLS SLEEPTIME!!!
+		try {Thread.sleep(50000);} catch (InterruptedException e) {} //********************************** GETBALLS SLEEPTIME!!!
 		Sound.buzz();
 		lsDataL.start();
 	    lsDataR.start();

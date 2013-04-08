@@ -1,5 +1,6 @@
 package modes;
 
+import connection.BTConnectTest;
 import motion.SquareNavigation;
 
 
@@ -29,6 +30,8 @@ public class AttackerMode {
 	double XBricksGetBalls = 0;
 	double YBricksGetBalls = 0;
 	double TGetBalls = 0;
+	BTConnectTest connect = new BTConnectTest();
+	
 	public AttackerMode(int bx, int by, int w1, int w2, int d1, SquareNavigation sqrNav){
 		this.bx = bx;
 		this.by = by;
@@ -172,23 +175,44 @@ public class AttackerMode {
 		
 		// ================================================ START COMPETITION ALGO ===================================================
 		//travel to reloc position to get balls
-		sqrNav.travelTo( (int)XBricksBeforeGetBalls * 30, (int) YBricksBeforeGetBalls * 30);
-		try {Thread.sleep(500);} catch (InterruptedException e) {}
-		//reloc
-		sqrNav.relocalize(sqrNav.lastBrickX, sqrNav.lastBrickY, sqrNav.lastBrickT);
-		try {Thread.sleep(500);} catch (InterruptedException e) {}
-		//turn to appropriate angle
-		sqrNav.turnTo(TGetBalls);
-		try {Thread.sleep(500);} catch (InterruptedException e) {}
-	    // travel to the brick 1 unit away from dispenser, the angle should be already good
-		sqrNav.travelTo( (int)XBricksGetBalls * 30, (int) YBricksGetBalls * 30);
-		try {Thread.sleep(500);} catch (InterruptedException e) {}
-		// get the balls
-		sqrNav.getBalls(sqrNav.lastBrickX, sqrNav.lastBrickY, sqrNav.lastBrickT);
-		try {Thread.sleep(500);} catch (InterruptedException e) {}
-		sqrNav.travelTo( (int)5 * 30, (int) 3 * 30);
-		try {Thread.sleep(500);} catch (InterruptedException e) {}
-		sqrNav.travelTo( (int)0 * 30, (int) 0 * 30);
+		int counter=0;
+		while(counter <= 5){
+			
+			
+		
+			sqrNav.travelTo( (int)XBricksBeforeGetBalls * 30, (int) YBricksBeforeGetBalls * 30);
+			try {Thread.sleep(500);} catch (InterruptedException e) {}
+			//reloc
+			sqrNav.relocalize(sqrNav.lastBrickX, sqrNav.lastBrickY, sqrNav.lastBrickT);
+			try {Thread.sleep(500);} catch (InterruptedException e) {}
+			//turn to appropriate angle
+			sqrNav.turnTo(TGetBalls);
+			try {Thread.sleep(500);} catch (InterruptedException e) {}
+		    // travel to the brick 1 unit away from dispenser, the angle should be already good
+			sqrNav.travelTo( (int)XBricksGetBalls * 30, (int) YBricksGetBalls * 30);
+			try {Thread.sleep(500);} catch (InterruptedException e) {}
+			// get the balls
+			sqrNav.getBalls(sqrNav.lastBrickX, sqrNav.lastBrickY, sqrNav.lastBrickT);
+			try {Thread.sleep(500);} catch (InterruptedException e) {}
+			// go to launching position
+			//sqrNav.travelTo( (int)5 * 30, (int) 2 * 30);
+			sqrNav.travelTo( (int)2 * 30, (int) 2 * 30);
+			try {Thread.sleep(500);} catch (InterruptedException e) {}
+			sqrNav.turnTo(0);
+			try {Thread.sleep(500);} catch (InterruptedException e) {}
+			sqrNav.relocalize(sqrNav.lastBrickX, sqrNav.lastBrickY, sqrNav.lastBrickT);
+			try {Thread.sleep(500);} catch (InterruptedException e) {}
+			
+			try {
+				connect.connect('a');
+			try {Thread.sleep(25000);} catch (InterruptedException e) {}	
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			counter++;
+		}
+		sqrNav.travelTo(0,0);
 		
 		//travel to launch position
 		//sqrNav.travelTo( (int)5 * 30, (int) d1 * 30); ///////////************************************************* LAUNCH¡¡£Ð£Ï£Ó£É£Ô£É£Ï£Î

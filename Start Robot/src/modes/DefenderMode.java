@@ -1,4 +1,5 @@
 package modes;
+import connection.Transmission;
 import motion.SquareNavigation;
 
 
@@ -31,6 +32,7 @@ public class DefenderMode {
 	private int w2;
 	private int d1; //the defender no go zones
 	private SquareNavigation sqrNav;
+	Transmission t = new Transmission();
 	
 	public DefenderMode(int w1, int w2, int d1, SquareNavigation sqrNav){
 		this.w1 = w1;
@@ -43,8 +45,15 @@ public class DefenderMode {
 	 */
 	public void defenseAlgorithm(){
 		
+		
 		//goal at 5, 10
-		sqrNav.travelTo(5, w2 -1); //stand infront of the goal in x and the "no go" zone in y
+		sqrNav.travelTo(3 * 30, (10 - t.w2) * 30);
+		while(true){
+			sqrNav.travelTo(5* 30, (10 - t.w2) * 30 );
+			try {Thread.sleep(2000);} catch (InterruptedException e) {}
+			sqrNav.travelTo(3*30, (10 - t.w2) * 30);
+		}
+		
 	}
 	
 }

@@ -17,6 +17,7 @@ import data.USData;
 
 import lejos.nxt.LightSensor;
 import lejos.nxt.SensorPort;
+import lejos.nxt.Sound;
 import lejos.nxt.UltrasonicSensor;
 import localization.LightLocalizer;
 import localization.USLocalizer;
@@ -33,7 +34,8 @@ import localization.USLocalizer;
  */
 public class StartRobot {
 
-	//static BluetoothConnection compConnect = new BluetoothConnection();	*****Used!!!*
+	static BluetoothConnection compConnect = new BluetoothConnection();	
+	//*****Used!!!*
 	
 	/*
 	 * Main function will ask the user to choose between attacker (left button) or defender mode (right button).
@@ -45,7 +47,7 @@ public class StartRobot {
 	public static void main(String args[]){
 
 		
-		//compConnect.printTransmission(); ****USED****
+		//compConnect.printTransmission();
 
 		Start();
 	
@@ -61,7 +63,7 @@ public class StartRobot {
 		 * the bt values
 		 */
 //		BluetoothConnection compConnect = new BluetoothConnection(); //will wait for btooth
-//		Transmission t = compConnect.getTransmission();
+		Transmission t = compConnect.getTransmission();
 		
 		
 		
@@ -89,7 +91,7 @@ public class StartRobot {
 		//LightLocalizer lsloc = new LightLocalizer(odo, navigate, lsl, lsr, t.startingCorner);	//--NEEDED
 		
 		//init modes
-		AttackerMode attack = new AttackerMode(2,11, 0, 0, 0, sqrNav);
+		AttackerMode attack = new AttackerMode(-1,5, 0, 0, 0, sqrNav);
 		DefenderMode defend = new DefenderMode(0, 0, 0, sqrNav);
 		
 //		AttackerMode attack = new AttackerMode(t.bx, t.by, t.w1, t.w2, t.d1, sqrNav); //--NEEDED for bt
@@ -101,7 +103,7 @@ public class StartRobot {
 		
 		//chosing which role to do - attack/defense
 	//	if (t.role == PlayerRole.ATTACKER) --NEEDED
-			attack.attackAlgorithm();		//do the attack
+//			attack.attackAlgorithm();		//do the attack
 		//else
 	//		defend.defenseAlgorithm();		//do the defense __NEEDED
 		
@@ -123,12 +125,16 @@ public class StartRobot {
 //		//Controller control = new Controller(odo);
 //		//LCDinfo LCDinfo = new LCDinfo(odo);
 //		int buttonChoice;
-//		
-//		if(compConnect.isAttacker()){
-//			attack.attackAlgorithm();
-//		}else{
-//			defend.defenseAlgorithm();
-//		}
+////		
+		if(t.role.getId() == 1){
+			Sound.buzz();
+			attack.attackAlgorithm();
+		}else{
+			Sound.buzz();
+			Sound.beep();
+			Sound.buzz();
+			defend.defenseAlgorithm();
+		}
 //			**USED!!!!!**
 //	
 //		buttonChoice = Button.ID_LEFT;

@@ -41,17 +41,79 @@ public class BTReceive {
         String closing = "Closing...";
     	NXTConnection conn = Bluetooth.waitForConnection();
     	DataInputStream input = conn.openDataInputStream();
+    	LCD.drawString(waiting,0,0);
     	
     	if(input.readChar()=='a'){
     		Sound.beep();
     		Sound.beep();
     		Sound.buzz();
-    		
+    		// Launcher motors
+    					NXTRegulatedMotor leftMotor = Motor.B;
+    					NXTRegulatedMotor rightMotor = Motor.C;
+    					//Feeding mechanism
+    					NXTRegulatedMotor turnMotor = Motor.A;
+    					int turn = 180; 
+    					int angle1 = 90;
+    					LCD.drawString(waiting,0,0);
+    					LCD.refresh();
+    					
+
+    			        BTConnection btc = Bluetooth.waitForConnection();
+    			        
+    					LCD.clear();
+    					LCD.drawString(connected,0,0);
+    					
+    					LCD.refresh();	
+    					
+    					turnMotor.rotate(100);
+    					
+    					for(int i= 0; i<5; i++){
+    						turnMotor.setSpeed(turn);
+    						//Motor.C.rotateTo(angle);
+    						turnMotor.rotate(angle1);
+
+
+    						try {
+    						Thread.sleep(4000);
+    						} catch (InterruptedException e) {
+    						// TODO Auto-generated catch block
+    						e.printStackTrace();
+    						}
+
+
+    						rightMotor.setSpeed(speed);
+    						leftMotor.setSpeed(speed);
+    						rightMotor.rotateTo(angle, true);
+    						leftMotor.rotateTo(angle);
+
+    						//do return to original position
+    						rightMotor.setSpeed(returnSpeed);
+    						leftMotor.setSpeed(returnSpeed);
+    						rightMotor.rotateTo(reAdjust, true);
+    						leftMotor.rotateTo(reAdjust);
+
+
+    					
+    					
+    					
+    					
+    					
+
+    					/* END MOVE ROBOT HERE */
+    					DataInputStream dis = btc.openDataInputStream();
+    					DataOutputStream dos = btc.openDataOutputStream();
+
+    					dis.close();
+    					dos.close();
+    					Thread.sleep(100); // wait for data to drain
+    					LCD.clear();
+    					LCD.drawString(closing,0,0);
+    					LCD.refresh();
+    					btc.close();
+    					LCD.clear();
+    				}
     	}else{
-    		
-    		
-    	
-    	
+
 		while (true)
 		{
 			// Launcher motors
@@ -71,6 +133,8 @@ public class BTReceive {
 			LCD.drawString(connected,0,0);
 			
 			LCD.refresh();	
+			
+			turnMotor.rotate(100);
 			
 			for(int i= 0; i<5; i++){
 				turnMotor.setSpeed(turn);
