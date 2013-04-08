@@ -44,14 +44,30 @@ public class DefenderMode {
 	 * TODO: Call the strategy established in the DefenderStrat1
 	 */
 	public void defenseAlgorithm(){
-		
+//		
+//		
+//		//goal at 5, 10
+//		sqrNav.travelTo(5 * 30, (10 - t.w2 - 1) * 30);
+//		while(true){
+//			sqrNav.travelTo(4* 30, (10 - t.w2 - 1) * 30 );
+//			try {Thread.sleep(2000);} catch (InterruptedException e) {}
+//			sqrNav.travelTo(5 *30, (10 - t.w2 - 1) * 30);
+//   		try {Thread.sleep(10000);} catch (InterruptedException e) {}
+//			sqrNav.travelTo(6* 30, (10 - t.w2 - 1) * 30 );
+//			try {Thread.sleep(2000);} catch (InterruptedException e) {}
+//		sqrNav.travelTo(5 *30, (10 - t.w2 - 1) * 30);
+//		
+//		try {Thread.sleep(10000);} catch (InterruptedException e) {}
+//		
+//    }
+
 		
 		//goal at 5, 10
-		sqrNav.travelTo(3 * 30, (10 - t.w2) * 30);
+		sqrNav.travelTo(5 * 30, (10 - 4 - 1 ) * 30);
 		while(true){
-			sqrNav.travelTo(5* 30, (10 - t.w2) * 30 );
+			sqrNav.travelTo(7* 30, (10 - 4 -1 ) * 30 );
 			try {Thread.sleep(2000);} catch (InterruptedException e) {}
-			sqrNav.travelTo(3*30, (10 - t.w2) * 30);
+			sqrNav.travelTo(3*30, (10 - 4 -1) * 30);
 		}
 		
 	}

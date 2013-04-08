@@ -3,7 +3,7 @@
 * @date November 3, 2011
 * @class ECSE 211 - Design Principle and Methods
 */
-package bluetooth;
+package connection;
 
 /**
  * BOTTOM LEFT	X1 (0,0) "BL"

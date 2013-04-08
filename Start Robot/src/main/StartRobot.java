@@ -91,8 +91,8 @@ public class StartRobot {
 		//LightLocalizer lsloc = new LightLocalizer(odo, navigate, lsl, lsr, t.startingCorner);	//--NEEDED
 		
 		//init modes
-		AttackerMode attack = new AttackerMode(-1,5, 0, 0, 0, sqrNav);
-		DefenderMode defend = new DefenderMode(0, 0, 0, sqrNav);
+		AttackerMode attack = new AttackerMode(t.bx, t.by, t.w1, t.w2, t.d1, sqrNav);
+		DefenderMode defend = new DefenderMode(t.w1, t.w2, t.d1, sqrNav);
 		
 //		AttackerMode attack = new AttackerMode(t.bx, t.by, t.w1, t.w2, t.d1, sqrNav); //--NEEDED for bt
 //		DefenderMode defend = new DefenderMode(t.w1, t.w2, t.d1, sqrNav);				//--NEEDED for bt
@@ -106,7 +106,7 @@ public class StartRobot {
 //			attack.attackAlgorithm();		//do the attack
 		//else
 	//		defend.defenseAlgorithm();		//do the defense __NEEDED
-		
+		//defend.defenseAlgorithm();
 		
 		//BTConnectTest connect = new BTConnectTest();
 		//BTReceive connectReceive = new BTReceive();
@@ -125,17 +125,17 @@ public class StartRobot {
 //		//Controller control = new Controller(odo);
 //		//LCDinfo LCDinfo = new LCDinfo(odo);
 //		int buttonChoice;
-////		
-		if(t.role.getId() == 1){
-			Sound.buzz();
-			attack.attackAlgorithm();
-		}else{
-			Sound.buzz();
-			Sound.beep();
-			Sound.buzz();
-			defend.defenseAlgorithm();
-		}
-//			**USED!!!!!**
+//		
+									if(t.role.getId() == 1){
+										Sound.buzz();
+										attack.attackAlgorithm();
+									}else{
+										Sound.buzz();
+										Sound.beep();
+										Sound.buzz();
+										defend.defenseAlgorithm();
+									}
+			//**USED!!!!!**
 //	
 //		buttonChoice = Button.ID_LEFT;
 //
