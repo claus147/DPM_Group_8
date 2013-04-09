@@ -34,7 +34,7 @@ public class Localization {
 		UltrasonicSensor usL = new UltrasonicSensor(SensorPort.S2);
 		UltrasonicSensor usR = new UltrasonicSensor(SensorPort.S3);
 		
-		StartCorner sc = StartCorner.BOTTOM_LEFT;
+		StartCorner sc = StartCorner.TOP_LEFT;
 		
 		USLocalizer usloc;
 		

@@ -56,6 +56,13 @@ public class LightLocalizer {
 		this.lsL = lsL;
 		this.lsR = lsR;
 		this.sc = sc;
+		
+//		if(this.sc.getId() == 2)
+//			this.sc.setId(4);
+//		else if(this.sc.getId() == 4)
+//			this.sc.setId(2);
+		
+		
 		this.LSDataL = new LSData(lsL, leftThreshold);
 		this.LSDataR = new LSData(lsR, rightThreshold);
 		angle1 = (sc.getId()-1)*90;  		//c1 facing 0, c2 facing 90, c3 facing 180, c4 facing 270
@@ -116,7 +123,7 @@ public class LightLocalizer {
 			
 		}
 
-		if (sc.getId()<=2){			//if localizing in left of field correct x first
+		if (sc == StartCorner.BOTTOM_LEFT || sc == StartCorner.TOP_RIGHT){			//if localizing in left of field correct x first
 			pos[0] = sc.getX()*30;  //turning to cm
 			update[0] = true;
 		} else {					//else correct y first
@@ -158,22 +165,44 @@ public class LightLocalizer {
 		}
 		
 		//updating odometer
-		if (sc.getId()<=2){ 		//if localizing in left of field correct y second
-			pos[1] = sc.getY()*30;	//turn to cm
-			update[1] = true;
-		} else {					//else correct x second
-			pos[0] = sc.getX()*30;	//turn to cm
-			update[0] = true;
+		if (sc == StartCorner.BOTTOM_LEFT){// || sc == StartCorner.TOP_RIGHT){ 		//if localizing in left of field correct y second
+			pos[0] = 0;//sc.getY()*30;	//turn to cm
+			//update[1] = true;
+			pos[1] = 0;
+			pos[2] = 90;
+		} else if(sc == StartCorner.BOTTOM_RIGHT){					//else correct x second
+			pos[0] = 300;
+			pos[1] = 0;
+			pos[2] = 0;
+			
+			//pos[0] = 300;//sc.getX()*30;	//turn to cm
+			//update[0] = true;
+		}else if(sc == StartCorner.TOP_RIGHT){					//else correct x second
+			pos[0] = 300;
+			pos[1] = 300;
+			pos[2] = 270;
+		}else if(sc == StartCorner.TOP_LEFT){					//else correct x second
+			pos[0] = 0;
+			pos[1] = 300;
+			pos[2] = 180;
 		}
-		pos[2] = angle2;
+		
+		
+//		
+//		pos[2] = angle2;
+//		update[2] = true;
+		update[0] = true;
+		update[1] = true;
 		update[2] = true;
 		odo.setPosition(pos, update);
+//		
+//
+//		if (sc.getId() == 1 || sc.getId() == 4)	//if at the bottom of the field we want to face upfield,
+//			nav.turnTo(0);
+//		else									//else at top of field so face downfield
+//			nav.turnTo(180);
 		
-
-		if (sc.getId() == 1 || sc.getId() == 4)	//if at the bottom of the field we want to face upfield,
-			nav.turnTo(0);
-		else									//else at top of field so face downfield
-			nav.turnTo(180);
+		
 
 	}
 }

@@ -36,7 +36,7 @@ import modes.Controller;
  	
  	final double leftRadius = 2.4;
  	final double rightRadius = 2.4;
- 	final double width = 17.0;
+ 	final double width = 17.5;
  	
  	/* END TODO : CLEAN THIS CODE */
  	

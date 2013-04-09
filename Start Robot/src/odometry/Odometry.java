@@ -22,7 +22,7 @@ public class Odometry implements TimerListener {
 	//added claus
 	private double leftRadius = 2.4;
 	private double rightRadius = 2.4;
-	private double width = 17.2;
+	private double width = 17.4;
 	private NXTRegulatedMotor leftMotor = Motor.A;
 	private NXTRegulatedMotor rightMotor = Motor.B;
 	
