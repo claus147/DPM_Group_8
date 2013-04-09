@@ -87,7 +87,7 @@ public class StartRobot {
 		
 		//init loc
 		USLocalizer usloc = new USLocalizer(odo, navigate, usl, usr);
-		LightLocalizer lsloc = new LightLocalizer(odo, navigate, lsl, lsr, StartCorner.BOTTOM_LEFT);
+		LightLocalizer lsloc = new LightLocalizer(odo, navigate, lsl, lsr, t.startingCorner);// StartCorner.BOTTOM_LEFT);
 		//LightLocalizer lsloc = new LightLocalizer(odo, navigate, lsl, lsr, t.startingCorner);	//--NEEDED
 		
 		//init modes

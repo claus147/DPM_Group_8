@@ -196,7 +196,7 @@ public class AttackerMode {
 			try {Thread.sleep(500);} catch (InterruptedException e) {}
 			// go to launching position
 			//sqrNav.travelTo( (int)5 * 30, (int) 2 * 30);
-			sqrNav.travelTo( (int)2 * 30, (int) 2 * 30);
+			sqrNav.travelTo( (int)2 * 30, (int) 6 * 30);
 			try {Thread.sleep(500);} catch (InterruptedException e) {}
 			sqrNav.turnTo(0);
 			try {Thread.sleep(500);} catch (InterruptedException e) {}
@@ -205,7 +205,7 @@ public class AttackerMode {
 			
 			try {
 				connect.connect('a');
-			try {Thread.sleep(25000);} catch (InterruptedException e) {}	
+			try {Thread.sleep(40000);} catch (InterruptedException e) {}	
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
