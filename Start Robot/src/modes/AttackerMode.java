@@ -175,8 +175,8 @@ public class AttackerMode {
 		
 		// ================================================ START COMPETITION ALGO ===================================================
 		//travel to reloc position to get balls
-		int counter=0;
-		while(counter <= 5){
+		//int counter=0;
+		while(true){
 			
 			
 		
@@ -196,29 +196,31 @@ public class AttackerMode {
 			try {Thread.sleep(500);} catch (InterruptedException e) {}
 			// go to launching position
 			//sqrNav.travelTo( (int)5 * 30, (int) 2 * 30);
-			sqrNav.travelTo( (int)2 * 30, (int) 6 * 30);
+			sqrNav.travelTo( (int)5 * 30, (int) 2 * 30);
 			try {Thread.sleep(500);} catch (InterruptedException e) {}
+			
+			
 			sqrNav.turnTo(0);
 			try {Thread.sleep(500);} catch (InterruptedException e) {}
 			sqrNav.relocalize(sqrNav.lastBrickX, sqrNav.lastBrickY, sqrNav.lastBrickT);
 			try {Thread.sleep(500);} catch (InterruptedException e) {}
-			
+			sqrNav.launchLoc(sqrNav.lastBrickX, sqrNav.lastBrickY, sqrNav.lastBrickT);
 			try {
 				connect.connect('a');
-			try {Thread.sleep(40000);} catch (InterruptedException e) {}	
+			try {Thread.sleep(60000);} catch (InterruptedException e) {}	
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			counter++;
+			//counter++;
 		}
-		sqrNav.travelTo(0,0);
-		
-		//travel to launch position
-		//sqrNav.travelTo( (int)5 * 30, (int) d1 * 30); ///////////************************************************* LAUNCH¡¡£Ð£Ï£Ó£É£Ô£É£Ï£Î
-		try {Thread.sleep(500);} catch (InterruptedException e) {}
-		
-		try {Thread.sleep(500);} catch (InterruptedException e) {}
+//		sqrNav.travelTo(0,0);
+//		
+//		//travel to launch position
+//		//sqrNav.travelTo( (int)5 * 30, (int) d1 * 30); ///////////************************************************* LAUNCH¡¡£Ð£Ï£Ó£É£Ô£É£Ï£Î
+//		try {Thread.sleep(500);} catch (InterruptedException e) {}
+//		
+//		try {Thread.sleep(500);} catch (InterruptedException e) {}
 //
 //		/* START PUSH THE DISPENSER */
 		

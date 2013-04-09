@@ -168,7 +168,7 @@ public class BTReceive {
 	static int speed = 1100; //speed of launch
 	static int returnSpeed = 80;	 //speed of return to original position
 	static int angle = -80; //angle the arm turns to (final position of catapult arm) - negative because initally not geared 
-	static int reAdjust = 10;	
+	static int reAdjust = 80;	
 
 	// 6.5 feet
 	// angle = -60
@@ -217,7 +217,7 @@ public class BTReceive {
 				rightMotor.rotate(120);
 				leftMotor.rotate(120);
 				
-				for(int i= 0; i<5; i++){
+				for(int i= 0; i<8; i++){
 					turnMotor.setSpeed(turn);
 					//Motor.C.rotateTo(angle);
 					turnMotor.rotate(angle1);
@@ -233,14 +233,14 @@ public class BTReceive {
 
 					rightMotor.setSpeed(speed);
 					leftMotor.setSpeed(speed);
-					rightMotor.rotateTo(angle, true);
-					leftMotor.rotateTo(angle);
+					rightMotor.rotate(angle, true);
+					leftMotor.rotate(angle);
 
 					//do return to original position
 					rightMotor.setSpeed(returnSpeed);
 					leftMotor.setSpeed(returnSpeed);
-					rightMotor.rotateTo(reAdjust, true);
-					leftMotor.rotateTo(reAdjust);
+					rightMotor.rotate(reAdjust, true);
+					leftMotor.rotate(reAdjust);
 
 
 

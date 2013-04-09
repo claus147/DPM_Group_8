@@ -21,6 +21,7 @@ public class SquareNavigation {
 	
  	public LightSensor lsLeft, lsRight;
  	public LSData lsDataL, lsDataR;
+ 	public LSData lsDataL2, lsDataR2;
  	public double leftThreshold = 0.04; 				//threshold of light sensor - left (larger value is larger tolerance - less sensitive)
 	public double rightThreshold = 0.04;//threshold of light sensor - right (smaller value is smaller tolerance - more sensitive)
 	
@@ -30,6 +31,7 @@ public class SquareNavigation {
 	public UltrasonicSensor usRight;
 	public USData usDataLeft;// = new USData(new UltrasonicSensor(SensorPort.S2));
 	public USData usDataRight;// = new USData(new UltrasonicSensor(SensorPort.S3));
+	
 	
 	final double leftRadius = 2.4;
  	final double rightRadius = 2.4;
@@ -60,6 +62,10 @@ public class SquareNavigation {
  		
  		this.lsDataL = new LSData(lsL, 10, leftThreshold);
 		this.lsDataR = new LSData(lsR, 10, rightThreshold);
+		
+		this.lsDataL2 = new LSData(lsL, 50, leftThreshold);
+		this.lsDataR2 = new LSData(lsR, 50, rightThreshold);
+		
 		
 		lsLeft.setFloodlight(true);
 		lsRight.setFloodlight(true);
@@ -469,7 +475,90 @@ public class SquareNavigation {
 	}//end of reloc method
  	
 	
+	public void launchLoc(double locX, double locY, double locT) {
+		lsDataL2.start();
+	    lsDataR2.start();
 	
+		rightMotor.setSpeed(150);
+		leftMotor.setSpeed(150);
+	
+		leftMotor.rotate(toAngle(leftRadius, 5), true);
+		rightMotor.rotate(toAngle(rightRadius, 5), true);
+		try {Thread.sleep(2000);} catch (InterruptedException e) {}
+		leftMotor.stop();
+		rightMotor.stop();
+		rightMotor.setSpeed(-50);
+		leftMotor.setSpeed(-50);
+	
+		leftMotor.rotate(toAngle(leftRadius, -10), true);
+		rightMotor.rotate(toAngle(rightRadius, -10), true); 
+		try {Thread.sleep(2000);} catch (InterruptedException e) {}
+		
+		boolean isLineL = false; 					//assume not on a line (left)
+	    boolean isLineR = false; 
+		    
+				
+		boolean leftDetect = false;
+		boolean rightDetect = false;
+			
+	
+		while(!rightDetect || !leftDetect){		
+				
+				
+			isLineR = lsDataR2.getIsLine();
+			if (isLineR && rightDetect == false){
+				rightMotor.stop(false);
+				lsDataR2.stop();
+				rightDetect = true;
+			}
+			isLineL = lsDataL2.getIsLine();
+			if (isLineL && leftDetect == false) {
+				leftMotor.stop(false);
+				lsDataL2.stop();
+				leftDetect =  true;
+			}
+				
+				
+	
+				
+				//if lost a line, go back to assumed position
+			if(leftMotor.getRotationSpeed() == 0 && !leftDetect){
+						
+				leftMotor.stop(false);
+						//Sound.beep();
+	
+				leftMotor.setSpeed(100);
+	
+	
+				leftMotor.rotate(toAngle(leftRadius, 5), true);
+				
+				leftDetect = true;
+				lsDataL2.stop();
+						
+			}
+					
+			if(rightMotor.getRotationSpeed() == 0  && !rightDetect){
+						
+				rightMotor.stop(false);
+						//Sound.beep();
+						
+	
+				rightMotor.setSpeed(150);
+	
+				rightMotor.rotate(toAngle(rightRadius, 5), true);
+				rightDetect = true;	
+				lsDataR2.stop();
+			}
+			
+			
+		}
+
+		boolean[] upd = {true, true, true};
+		double[] pos = {locX,locY, locT};
+		odo.setPosition(pos, upd);
+		
+		
+	}
 	
 	public int supposedSquareHeading(int destX, int destY){
 		
