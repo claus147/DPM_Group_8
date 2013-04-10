@@ -26,7 +26,7 @@ import modes.Controller;
  	Odometry odo;// = new Odometry();
 
  	private static final int FORWARD_SPEED = 180;
- 	private static final int ROTATE_SPEED = 200;
+ 	private static final int ROTATE_SPEED = 80;
  	
  	NXTRegulatedMotor leftMotor = WheelsData.leftMotor;
  	NXTRegulatedMotor rightMotor = WheelsData.rightMotor;

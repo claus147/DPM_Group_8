@@ -24,8 +24,8 @@ public class LightLocalizer {
 	private Navigation nav;
 	private LightSensor lsL, lsR;
 	private LSData LSDataL, LSDataR;					//the class that constantly polls light data (left, right)
-	public static double FORWARD_SPEED = 1;			
-	public static double ROTATION_SPEED = 80; 			//was 15
+	public static double FORWARD_SPEED = 40;			
+	public static double ROTATION_SPEED = 40; 			//was 15
 	public static double [] pos = new double [3];		//to access x, y theta from 2 Wheeled robot
 	public static boolean[] update = new boolean [3]; 	//initialize the update
 	private double leftThreshold = 0.04; 				//threshold of light sensor - left (larger value is larger tolerance - less sensitive)
@@ -102,7 +102,7 @@ public class LightLocalizer {
 	 */
 	public void doLocalization() {
 		
-		nav.goforward(ROTATION_SPEED);
+		nav.goforward(FORWARD_SPEED);
 		
 		LSDataL.start();
 		LSDataR.start();
@@ -138,7 +138,7 @@ public class LightLocalizer {
 		nav.turnTo(angle2); //97
 		//Sound.buzz();
 		try { Thread.sleep(1000); } catch (InterruptedException e) {}
-		nav.goforward(ROTATION_SPEED);
+		nav.goforward(FORWARD_SPEED);
 		
 		isLineL = false;
 		isLineR = false;

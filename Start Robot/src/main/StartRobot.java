@@ -112,7 +112,18 @@ public class StartRobot {
 		
 		//BTConnectTest connect = new BTConnectTest();
 		//BTReceive connectReceive = new BTReceive();
-	
+		if (t.startingCorner == StartCorner.BOTTOM_LEFT){// || sc == StartCorner.TOP_RIGHT){ 		//if localizing in left of field correct y second
+			sqrNav.travelTo(30, 30);
+		} else if(t.startingCorner == StartCorner.BOTTOM_RIGHT){					//else correct x second
+			sqrNav.travelTo(270, 30);
+			//pos[0] = 300;//sc.getX()*30;	//turn to cm
+			//update[0] = true;
+		}else if(t.startingCorner == StartCorner.TOP_RIGHT){					//else correct x second
+			sqrNav.travelTo(270, 270);
+		}else if(t.startingCorner == StartCorner.TOP_LEFT){					//else correct x second
+			sqrNav.travelTo(30, 270);
+		}
+
 		
 		
 //		//Odometry odo = new Odometry(true);
