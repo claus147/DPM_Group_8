@@ -259,7 +259,7 @@ public class BTReceive {
 			LCD.clear();
 			}
 			} else {
-				for(int i= 0; i<5; i++){
+				for(int i= 0; i<8; i++){
 					turnMotor.rotate(45);
 
 
