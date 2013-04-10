@@ -18,7 +18,7 @@ import odometry.Odometry;
 
 public class USLocalizer {
 	public enum LocalizationType { FALLING_EDGE, RISING_EDGE };
-	public static double ROTATION_SPEED = 60;
+	public static double ROTATION_SPEED = 120;
 
 	//public static double angleA, angleB;	//made public so set/get methods dont need to be written to display
 	//public static double turn = 0.0;		//turn to value (the corrected theta)
@@ -29,7 +29,7 @@ public class USLocalizer {
 	private LocalizationType locType;
 	private USData USDataL, USDataR;
 	private int sleepTime = 50;
-	private int noWall = 40;
+	private int noWall = 35;
 	
 	/**
 	 * the automatically determined localization
@@ -123,9 +123,10 @@ public class USLocalizer {
 			isWallR = true;
 			
 			//USDataL.start();
-			nav.turnCounterClockWise();					//now anticlockwise		
 			USDataL.start();
 			try { Thread.sleep(3000); } catch (InterruptedException e) {}
+			nav.turnCounterClockWise();					//now anticlockwise		
+			
 			
 			//sleep so it doesnt think that the wall edge just detected is the other wall edge
 			//try { Thread.sleep(8000); } catch (InterruptedException e) {}		
@@ -145,7 +146,7 @@ public class USLocalizer {
 			
 			nav.turnClockWise();//rotate clockwise first	
 			USDataR.start();
-			try { Thread.sleep(6000); } catch (InterruptedException e) {} // wait for the sensors to initialise
+			try { Thread.sleep(3000); } catch (InterruptedException e) {} // wait for the sensors to initialise
 			
 				
 			//try { Thread.sleep(5000); } catch (InterruptedException e) {}
