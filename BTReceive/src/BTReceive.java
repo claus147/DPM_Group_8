@@ -214,8 +214,9 @@ public class BTReceive {
 			LCD.refresh();	
 			if(dis.readChar()=='a'){
 				
-			//	rightMotor.rotate(80);
-			//	leftMotor.rotate(80);
+				rightMotor.rotate(80);
+				leftMotor.rotate(80);
+			
 				for(int i= 0; i<8; i++){
 					turnMotor.setSpeed(turn);
 					//Motor.C.rotateTo(angle);
